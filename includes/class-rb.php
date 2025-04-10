@@ -20,13 +20,15 @@ final class Review_Bird {
 	private function __construct() {
 		$this->version         = defined( 'SR_RB_VERSION' ) ? SR_RB_VERSION : '1.0.0';
 		$this->debug           = get_option( 'review_bird_debug', true ) ?? false;
-		$this->plugin_name     = $this->plugin_prefix = 'review-bird';
+		$this->plugin_name     = 'review-bird';
+		$this->plugin_prefix   = 'sr_rb';
 		$this->plugin_dir_path = plugin_dir_path( dirname( __FILE__ ) );
 		$this->plugin_dir_url  = plugin_dir_url( dirname( __FILE__ ) );
 		$this->load_dependencies();
 	}
 
 	private function load_dependencies(): void {
+		require_once $this->plugin_dir_path . 'vendor/autoload.php';
 		require_once $this->plugin_dir_path . 'includes/traits/class-rb-singleton-trait.php';
 		require_once $this->plugin_dir_path . 'includes/class-rb-install.php';
 		require_once $this->plugin_dir_path . 'includes/class-rb-freemius.php';

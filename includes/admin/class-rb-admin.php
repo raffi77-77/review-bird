@@ -2,13 +2,17 @@
 
 namespace Review_Bird\Includes\Admin;
 
+use Review_Bird\Includes\Freemius;
 use Review_Bird\Includes\Traits\SingletonTrait;
 
 class Admin {
 
 	use SingletonTrait;
+	
+	public Freemius $freemius;
 
 	public function boot() {
+		$this->fs             = Freemius::instance()->fs;
 		add_action( 'admin_menu', array( $this, 'add_options_page' ) );
 		// add_action( 'admin_init', array( Assets::class, 'admin_init' ) );
 		// add_action( 'post_updated', array( Vector_Service::class, 'post_object_updated' ), 10, 3 );
@@ -24,20 +28,20 @@ class Admin {
 			$this,
 			'page_settings'
 		), 1 );
-		$reviews = add_submenu_page( 'review-bird', __( 'Reviews', 'review-bird' ), __( 'Reports', 'review-bird' ), 'manage_options', 'sr-rb-reviews', array(
+		$reviews = add_submenu_page( 'review-bird', __( 'Reviews', 'review-bird' ), __( 'Reviews', 'review-bird' ), 'manage_options', 'sr-rb-reviews', array(
 			$this,
-			'page_statistics'
+			'page_reviews'
 		), 3 );
 		$skins = add_submenu_page( 'review-bird', __( 'Skins', 'review-bird' ), __( 'Skins', 'review-bird' ), 'manage_options', 'sr-rb-skins', array(
 			$this,
-			'page_statistics'
+			'page_skins'
 		), 3 );
 		$sms_feedback = add_submenu_page( 'review-bird', __( 'SMS feedback', 'review-bird' ), __( 'SMS feedback', 'review-bird' ), 'manage_options', 'sr-rb-feedback', array(
 			$this,
-			'page_statistics'
+			'page_feedback'
 		), 3 );
-		add_action( 'admin_print_scripts-' . $settings, array( $this, 'register_settings_scripts' ) );
-		add_action( 'admin_print_styles-' . $settings, array( $this, 'register_settings_styles' ) );
+		// add_action( 'admin_print_scripts-' . $settings, array( $this, 'register_settings_scripts' ) );
+		// add_action( 'admin_print_styles-' . $settings, array( $this, 'register_settings_styles' ) );
 
 		// add_action( 'add_meta_boxes', array( $this, 'chatbot_meta_box' ) );
 		// add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_scripts' ) );
@@ -82,6 +86,10 @@ class Admin {
 			wp_enqueue_style( $rb->get_plugin_name() . '-page-settings-js-style' );
 		}
 	}
+	
+	public function page_reviews(): void {
+		echo 'Reviews!';
+	}
 
 	public function page_home(): void {
 		echo 'Home!';
@@ -90,6 +98,14 @@ class Admin {
 	public function page_settings(): void {
 		// include Review_Bird()->get_plugin_dir_path() . 'templates/.../index.php';
 		echo 'Settings!';
+	}
+	
+	public function page_skins(): void {
+		echo 'Skins!';
+	}
+	
+	public function page_feedback(): void {
+		echo 'Feedback!';
 	}
 
 	public function chatbot_meta_box() {

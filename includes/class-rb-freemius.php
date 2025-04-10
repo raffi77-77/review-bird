@@ -25,25 +25,18 @@ class Freemius {
 
 	private function fs_init(): ?\Freemius {
 		try {
-			// Include Freemius SDK.
-			require_once plugin_dir_path( __DIR__ ) . '/vendor/freemius/start.php';
 			return fs_dynamic_init( array(
-				'id'                  => '6959',
+				'id'                  => '18636',
 				'slug'                => 'review-bird',
 				'premium_slug'        => 'review-bird-pro',
 				'type'                => 'plugin',
-				'public_key'          => 'pk_e348807215df985c848c86b883ee3',
+				'public_key'          => 'pk_447a04094d7ba96f7470d4f9a7329',
 				'is_premium'          => true,
 				'premium_suffix'      => '(PRO)',
-				// If your plugin is a serviceware, set this option to false.
-				'has_premium_version' => true,
 				'has_addons'          => false,
-				'has_paid_plans'      => true,
-				'has_affiliation'     => 'selected',
+				'has_paid_plans'      => false,
 				'menu'                => array(
 					'slug'           => 'review-bird',
-					'support'        => false,
-					'affiliation'    => false,
 				),
 			) );
 		} catch ( Exception $e ) {
