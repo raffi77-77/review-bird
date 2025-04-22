@@ -1,6 +1,6 @@
 <?php
 
-namespace Review_Bird\Includes;
+namespace Review_Bird\Includes\Services;
 
 use Review_Bird\Includes\Traits\SingletonTrait;
 
@@ -48,40 +48,14 @@ CREATE TABLE {$wpdb->prefix}{$prefix}_reviews (
   flow_id bigint(20) unsigned NOT NULL,
   message text NULL,
   user_id bigint(20) unsigned NULL, 
+  user_name varchar(64) NULL, 
   rating smallint NULL,
+  `like` tinyint(1) NULL,
   created_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   updated_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   PRIMARY KEY  (id),
   UNIQUE KEY uuid (uuid),
   KEY flow_id (flow_id)
-) $collate;
-CREATE TABLE {$wpdb->prefix}{$prefix}_questions (
-  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  uuid char(36) NOT NULL,
-  title text NOT NULL,
-  flow_id bigint(20) unsigned NOT NULL,
-  `type` tinyint(1) NULL,
-  `required` tinyint(1) NULL,
-  `order` smallint(1) NULL,
-  created_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-  updated_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-  PRIMARY KEY  (id),
-  UNIQUE KEY uuid (uuid),
-  KEY flow_id (flow_id),
-  KEY `type` (`type`),
-  KEY `required` (`required`),
-  KEY `order` (`order`)
-) $collate;
-CREATE TABLE {$wpdb->prefix}{$prefix}_answers (
-  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  uuid char(36) NOT NULL,
-  `value` text NULL,
-  review_id bigint(20) unsigned NOT NULL,
-  question_id bigint(20) unsigned NOT NULL,
-  PRIMARY KEY  (id),
-  UNIQUE KEY uuid (uuid),
-  KEY review_id (review_id),
-  KEY question_id (question_id)
 ) $collate;";
 		return $tables;
 	}
@@ -91,8 +65,6 @@ CREATE TABLE {$wpdb->prefix}{$prefix}_answers (
 		$prefix = Review_Bird()->get_plugin_prefix();
 		$tables = array(
 			"{$wpdb->prefix}_{$prefix}_reviews",
-			"{$wpdb->prefix}_{$prefix}_questions",
-			"{$wpdb->prefix}_{$prefix}_answers",
 		);
 
 		return apply_filters( 'sr_rb_install_get_tables', $tables );

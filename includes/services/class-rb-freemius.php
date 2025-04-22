@@ -1,8 +1,7 @@
 <?php
 
-namespace Review_Bird\Includes;
+namespace Review_Bird\Includes\Services;
 
-use Review_Bird\Includes\Services\Helper;
 use Exception;
 use Review_Bird\Includes\Traits\SingletonTrait;
 

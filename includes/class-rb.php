@@ -2,9 +2,10 @@
 
 namespace Review_Bird\Includes;
 
-use Review_Bird\Includes\Custom_Post_Types;
-use Review_Bird\Includes\Frontend\Frontend;
+use Review_Bird\Includes\Cpts\Custom_Post_Types;
 use Review_Bird\Includes\Admin\Admin;
+use Review_Bird\Includes\Frontend\Frontend;
+use Review_Bird\Includes\Services\Install;
 
 final class Review_Bird {
 
@@ -30,14 +31,32 @@ final class Review_Bird {
 	private function load_dependencies(): void {
 		require_once $this->plugin_dir_path . 'vendor/autoload.php';
 		require_once $this->plugin_dir_path . 'includes/traits/class-rb-singleton-trait.php';
-		require_once $this->plugin_dir_path . 'includes/class-rb-install.php';
-		require_once $this->plugin_dir_path . 'includes/class-rb-freemius.php';
-		require_once $this->plugin_dir_path . 'includes/class-rb-custom-post-types.php';
+		require_once $this->plugin_dir_path . 'includes/traits/class-rb-json-serializable-trait.php.php';
+		
+		require_once $this->plugin_dir_path . 'includes/services/class-rb-collection.php';
+		require_once $this->plugin_dir_path . 'includes/services/class-rb-data-object-collection.php';
+		require_once $this->plugin_dir_path . 'includes/services/class-rb-helper.php';
+		require_once $this->plugin_dir_path . 'includes/services/class-rb-install.php';
+		require_once $this->plugin_dir_path . 'includes/services/class-rb-freemius.php';
+		
+		require_once $this->plugin_dir_path . 'includes/cpts/class-rb-custom-post-types.php';
+		require_once $this->plugin_dir_path . 'includes/cpts/flow/class-rb-custom-post-type.php';
+		
 		require_once $this->plugin_dir_path . 'includes/admin/class-rb-admin.php';
 		require_once $this->plugin_dir_path . 'includes/admin/class-rb-ajax.php';
+		
 		require_once $this->plugin_dir_path . 'includes/exceptions/class-rb-exception.php';
+		require_once $this->plugin_dir_path . 'includes/exceptions/class-rb-error-codes.php';
+		
 		require_once $this->plugin_dir_path . 'includes/frontend/class-rb-frontend.php';
-		require_once $this->plugin_dir_path . 'includes/services/class-rb-helper.php';
+		
+		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-data-object.php';
+		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-wp-meta-data-object.php';
+		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-wp-post-data-object.php';
+		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-wpdb-data-object.php';
+		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-flow-meta.php';
+		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-review.php';
+		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-setting.php';
 	}
 
 	private function set_locale(): void {
@@ -47,7 +66,7 @@ final class Review_Bird {
 	}
 
 	public function register_cpts(): void {
-		Custom_Post_Types::setup();
+		Custom_Post_Types::register();
 	}
 
 	private function define_admin_classes(): void {

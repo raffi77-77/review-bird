@@ -1,17 +1,18 @@
 <?php
 
-namespace Review_Bird\Includes;
+namespace Review_Bird\Includes\Cpts\Flow;
 
-class Custom_Post_Types {
+use Review_Bird\Includes\Traits\SingletonTrait;
 
-	public static function setup() {
-		add_action( 'init', [ self::class, 'register' ] );
-	}
+class Custom_Post_Type {
+	use SingletonTrait;
 
-	public static function register() {
-		register_post_type( 'review_bird_flow', array(
+	public $name = 'review_bird_flow';
+
+	public function register() {
+		register_post_type( $this->name, array(
 			'label'               => __( 'Flows', 'review-bird' ),
-			'name'                => 'review_bird_flow',
+			'name'                => $this->name,
 			'labels'              => [
 				'name'          => __( 'Flows', 'review-bird' ),
 				'singular_name' => __( 'Flow', 'review-bird' ),
@@ -35,5 +36,16 @@ class Custom_Post_Types {
 			'has_archive'         => false,
 			'show_in_rest'        => true,
 		) );
+		$this->add_meta_boxes();
+	}
+
+	protected function add_meta_boxes() {
+		add_action( 'add_meta_boxes', array( $this, 'chatbot_meta_box' ) );
+	}
+
+	public function chatbot_meta_box() {
+		add_meta_box( 'bla-bla-meta-box', 'Bla bla box', function () {
+			echo 'bla bla box';
+		}, $this->name, 'normal', 'high' );
 	}
 }

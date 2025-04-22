@@ -2,9 +2,9 @@
 
 namespace Review_Bird\Includes\Exceptions;
 
-use Exception;
+use Exception as Base_Exception;
 
-class Review_Bird_Exception extends Exception {
+class Exception extends Base_Exception {
 
 	protected $error_code;
 	protected array $error_data = [];
