@@ -7,12 +7,12 @@ use Review_Bird\Includes\Traits\SingletonTrait;
 class Custom_Post_Type {
 	use SingletonTrait;
 
-	public $name = 'review_bird_flow';
+	const NAME = 'review_bird_flow';
 
 	public function register() {
-		register_post_type( $this->name, array(
+		register_post_type( self::NAME, array(
 			'label'               => __( 'Flows', 'review-bird' ),
-			'name'                => $this->name,
+			'name'                => self::NAME,
 			'labels'              => [
 				'name'          => __( 'Flows', 'review-bird' ),
 				'singular_name' => __( 'Flow', 'review-bird' ),
@@ -46,6 +46,6 @@ class Custom_Post_Type {
 	public function chatbot_meta_box() {
 		add_meta_box( 'bla-bla-meta-box', 'Bla bla box', function () {
 			echo 'bla bla box';
-		}, $this->name, 'normal', 'high' );
+		}, self::NAME, 'normal', 'high' );
 	}
 }

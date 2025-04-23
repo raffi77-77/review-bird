@@ -73,7 +73,9 @@ class Admin {
 
 	public function page_reviews(): void {
 		require_once Review_Bird::get_instance()->get_plugin_dir_path() . 'includes/admin/class-rb-review-table.php';
-		( new Review_Table() )->display();
+		$table = new Review_Table();
+		$table->prepare_items();
+		$table->display();
 	}
 
 	public function page_home(): void {

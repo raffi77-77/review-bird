@@ -33,11 +33,19 @@ final class Review_Bird {
 		require_once $this->plugin_dir_path . 'includes/traits/class-rb-singleton-trait.php';
 		require_once $this->plugin_dir_path . 'includes/traits/class-rb-json-serializable-trait.php.php';
 		
+		require_once $this->plugin_dir_path . 'includes/interfaces/class-rb-database-strategy-interface.php';
+		
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-collection.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-data-object-collection.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-helper.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-install.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-freemius.php';
+
+		require_once $this->plugin_dir_path . 'includes/database-strategies/class-rb-database-strategy.php';
+		require_once $this->plugin_dir_path . 'includes/database-strategies/class-rb-wp-meta-query.php';
+		require_once $this->plugin_dir_path . 'includes/database-strategies/class-rb-wp-options.php';
+		require_once $this->plugin_dir_path . 'includes/database-strategies/class-rb-wp-query.php';
+		require_once $this->plugin_dir_path . 'includes/database-strategies/class-rb-wpdb.php';
 		
 		require_once $this->plugin_dir_path . 'includes/cpts/class-rb-custom-post-types.php';
 		require_once $this->plugin_dir_path . 'includes/cpts/flow/class-rb-custom-post-type.php';
