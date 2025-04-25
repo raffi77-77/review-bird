@@ -4,6 +4,7 @@ namespace Review_Bird\Includes\Admin;
 
 use Review_Bird\Includes\Cpts\Flow\Custom_Post_Type;
 use Review_Bird\Includes\Data_Objects\Review;
+use Review_Bird\Includes\Services\Helper;
 use WP_List_Table;
 
 class Review_Table extends WP_List_Table {
@@ -20,20 +21,20 @@ class Review_Table extends WP_List_Table {
 		return [
 			'cb'         => '<input type="checkbox" />',
 			'id'         => 'ID',
-            
-			'created_at' => 'Submission Date',
+			'username'   => 'Username',
 			'message'    => 'Message',
-			'answer'     => 'Answer',
+			'like'       => 'Answer',
 			'rating'     => 'Rating',
+			'created_at' => 'Submission Date'
 		];
 	}
 
 	protected function column_cb( $item ) {
-		return sprintf( '<input type="checkbox" name="review[]" value="%s" />', $item['id'] );
+		return sprintf( '<input type="checkbox" name="review[]" value="%s" />', $item->id );
 	}
 
 	protected function column_default( $item, $column_name ) {
-		return $item[ $column_name ] ?? '';
+		return $item->{$column_name} ?? '';
 	}
 
 	public function prepare_items() {
@@ -64,7 +65,7 @@ class Review_Table extends WP_List_Table {
             <h1 class="wp-heading-inline"><?= __( 'Reviews', 'review-bird' ) ?></h1>
             <form method="get">
 				<?php
-                $this->display_filters();
+				$this->display_filters();
 				parent::display();
 				?>
             </form>
@@ -73,7 +74,7 @@ class Review_Table extends WP_List_Table {
 	}
 
 	public function display_filters() {
-        ?>
+		?>
         <div class="tablenav top">
             <div class="alignleft actions">
                 <select name="flow_id">
@@ -94,7 +95,7 @@ class Review_Table extends WP_List_Table {
 
 			<?php $this->search_box( 'Search Reviews', 'review_search' ); ?>
         </div>
-        <?php
+		<?php
 	}
 }
 
