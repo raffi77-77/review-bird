@@ -48,7 +48,7 @@ CREATE TABLE {$wpdb->prefix}{$prefix}_reviews (
   flow_id bigint(20) unsigned NOT NULL,
   message text NULL,
   user_id bigint(20) unsigned NULL, 
-  user_name varchar(64) NULL, 
+  username varchar(64) NULL, 
   rating smallint NULL,
   `like` tinyint(1) NULL,
   created_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,

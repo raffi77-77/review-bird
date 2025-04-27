@@ -21,31 +21,52 @@ class Custom_Post_Type {
 				'edit_item'     => __( 'Edit flow', 'review-bird' ),
 				'new_item'      => __( 'New flow', 'review-bird' ),
 			],
-			'supports'            => array( 'title'/*, 'custom-fields'*/ ),
+			'supports'            => array( 'title', 'editor', 'thumbnail'/*, 'custom-fields'*/ ),
 			'description'         => __( '', 'review-bird' ),
-			'public'              => false,
+			'public'              => true,
 			'show_ui'             => true,
 			'map_meta_cap'        => true,
-			'publicly_queryable'  => false,
+			'publicly_queryable'  => true,
 			'exclude_from_search' => true,
 			'show_in_menu'        => 'review-bird',
 			'hierarchical'        => false,
 			'show_in_nav_menus'   => false,
-			'rewrite'             => false,
-			'query_var'           => false,
-			'has_archive'         => false,
-			'show_in_rest'        => true,
+			'rewrite'              => ['slug' => 'review'],
+			'query_var'           => true,
+			'has_archive'         => true,
+			'show_in_rest'        => false,
 		) );
 		$this->add_meta_boxes();
 	}
 
 	protected function add_meta_boxes() {
-		add_action( 'add_meta_boxes', array( $this, 'chatbot_meta_box' ) );
+		add_action( 'add_meta_boxes', array( $this, 'title_question_meta_box' ) );
+		add_action( 'add_meta_boxes', array( $this, 'positive_review_response_meta_box' ) );
+		add_action( 'add_meta_boxes', array( $this, 'negative_review_response_meta_box' ) );
+		add_action( 'add_meta_boxes', array( $this, 'email_settings_meta_box' ) );
 	}
 
-	public function chatbot_meta_box() {
-		add_meta_box( 'bla-bla-meta-box', 'Bla bla box', function () {
-			echo 'bla bla box';
+	public function title_question_meta_box() {
+		add_meta_box( 'title-question', __('Title Question', 'review-bird'), function () {
+			echo 'Title question !';
+		}, self::NAME, 'normal', 'high' );
+	}
+	
+	public function positive_review_response_meta_box() {
+		add_meta_box( 'positive-review-response', __('Positive Review Response', 'review-bird'), function () {
+			echo 'Positive Review Response !';
+		}, self::NAME, 'normal', 'high' );
+	}
+	
+	public function negative_review_response_meta_box() {
+		add_meta_box( 'negative-review-response', __('Negative Review Response', 'review-bird'), function () {
+			echo 'Negative Review Response !';
+		}, self::NAME, 'normal', 'high' );
+	}
+
+	public function email_settings_meta_box() {
+		add_meta_box( 'email-settings', __('E-Mail sent on negative response', 'review-bird'), function () {
+			echo 'E-Mail sent on negative response !';
 		}, self::NAME, 'normal', 'high' );
 	}
 }
