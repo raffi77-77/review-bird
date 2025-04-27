@@ -73,7 +73,7 @@ class WPDB extends Database_Strategy implements Database_Strategy_Interface {
 				$ordering = 'ASC';
 			}
 			$order_by     = esc_sql( $args[3] );
-			$order_clause = "ORDER BY $order_by $ordering";
+			$order_clause = "ORDER BY `$order_by` $ordering";
 		}
 		// Limit, offset
 		$limit_clause = '';

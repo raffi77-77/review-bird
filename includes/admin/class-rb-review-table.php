@@ -20,14 +20,23 @@ class Review_Table extends WP_List_Table {
 	public function get_columns() {
 		return [
 			'cb'         => '<input type="checkbox" />',
-			'id'         => 'ID',
-			'username'   => 'Username',
-			'message'    => 'Message',
-			'like'       => 'Answer',
-			'rating'     => 'Rating',
-			'created_at' => 'Submission Date'
+			'id'         => __('ID', 'review-bird'),
+			'username'   => __('Username', 'review-bird'),
+			'message'    => __('Message', 'review-bird'),
+			'like'       => __('Answer', 'review-bird'),
+			'rating'     => __('Rating', 'review-bird'),
+			'created_at' => __('Submission Date', 'review-bird'),
 		];
 	}
+
+    public function get_sortable_columns() {
+	    return [
+		    'id'         => ['id', true],
+		    'like'       => ['like', true],
+		    'rating'     => ['rating', true],
+		    'created_at' => ['created_at', true],
+        ];
+    }
 
 	protected function column_cb( $item ) {
 		return sprintf( '<input type="checkbox" name="review[]" value="%s" />', $item->id );
@@ -36,14 +45,21 @@ class Review_Table extends WP_List_Table {
 	protected function column_default( $item, $column_name ) {
 		return $item->{$column_name} ?? '';
 	}
+    
+    protected function column_rating($item) {
+	    $stars = str_repeat( '⭐', (int) $item->rating );
+	    return $stars . " ({$item->rating})";
+    }
 
 	public function prepare_items() {
 		$columns               = $this->get_columns();
 		$hidden                = [];
-		$sortable              = [];
+		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = [ $columns, $hidden, $sortable ];
 		$per_page              = 10;
 		$current_page          = $this->get_pagenum();
+		$orderby                = sanitize_text_field( $_REQUEST['orderby'] ?? 'id' );
+		$order                = sanitize_text_field( $_REQUEST['order'] ?? 'desc' );
 		$search                = sanitize_text_field( $_REQUEST['s'] ?? '' );
 		$flow_id               = absint( $_REQUEST['flow_id'] ?? 0 );
 		$rating                = is_numeric( $_REQUEST['rating'] ?? '' ) ? (int) $_REQUEST['rating'] : '';
@@ -51,7 +67,7 @@ class Review_Table extends WP_List_Table {
 		$flow_id && $where['flow_id'] = $flow_id;
 		$rating && $where['rating'] = $rating;
 		$total_items = Review::count( $where ?? [] );
-		$this->items = Review::where( $where ?? [], $per_page, $current_page );
+		$this->items = Review::where( $where ?? [], $per_page, $current_page, $orderby, $order );
 		$this->set_pagination_args( [
 			'total_items' => $total_items,
 			'per_page'    => $per_page,
