@@ -7,7 +7,7 @@ trait SingletonTrait {
 	
 	protected static $instance = null;
 
-	public function __construct() {}
+	private function __construct() {}
 
 	final public static function instance() {
 		if ( null === static::$instance ) {

@@ -6,8 +6,7 @@ use Review_Bird\Includes\Database_Strategies\WP_Options;
 use Review_Bird\Includes\Services\Helper;
 
 class Setting extends Data_Object {
-
-	const SETTING_PREFIX = 'limb.';
+	
 	const KEY_REGEXP = 'a-zA-Z0-9._-';
 	const TABLE_NAME = 'options';
 	public string $key;
@@ -46,8 +45,9 @@ class Setting extends Data_Object {
 	}
 
 	public static function find( $id ) {
-		if ( ! str_starts_with( $id, self::SETTING_PREFIX ) ) {
-			$id = self::SETTING_PREFIX . $id;
+		$prefix = Review_Bird()->get_plugin_prefix();
+		if ( ! str_starts_with( $id, $prefix ) ) {
+			$id = $prefix . $id;
 		}
 
 		return parent::find( $id );

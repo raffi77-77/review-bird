@@ -1,13 +1,12 @@
 <?php
 
-namespace Review_Bird\Includes\Admin;
+namespace Review_Bird\Includes\Admin\Pages\Review;
 
 use Review_Bird\Includes\Cpts\Flow\Custom_Post_Type;
 use Review_Bird\Includes\Data_Objects\Review;
-use Review_Bird\Includes\Services\Helper;
 use WP_List_Table;
 
-class Review_Table extends WP_List_Table {
+class Table extends WP_List_Table {
 
 	public function __construct() {
 		parent::__construct( [

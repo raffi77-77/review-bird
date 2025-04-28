@@ -52,6 +52,10 @@ final class Review_Bird {
 		
 		require_once $this->plugin_dir_path . 'includes/admin/class-rb-admin.php';
 		require_once $this->plugin_dir_path . 'includes/admin/class-rb-ajax.php';
+		require_once $this->plugin_dir_path . 'includes/admin/pages/setting/class-rb-page.php';
+		require_once $this->plugin_dir_path . 'includes/admin/pages/review/class-rb-page.php';
+		require_once $this->plugin_dir_path . 'includes/admin/pages/skin/class-rb-page.php';
+		require_once $this->plugin_dir_path . 'includes/admin/pages/feedback/class-rb-page.php';
 		
 		require_once $this->plugin_dir_path . 'includes/exceptions/class-rb-exception.php';
 		require_once $this->plugin_dir_path . 'includes/exceptions/class-rb-error-codes.php';
