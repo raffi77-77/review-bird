@@ -29,6 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div id="review-box" style="max-width:600px;margin:2rem auto;padding:2rem;background:#fff;border-radius:8px;box-shadow:0 0 10px rgba(0,0,0,0.05);">
     <h2>Leave Your Review</h2>
 	<?php
+	echo do_blocks('<!-- wp:review-bird/flow {"flow_id":"' . get_the_ID() . '"} /-->');
 	// TODO call do_blocks() or do_shortcode() by passing the_ID
 	?>
 </div>

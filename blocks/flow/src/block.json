@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "review-bird/flow",
+	"version": "0.1.0",
+	"title": "Review Bird: Flow",
+	"category": "widgets",
+	"icon": "star-half",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "review-bird",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}
