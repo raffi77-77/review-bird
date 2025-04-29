@@ -46,6 +46,7 @@ CREATE TABLE {$wpdb->prefix}{$prefix}_reviews (
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   uuid char(36) NOT NULL,
   flow_id bigint(20) unsigned NOT NULL,
+  flow_uuid char(36) NOT NULL,
   message text NULL,
   user_id bigint(20) unsigned NULL, 
   username varchar(64) NULL, 

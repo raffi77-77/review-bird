@@ -3,17 +3,13 @@
 namespace Review_Bird\Includes\Api\V1\Controllers;
 
 use Exception;
-use Review_Bird\Includes\Data_Objects\Review;
 use Review_Bird\Includes\Data_Objects\Flow;
 use Review_Bird\Includes\Repositories\Review_Repository;
-use Review_Bird\Includes\Repositories\Flow_Repository;
 use Review_Bird\Includes\Services\Helper;
-use Review_Bird\Includes\User_Manager;
 use WP_REST_Server;
 
 class Reviews_Controller extends Rest_Controller {
-	protected string $generic_rest_base = 'chats';
-	protected $rest_base = 'reviews/(?P<uuid>[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})';
+	protected string $generic_rest_base = 'reviews';
 
 	public function register_routes() {
 		register_rest_route( $this->namespace, '/' . $this->generic_rest_base, array(
@@ -29,9 +25,11 @@ class Reviews_Controller extends Rest_Controller {
 
 	public function create_item( $request ) {
 		try {
-			$data    = $request->get_json_params();
+			$data            = $request->get_json_params();
+			$flow            = Flow::find_by_uuid( $data['flow_uuid'] );
+			$data['flow_id'] = $flow->id;
 
-			return rest_ensure_response( (new Review_Repository())->create( $data ?? [] ) );
+			return rest_ensure_response( ( new Review_Repository() )->create( $data ) );
 		} catch ( Exception $e ) {
 			Helper::log( $e, __METHOD__ );
 
@@ -39,12 +37,73 @@ class Reviews_Controller extends Rest_Controller {
 		}
 	}
 
-	protected function fill_personalized_params( $params ) {
-		if ( ! current_user_can( 'manage_options' ) && ! is_admin() ) {
-			$params['chatbot_user_uuid'] = User_Manager::instance()->get_current_user()->get_uuid();
+	public function get_item_schema() {
+		if ( $this->schema ) {
+			// Since WordPress 5.3, the schema can be cached in the $schema property.
+			return $this->schema;
 		}
+		$this->schema = array(
+			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'title'      => 'vector',
+			'type'       => 'object',
+			'properties' => array(
+				'id'        => array(
+					'description' => __( 'Unique identifier for the resource.', 'limb-ai' ),
+					'type'        => 'integer',
+					'context'     => array( 'view', 'edit' ),
+					'readonly'    => true
+				),
+				'message'   => array(
+					'description' => __( 'Review message', 'limb-ai' ),
+					'type'        => 'string',
+					'context'     => array( 'view', 'edit' ),
+					'arg_options' => array(// 'sanitize_callback' => 'wp_filter_post_kses',
+					),
+				),
+				'username'  => array(
+					'description' => __( 'Review message', 'limb-ai' ),
+					'type'        => 'string',
+					'context'     => array( 'view', 'edit' ),
+					'arg_options' => array(// 'sanitize_callback' => 'wp_filter_post_kses',
+					),
+				),
+				'uuid'      => array(
+					'description' => __( 'Universal unique identifier for the review', 'limb-ai' ),
+					'type'        => 'string',
+					'format'      => 'uuid',
+					'context'     => array( 'view' ),
+				),
+				'flow_uuid' => array(
+					'description' => __( 'Universal unique identifier for the flow', 'limb-ai' ),
+					'type'        => 'string',
+					'format'      => 'uuid',
+					'required'    => true,
+					'context'     => array( 'view', 'create' ),
+					'arg_options' => array(
+						'validate_callback' => function ( $value, $request, $param ) {
+							return Flow::exists_by_uuid( $value );
+						},
+					)
+				),
+				'rating'    => array(
+					'description' => __( 'Review rating', 'limb-ai' ),
+					'type'        => 'integer',
+					'arg_options' => array(
+						'validate_callback' => function ( $value, $request, $param ) {
+							return is_numeric( $value ) && (int) $value >= 0 && (int) $value <= 5;
+						},
+					)
+				),
+				'like'      => array(
+					'description' => __( 'Review like', 'limb-ai' ),
+					'type'        => 'integer',
+					'enum'        => [ 0, 1 ]
+				)
+			),
+		);
 
-		return $params;
+		return $this->schema;
 	}
-	
+
+
 }

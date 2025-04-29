@@ -18,23 +18,25 @@ class Flows_Controller extends Rest_Controller {
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_item' ),
 				'permission_callback' => array( $this, 'get_item_permissions_check' ),
-				'args'                => array_merge( $this->get_collection_params(), array(
-					'uuid' => array(
+				'args'                => array(
+					'uuid'    => array(
 						'type'              => 'string',
 						'validate_callback' => function ( $value ) {
 							return ! empty( Flow::exists_by_uuid( $value ) );
 						}
+					),
+					'include' => array(
+						'description' => __( 'Include extra data with chatbot.', 'limb-ai' ),
+						'type'        => 'array'
 					)
-				) )
+				)
 			),
 		) );
 	}
 
 	public function get_item( $request ) {
 		try {
-			$flow = ( new Flow_Repository() )->get_item( $request->get_param( 'uuid' ), $request->get_query_params() );
-
-			return rest_ensure_response( $this->prepare_item( $flow, $request ) );
+			return rest_ensure_response( $this->prepare_item( ( new Flow_Repository() )->get_item( $request->get_param( 'uuid' ) ), $request ) );
 		} catch ( Exception $e ) {
 			Helper::log( $e, __METHOD__ );
 
@@ -60,33 +62,6 @@ class Flows_Controller extends Rest_Controller {
 
 		// Extra manipulations can be made here
 		return $item;
-	}
-
-	public function get_collection_params() {
-		return array_merge( parent::get_collection_params(), array(
-			'uuid'    => array(
-				'description' => __( 'Unique identifier of the Chatbot', 'limb-ai' ),
-				'type'        => 'array'
-			),
-			'include' => array(
-				'description' => __( 'Include extra data with chatbot.', 'limb-ai' ),
-				'type'        => 'array'
-			),
-			'orderby' => array(
-				'description' => __( 'Sort the collection by attribute.', 'limb-ai' ),
-				'type'        => 'string',
-				'default'     => 'date',
-				'enum'        => array( 'date', 'ID' )
-			)
-		) );
-	}
-
-	public function get_items_permissions_check( $request ) {
-		if ( $this->permission_callback( $request ) ) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public function get_item_permissions_check( $request ) {

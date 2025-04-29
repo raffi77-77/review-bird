@@ -12,8 +12,7 @@ class Flow extends WP_Post_Data_Object {
 	 */
 	public $id;
 	public ?string $uuid = null;
-	public array $metas = [];
-
+	// TODO maybe some extra attributes needed
 	protected array $meta_properties = [ 'metas' ];
 
 	/**
@@ -46,6 +45,10 @@ class Flow extends WP_Post_Data_Object {
 		$post = self::get_db_strategy()->find( $id, self::POST_TYPE );
 
 		return ! empty( $post ) ? self::make( $post ) : null;
+	}
+
+	public function metas(){
+		return Flow_Meta::where(['post_id' => $this->id, 'meta_key' => ['_uuid']])->get();
 	}
 
 }

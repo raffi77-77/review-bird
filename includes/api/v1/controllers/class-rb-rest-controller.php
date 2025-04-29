@@ -16,7 +16,7 @@ abstract class Rest_Controller extends \WP_REST_Controller {
 			return true;
 		} else {
 			// If not logged in, then nonce should be verified alongside with current user existence
-			if ( $this->nonce_is_verified( $request ) && User_Manager::instance()->get_current_user() ) {
+			if ( $this->nonce_is_verified( $request ) ) {
 				return true;
 			}
 		}
