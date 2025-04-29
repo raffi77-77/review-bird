@@ -2,6 +2,8 @@
 
 namespace Review_Bird\Includes;
 
+use Review_Bird\Includes\Api\Server;
+use Review_Bird\Includes\Blocks\Flow;
 use Review_Bird\Includes\Cpts\Custom_Post_Types;
 use Review_Bird\Includes\Admin\Admin;
 use Review_Bird\Includes\Frontend\Frontend;
@@ -35,11 +37,19 @@ final class Review_Bird {
 		
 		require_once $this->plugin_dir_path . 'includes/interfaces/class-rb-database-strategy-interface.php';
 		
+		require_once $this->plugin_dir_path . 'includes/repositories/class-rb-flow-repository.php';
+		require_once $this->plugin_dir_path . 'includes/repositories/class-rb-review-repository.php';
+		
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-collection.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-data-object-collection.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-helper.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-install.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-freemius.php';
+
+		require_once $this->plugin_dir_path . 'includes/api/class-rb-server.php';
+		require_once $this->plugin_dir_path . 'includes/api/v1/controllers/class-rb-rest-controller.php';
+		require_once $this->plugin_dir_path . 'includes/api/v1/controllers/class-rb-flows-controller.php';
+		require_once $this->plugin_dir_path . 'includes/api/v1/controllers/class-rb-reviews-controller.php';
 
 		require_once $this->plugin_dir_path . 'includes/database-strategies/class-rb-database-strategy.php';
 		require_once $this->plugin_dir_path . 'includes/database-strategies/class-rb-wp-meta-query.php';
@@ -51,6 +61,7 @@ final class Review_Bird {
 		require_once $this->plugin_dir_path . 'includes/cpts/flow/class-rb-custom-post-type.php';
 		
 		require_once $this->plugin_dir_path . 'includes/admin/class-rb-admin.php';
+		require_once $this->plugin_dir_path . 'includes/admin/class-rb-asset.php';
 		require_once $this->plugin_dir_path . 'includes/admin/class-rb-ajax.php';
 		require_once $this->plugin_dir_path . 'includes/admin/pages/setting/class-rb-page.php';
 		require_once $this->plugin_dir_path . 'includes/admin/pages/review/class-rb-page.php';
@@ -59,6 +70,9 @@ final class Review_Bird {
 		
 		require_once $this->plugin_dir_path . 'includes/exceptions/class-rb-exception.php';
 		require_once $this->plugin_dir_path . 'includes/exceptions/class-rb-error-codes.php';
+
+		require_once $this->plugin_dir_path . 'includes/blocks/class-rb-block.php';
+		require_once $this->plugin_dir_path . 'includes/blocks/class-rb-flow.php';
 		
 		require_once $this->plugin_dir_path . 'includes/frontend/class-rb-frontend.php';
 		
@@ -66,6 +80,7 @@ final class Review_Bird {
 		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-wp-meta-data-object.php';
 		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-wp-post-data-object.php';
 		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-wpdb-data-object.php';
+		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-flow.php';
 		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-flow-meta.php';
 		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-review.php';
 		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-setting.php';
@@ -79,6 +94,10 @@ final class Review_Bird {
 
 	public function register_cpts(): void {
 		Custom_Post_Types::register();
+	}
+
+	public function register_blocks(): void {
+		add_action( 'init', [ ( new Flow() ), 'register' ] );
 	}
 
 	private function define_admin_classes(): void {
@@ -107,7 +126,7 @@ final class Review_Bird {
 	}
 
 	private function api_init(): void {
-		// Server::get_instance()->init();
+		 Server::get_instance()->init();
 	}
 
 	public function get_debug(): bool {
@@ -120,6 +139,7 @@ final class Review_Bird {
 	public function run(): void {
 		$this->set_locale();
 		$this->register_cpts();
+		$this->register_blocks();
 		$this->init_activation_hooks();
 		$this->define_admin_classes();
 		$this->frontend();

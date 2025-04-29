@@ -9,10 +9,8 @@ class Frontend {
 	use SingletonTrait;
     
 	public function init() {
-		// add_shortcode( 'sr_rb_shortcode', array( $this, 'shortcode' ) );
-		if ( /**/ false ) {
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_chatbots_js' ) );
-		}
+		add_shortcode( 'sr_rb_shortcode', array( $this, 'shortcode' ) );
+		// add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_chatbots_js' ) );
 	}
 
 	public function openai_output_shortcode() {

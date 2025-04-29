@@ -30,13 +30,15 @@ class Page {
 		add_settings_section( 'new_flow', __( 'Defaults for Flows', 'review-bird' ), null, self::$menu_slug );
 		add_settings_field( 'flow_slug', __( 'Flow Slug:', 'review-bird' ), [ $this, 'render_flow_slug_field' ], self::$menu_slug, 'flow_slug' );
 		add_settings_field( 'define_question', __( 'Question:', 'review-bird' ), [ $this, 'render_question_field' ], self::$menu_slug, 'new_flow' );
-		add_settings_field( 'negative_review_response', 'Negative Review', function (){}, self::$menu_slug, 'new_flow' );
-        add_settings_field( 'negative_review_box_text', __( 'Box Text:', 'review-bird' ), [ $this, 'render_negative_review_box_field' ], self::$menu_slug, 'new_flow' );
+		add_settings_field( 'negative_review_response', 'Negative Review', function () {
+		}, self::$menu_slug, 'new_flow' );
+		add_settings_field( 'negative_review_box_text', __( 'Box Text:', 'review-bird' ), [ $this, 'render_negative_review_box_field' ], self::$menu_slug, 'new_flow' );
 		add_settings_field( 'negative_review_entry_success_message', __( 'Success Message:', 'review-bird' ), [ $this, 'render_review_entry_success_message' ], self::$menu_slug, 'new_flow' );
-		add_settings_field( 'negative_review_responses', 'Form Placeholders', function (){}, self::$menu_slug, 'new_flow' );
-        add_settings_field( 'negative_review_username_placeholder', __( 'Username field:', 'review-bird' ), [ $this, 'render_review_username_placeholder' ], self::$menu_slug, 'new_flow' );
-        add_settings_field( 'negative_review_text_placeholder', __( 'Review field:', 'review-bird' ), [ $this, 'render_review_text_placeholder' ], self::$menu_slug, 'new_flow' );
-        add_settings_field( 'negative_review_email_feedback_to', __( 'Notify To E-Mails', 'review-bird' ), [ $this, 'render_notify_to_emails' ], self::$menu_slug, 'new_flow' );
+		add_settings_field( 'negative_review_responses', 'Form Placeholders', function () {
+		}, self::$menu_slug, 'new_flow' );
+		add_settings_field( 'negative_review_username_placeholder', __( 'Username field:', 'review-bird' ), [ $this, 'render_review_username_placeholder' ], self::$menu_slug, 'new_flow' );
+		add_settings_field( 'negative_review_text_placeholder', __( 'Review field:', 'review-bird' ), [ $this, 'render_review_text_placeholder' ], self::$menu_slug, 'new_flow' );
+		add_settings_field( 'negative_review_email_feedback_to', __( 'Notify To E-Mails', 'review-bird' ), [ $this, 'render_notify_to_emails' ], self::$menu_slug, 'new_flow' );
 	}
 
 	public function render() {
@@ -62,43 +64,45 @@ class Page {
 
 	public function render_question_field() {
 		?>
-        <textarea name="<?= $this->option_name ?>[question]" value="<?php echo esc_attr( $this->settings['question'] ?? '' ); ?>" class="regular-text"><?=esc_html($this->settings['question'] ?? '')?></textarea>
-        <p><?=__('The shortcode {site-name} displays the site name as defined in WordPress under Settings → General.', 'review-bird')?></p>
+        <textarea name="<?= $this->option_name ?>[question]" value="<?php echo esc_attr( $this->settings['question'] ?? '' ); ?>" class="regular-text"><?= esc_html( $this->settings['question'] ?? '' ) ?></textarea>
+        <p><?= __( 'The shortcode {site-name} displays the site name as defined in WordPress under Settings → General.', 'review-bird' ) ?></p>
 		<?php
 	}
 
 	public function render_negative_review_box_field() {
 		?>
-        <textarea name="<?= $this->option_name ?>[review_box]" value="<?php echo esc_attr( $this->settings['review_box'] ?? '' ); ?>" class="regular-text"><?=esc_html($this->settings['review_box'] ?? '')?></textarea>
+        <textarea name="<?= $this->option_name ?>[review_box]" value="<?php echo esc_attr( $this->settings['review_box'] ?? '' ); ?>" class="regular-text"><?= esc_html( $this->settings['review_box'] ?? '' ) ?></textarea>
 		<?php
 	}
 
 	public function render_review_entry_success_message() {
 		?>
-        <textarea name="<?= $this->option_name ?>[entry_success_message]" value="<?php echo esc_attr( $this->settings['entry_success_message'] ?? '' ); ?>" class="regular-text"><?=esc_html($this->settings['entry_success_message'] ?? '')?></textarea>
+        <textarea name="<?= $this->option_name ?>[entry_success_message]" value="<?php echo esc_attr( $this->settings['entry_success_message'] ?? '' ); ?>"
+                  class="regular-text"><?= esc_html( $this->settings['entry_success_message'] ?? '' ) ?></textarea>
 		<?php
 	}
-    
-    public function render_review_username_placeholder() {
-	    ?>
+
+	public function render_review_username_placeholder() {
+		?>
         <input type="text" name="<?= $this->option_name ?>[review_username_placeholder]" value="<?php echo esc_attr( $this->settings['review_username_placeholder'] ?? '' ); ?>" class="regular-text">
-        <p><?=__('This is a text for the name', 'review-bird')?></p>
-	    <?php
-    }
-    public function render_review_text_placeholder() {
-	    ?>
+        <p><?= __( 'This is a text for the name', 'review-bird' ) ?></p>
+		<?php
+	}
+
+	public function render_review_text_placeholder() {
+		?>
         <input type="text" name="<?= $this->option_name ?>[review_text_placeholder]" value="<?php echo esc_attr( $this->settings['review_text_placeholder'] ?? '' ); ?>" class="regular-text">
-        <p><?=__('This is a text for the review field', 'review-bird')?></p>
-	    <?php
-    }
+        <p><?= __( 'This is a text for the review field', 'review-bird' ) ?></p>
+		<?php
+	}
 
 	public function render_notify_to_emails() {
 		?>
         <input type="text" name="<?= $this->option_name ?>[review_notify_to_emails]" value="<?php echo esc_attr( $this->settings['review_notify_to_emails'] ?? '' ); ?>" class="regular-text">
-        <p><?=__('Email address(es) to receive negative feedback. You can enter multiple addresses, separated by commas.', 'review-bird')?></p>
+        <p><?= __( 'Email address(es) to receive negative feedback. You can enter multiple addresses, separated by commas.', 'review-bird' ) ?></p>
 		<?php
 	}
-    
+
 	public function sanitize_settings( $options ) {
 		if ( ! is_array( $options ) ) {
 			$options = [];

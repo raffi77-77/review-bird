@@ -2,9 +2,6 @@
 
 namespace Review_Bird\Includes\Admin\Pages\Feedback;
 
-use Review_Bird\Includes\Admin\Pages\Review\Table;
-use Review_Bird\Includes\Review_Bird;
-
 class Page {
 
 	static $menu_slug = 'sr-rb-feedback';

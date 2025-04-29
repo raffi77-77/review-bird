@@ -1,0 +1,25 @@
+{
+  "apiVersion": 3,
+  "name": "review-bird/chatbot",
+  "version": "0.1.0",
+  "title": "Review Flow",
+  "category": "widgets",
+  "icon": "format-chat",
+  "description": "Block showing Review Box",
+  "attributes": {
+    "id": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "render": "file:./render.php",
+  "textdomain": "review-bird",
+  "keywords": [
+    "review",
+    "flow",
+    "bird"
+  ],
+  "supports": {
+    "html": false
+  }
+}
