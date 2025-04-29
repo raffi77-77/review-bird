@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "scripts": {
     "watch:flow": "wp-scripts start --webpack-src-dir=blocks/flow/src --output-path=blocks/flow/build",
-    "build:flow": "wp-scripts build --webpack-src-dir=blocks/flow/src --output-path=blocks/flow/build"
+    "build:flow": "wp-scripts build --webpack-src-dir=blocks/flow/src --output-path=blocks/flow/build",
+    "watch:scss": "sass --watch assets/scss/:dist/css/ --style compressed",
+    "build:scss": "sass --no-source-map assets/scss/:dist/css/ --style compressed"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^30.15.0"
+    "@wordpress/scripts": "^30.15.0",
+    "sass": "^1.87.0"
   },
   "dependencies": {
     "@wordpress/element": "^6.22.0"
