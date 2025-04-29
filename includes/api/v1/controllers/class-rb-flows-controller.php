@@ -18,13 +18,14 @@ class Flows_Controller extends Rest_Controller {
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_item' ),
 				'permission_callback' => array( $this, 'get_item_permissions_check' ),
-				'args'                => array_merge( array(
+				'args'                => array_merge( $this->get_collection_params(), array(
 					'uuid' => array(
+						'type'              => 'string',
 						'validate_callback' => function ( $value ) {
 							return ! empty( Flow::exists_by_uuid( $value ) );
 						}
 					)
-				), $this->get_collection_params() )
+				) )
 			),
 		) );
 	}
@@ -45,7 +46,6 @@ class Flows_Controller extends Rest_Controller {
 		if ( is_a( $item, \WP_Error::class ) ) {
 			return $item;
 		}
-		
 		if ( ! is_a( $item, Flow::class ) ) {
 			throw new Exception( __( 'Unknown item type.', 'limb-ai' ) );
 		}

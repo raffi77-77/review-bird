@@ -12,6 +12,7 @@ class Flow extends WP_Post_Data_Object {
 	 */
 	public $id;
 	public ?string $uuid = null;
+	public array $metas = [];
 
 	protected array $meta_properties = [ 'metas' ];
 
