@@ -1,0 +1,179 @@
+.rw-flow {
+  &-button {
+
+    &, &:not(:hover):not(:active):not(.has-background) {
+      width: var(--rw-flow-button-width);
+      height: var(--rw-flow-button-height);
+      display: block;
+      padding: var(--rw-flow-button-pb) var(--rw-flow-button-pi);
+      background-color: var(--rw-flow-button-local-bg);
+      color: var(--rw-flow-button-local-color);
+      border: 1px solid var(--rw-flow-button-border);
+      border-radius: var(--rw-flow-border-r);
+    }
+
+    &-feedback {
+      --rw-flow-button-width: 70px;
+      --rw-flow-button-height: 70px;
+      --rw-flow-button-pb: 10px;
+      --rw-flow-button-pi: 10px;
+      --rw-flow-button-nested-p: 10px;
+      --rw-flow-button-local-bg: transparent;
+      --rw-flow-button-in-local-bg: var(--rw-flow-default-color);
+      --rw-flow-button-border: var(--rw-flow-border-color);
+      --rw-flow-border-r: 50%;
+      @include min-width($rw-flow-wp-breakpoint) {
+        --rw-flow-button-width: 155px;
+        --rw-flow-button-height: 155px;
+        --rw-flow-button-pb: 16px;
+        --rw-flow-button-pi: 16px;
+        --rw-flow-button-nested-p: 30px;
+      }
+
+      &-in {
+        width: 100%;
+        height: 100%;
+        display: block;
+        margin: auto;
+        padding: var(--rw-flow-button-nested-p);
+        background-color: var(--rw-flow-button-in-local-bg);
+        transition: background-color 0.3s ease-in-out;
+        border-radius: inherit;
+      }
+
+      &-i {
+        width: 100%;
+        fill: var(--rw-flow-white);
+      }
+
+      &-good {
+        &:hover {
+          --rw-flow-button-in-local-bg: var(--rw-flow-success-color);
+        }
+
+        &.active {
+          --rw-flow-button-in-local-bg: var(--rw-flow-success-color);
+        }
+      }
+
+      &-bad {
+        margin-inline-start: 30px;
+
+        &:hover {
+          --rw-flow-button-in-local-bg: var(--rw-flow-error-color);
+        }
+
+        &.active {
+          --rw-flow-button-in-local-bg: var(--rw-flow-error-color);
+        }
+      }
+    }
+
+    &-platform {
+      --rw-flow-button-width: 145px;
+      --rw-flow-button-height: 73px;
+      --rw-flow-border-r: 16px;
+
+      position: relative;
+      min-width: var(--rw-flow-button-width);
+
+      &:not(:first-child) {
+        margin-inline-start: 12px;
+      }
+
+      &:not(:first-child):not(:last-child) {
+        margin-inline-start: 12px;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: var(--rw-flow-border-r);
+        box-shadow: 0 0 8.22px rgba(8, 35, 60, 0.1);
+      }
+
+      &.app-store {
+        .rw-flow-button-platform-i {
+          width: 32px;
+          height: 32px;
+        }
+      }
+
+      &-i {
+        width: 100%;
+        height: 100%;
+        display: block;
+        margin: auto;
+      }
+    }
+
+    &-close {
+      &, &:not(:hover):not(:active):not(.has-background) {
+        position: absolute;
+        right: 20px;
+        top: 30px;
+      }
+
+      &-i {
+        width: 100%;
+        height: 100%;
+        display: block;
+        margin: auto;
+      }
+    }
+
+    &-155 {
+      width: 155px;
+      height: 155px;
+    }
+
+    &-30 {
+      width: 30px;
+      height: 30px;
+    }
+
+    &-minimal {
+      --rw-flow-button-pb: 10px;
+      --rw-flow-button-pi: 20px;
+      --rw-flow-border-r: 3px;
+
+      .rw-flow-button-desc {
+        display: block;
+        color: var(--rw-flow-button-local-color);
+        font-size: var(--rw-flow-fs-16);
+        font-weight: var(--rw-flow-fw-600);
+        line-height: 100%;
+      }
+    }
+
+    &-primary {
+      --rw-flow-button-local-bg: var(--rw-flow-primary-button-bg);
+      --rw-flow-button-local-color: var(--rw-flow-secondary-color);
+      transition: background-color 0.3s ease-in-out;
+      margin-inline-start: 0;
+
+      &:not(:first-child), &:not(:last-child) {
+        margin-inline-start: 20px;
+      }
+
+      &:hover {
+        --rw-flow-button-local-bg: rgba(var(--rw-flow-primary-rgb-color), 0.7)
+      }
+    }
+
+    &-secondary {
+      --rw-flow-button-local-bg: var(--rw-flow-secondary-button-bg);
+      --rw-flow-button-local-color: var(--rw-flow-primary-color);
+      --rw-flow-button-border: var(--rw-flow-border-color);
+      transition: background-color 0.3s ease-in-out;
+
+      &:hover {
+        --rw-flow-button-local-bg: rgba(var(--rw-flow-rgb-black), 0.1)
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
-.review-bird-flow {
-  p {
-    color: red;
-  }
+#review-bird {
+  @import "helpers/index";
+  @import "base/index";
+  @import "components/index";
+  @import "layout/index";
 }

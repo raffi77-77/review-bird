@@ -20,7 +20,7 @@ class Page {
 	public function add_submenu_page() {
 		$settings = add_submenu_page( 'review-bird', __( 'Settings', 'review-bird' ), __( 'Settings', 'review-bird' ), 'manage_options', self::$menu_slug, array( $this, 'render' ), 1 );
 		// add_action( 'admin_print_scripts-' . $settings, array( $this, 'register_settings_scripts' ) );
-		// add_action( 'admin_print_styles-' . $settings, array( $this, 'register_settings_styles' ) );
+		 add_action( 'admin_print_styles-' . $settings, array( $this, 'register_settings_styles' ) );
 	}
 
 	public function register_settings() {
@@ -146,7 +146,7 @@ class Page {
 	public function register_settings_styles(): void {
 		$rb = Review_Bird();
 		if ( ! wp_style_is( $rb->get_plugin_name() . '-page-settings-style', 'registered' ) ) {
-			wp_register_style( $rb->get_plugin_name() . '-page-settings-style', $rb->get_plugin_dir_url() . 'dist/css/admin/page/settings.css', array(), $rb->get_version() );
+			wp_register_style( $rb->get_plugin_name() . '-page-settings-style', $rb->get_plugin_dir_url() . 'dist/css/admin/pages/settings.css', array(), $rb->get_version() );
 		}
 		wp_enqueue_style( $rb->get_plugin_name() . '-page-settings-style' );
 		if ( file_exists( $rb->get_plugin_dir_path() . 'dist/js/admin/something-to-change-page-settings.css' ) ) {

@@ -1,0 +1,11 @@
+.rw-flow {
+  &-textarea {
+    width: 100%;
+    padding: 16px 15px;
+    border: 1px solid var(--rw-flow-input-border-color);
+    border-radius: 5px;
+    resize: none;
+    font-size: var(--rw-flow-fs-16);
+    line-height: var(--rw-flow-lh-20);
+  }
+}

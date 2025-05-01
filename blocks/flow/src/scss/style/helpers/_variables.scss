@@ -1,0 +1,60 @@
+& {
+  --rw-flow-black: #000;
+  --rw-flow-rgb-black: 0, 0, 0;
+  --rw-flow-white: #fff;
+  --rw-flow-default-color: #9EC0D8;
+  --rw-flow-success-color: #49B329;
+  --rw-flow-error-color: #E62323;
+
+  --rw-flow-primary-color: #1973E8;
+  --rw-flow-primary-rgb-color: 25, 115, 232;
+  --rw-flow-secondary-color: var(--rw-flow-white);
+  --rw-flow-secondary-rgb-color: 255, 255, 255;
+  --rw-flow-tertiary-color: #F9BC07;
+
+  //  button colors
+  --rw-flow-primary-button-bg: var(--rw-flow-primary-color);
+  --rw-flow-secondary-button-bg: var(--rw-flow-secondary-color);
+
+  //  icon colors
+  --rw-flow-star-active-fill: #F9BC07;
+  --rw-flow-stars-stroke: #828282;
+
+  //  text colors
+  --rw-flow-text-primary-color: #333333;
+  --rw-flow-text-secondary-color: #005086;
+
+  //  border color
+  --rw-flow-border-color: rgba(158, 192, 216, 50%);
+  --rw-flow-input-border-color: #BDBDBD;
+
+  //font-size
+  --rw-flow-fs-10: 10px;
+  --rw-flow-fs-12: 12px;
+  --rw-flow-fs-14: 14px;
+  --rw-flow-fs-16: 16px;
+  --rw-flow-fs-18: 18px;
+  --rw-flow-fs-20: 20px;
+  --rw-flow-fs-22: 22px;
+  --rw-flow-fs-24: 24px;
+
+  //  font-weight
+  --rw-flow-fw-400: 400;
+  --rw-flow-fw-500: 500;
+  --rw-flow-fw-600: 600;
+  --rw-flow-fw-700: 700;
+
+  //  line-height
+  --rw-flow-lh-18: 18px;
+  --rw-flow-lh-20: 20px;
+  --rw-flow-lh-22: 22px;
+  --rw-flow-lh-24: 24px;
+  --rw-flow-lh-26: 26px;
+  --rw-flow-lh-28: 28px;
+  --rw-flow-lh-30: 30px;
+  --rw-flow-lh-32: 32px;
+}
+
+$rw-flow-wp-breakpoint: 782px;
+$rw-flow-wp-md-breakpoint: 960px;
+$rw-flow-wp-lg-breakpoint: 1200px;

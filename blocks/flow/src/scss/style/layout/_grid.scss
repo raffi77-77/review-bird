@@ -1,0 +1,86 @@
+.rw-flow {
+
+  &-container {
+    display: flex;
+    height: 100vh;
+  }
+
+  &-row {
+    width: 100%;
+    height: max-content;
+    margin: auto;
+    background-color: var(--rw-flow-white);
+    border: 1px solid var(--rw-flow-border-color);
+  }
+
+  &-title {
+    padding-block-end: 0;
+
+    &:not(:last-child) {
+      padding-block-end: 50px;
+    }
+
+    &-in {
+      font-size: var(--rw-flow-fs-24);
+      font-weight: var(--rw-flow-fw-600);
+      line-height: var(--rw-flow-lh-32);
+      text-align: center;
+    }
+  }
+
+  &-public-review {
+    &-desc {
+      font-size: var(--rw-flow-fs-20);
+      font-weight: var(--rw-flow-fw-500);
+      line-height: var(--rw-flow-lh-28);
+      text-align: center;
+      color: var(--rw-flow-primary-color);
+    }
+  }
+
+  &-desc {
+    padding-block-end: 0;
+
+    &:not(:last-child) {
+      padding-block-end: 40px;
+    }
+
+    &-in {
+      font-size: var(--rw-flow-fs-20);
+      font-weight: var(--rw-flow-fw-500);
+      line-height: var(--rw-flow-lh-32);
+      text-align: center;
+    }
+  }
+
+  &-label {
+    padding-block-end: 0;
+
+    &:not(:last-child) {
+      padding-block-end: 40px;
+    }
+  }
+
+
+  &-platform-slide {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 10px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &-in {
+      width: max-content;
+    }
+  }
+
+  &-logo {
+    margin-inline: 10px auto;
+    @include min-width($rw-flow-wp-lg-breakpoint) {
+
+      margin: auto;
+    }
+  }
+}
