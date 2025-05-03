@@ -15,8 +15,9 @@ class Custom_Post_Type {
 	public function __construct() {
 		add_filter( 'template_include', array( $this, 'rewrite_template' ) );
 		add_action( 'save_post_' . self::NAME, array( $this, 'save_post' ), 10, 3 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_settings_styles' ) );
 	}
-	
+
 	public function save_post($post_id, $post, $update) {
 		Flow_Meta::create([ 'post_id' => $post_id, 'meta_key' => '_uuid', 'meta_value' => Helper::get_uuid() ]);
 	}
@@ -89,25 +90,46 @@ class Custom_Post_Type {
 
 	public function title_question_meta_box() {
 		add_meta_box( 'title-question', __( 'Title Question', 'review-bird' ), function () {
-			echo 'Title question !';
+			ob_start();
+			include Review_Bird()->get_plugin_dir_path() . 'templates/admin/posts/meta-boxes/title-questions.php';
+			echo ob_get_clean();
 		}, self::NAME, 'normal', 'high' );
 	}
 
 	public function positive_review_response_meta_box() {
 		add_meta_box( 'positive-review-response', __( 'Positive Review Response', 'review-bird' ), function () {
-			echo 'Positive Review Response !';
+			ob_start();
+			include Review_Bird()->get_plugin_dir_path() . 'templates/admin/posts/meta-boxes/positive-review.php';
+			echo ob_get_clean();
 		}, self::NAME, 'normal', 'high' );
 	}
 
 	public function negative_review_response_meta_box() {
 		add_meta_box( 'negative-review-response', __( 'Negative Review Response', 'review-bird' ), function () {
-			echo 'Negative Review Response !';
+			ob_start();
+			include Review_Bird()->get_plugin_dir_path() . 'templates/admin/posts/meta-boxes/negative-review.php';
+			echo ob_get_clean();
 		}, self::NAME, 'normal', 'high' );
 	}
 
 	public function email_settings_meta_box() {
 		add_meta_box( 'email-settings', __( 'E-Mail sent on negative response', 'review-bird' ), function () {
-			echo 'E-Mail sent on negative response !';
+			ob_start();
+			include Review_Bird()->get_plugin_dir_path() . 'templates/admin/posts/meta-boxes/admin-email.php';
+			echo ob_get_clean();
 		}, self::NAME, 'normal', 'high' );
+	}
+
+	public function register_settings_styles() {
+		// Get the current screen
+		$screen = get_current_screen();
+
+		if ($screen->post_type === self::NAME) {
+			$rb = Review_Bird();
+			if ( ! wp_style_is( $rb->get_plugin_name() . '-post-' . self::NAME . '-style', 'registered' ) ) {
+				wp_register_style( $rb->get_plugin_name() . '-post-' . self::NAME . '-style', $rb->get_plugin_dir_url() . 'dist/css/admin/posts/flow.css', array(), $rb->get_version() );
+			}
+			wp_enqueue_style( $rb->get_plugin_name() . '-post-' . self::NAME . '-style' );
+		}
 	}
 }

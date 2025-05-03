@@ -1,15 +1,15 @@
 import {useState} from "@wordpress/element";
 import Utilities from "../utilities/index"
 import logo from "../../../../resources/logo/logo.svg"
-
+import generalLogo from "../../../../resources/logo/general-logo.svg"
 export default function Flow({id, data}) {
     const [step, setStep] = useState(1);
 
-    return <div id="review-bird">
+    return <div id="review-bird" className="theme orange">
         <Utilities/>
-        {step === 1 && <div className="rw-flow-container">
+        {step === 1 && <div className='rw-flow-container'>
 
-            <div className='rw-flow-row rw-flow-feedback-row none'>
+            <div className='rw-flow-feedback-row'>
                 <div className="rw-flow-feedback-header">
                     <div className="rw-flow-logo">
                         <img src={logo}/>
@@ -124,7 +124,7 @@ export default function Flow({id, data}) {
                 </div>
             </div>
 
-            <div className='rw-flow-row rw-flow-feedback-row rw-flow-feedback-public-review-row'>
+            <div className='rw-flow-row rw-flow-feedback-row rw-flow-feedback-public-review-row none'>
                 <div className="rw-flow-feedback-header">
                     <div className="rw-flow-logo">
                         <img src={logo}/>
@@ -208,7 +208,7 @@ export default function Flow({id, data}) {
                 </div>
             </div>
 
-            <div className='rw-flow-row rw-flow-feedback-row none'>
+            <div className='rw-flow-feedback-row none'>
                 <div className="rw-flow-feedback-header">
                     <div className="rw-flow-logo">
                         <img src={logo}/>
@@ -240,6 +240,7 @@ export default function Flow({id, data}) {
                     </div>
                 </div>
             </div>
+            <div><img src={generalLogo} alt="Logo"/></div>
         </div>
         }
         {step === 2 &&

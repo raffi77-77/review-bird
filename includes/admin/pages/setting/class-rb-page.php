@@ -58,47 +58,47 @@ class Page {
 
 	public function render_flow_slug_field() {
 		?>
-        <input type="text" name="<?= $this->option_name ?>[flow_slug]" value="<?php echo esc_attr( $this->settings['flow_slug'] ?? '' ); ?>" class="regular-text">
+        <input type="text" placeholder="Revuew" name="<?= $this->option_name ?>[flow_slug]" value="<?php echo esc_attr( $this->settings['flow_slug'] ?? '' ); ?>" class="regular-text rw-settings-input">
 		<?php
 	}
 
 	public function render_question_field() {
 		?>
-        <textarea name="<?= $this->option_name ?>[question]" value="<?php echo esc_attr( $this->settings['question'] ?? '' ); ?>" class="regular-text"><?= esc_html( $this->settings['question'] ?? '' ) ?></textarea>
+        <textarea name="<?= $this->option_name ?>[question]" value="<?php echo esc_attr( $this->settings['question'] ?? '' ); ?>" class="regular-text rw-settings-textarea"><?= esc_html( $this->settings['question'] ?? '' ) ?></textarea>
         <p><?= __( 'The shortcode {site-name} displays the site name as defined in WordPress under Settings → General.', 'review-bird' ) ?></p>
 		<?php
 	}
 
 	public function render_negative_review_box_field() {
 		?>
-        <textarea name="<?= $this->option_name ?>[review_box]" value="<?php echo esc_attr( $this->settings['review_box'] ?? '' ); ?>" class="regular-text"><?= esc_html( $this->settings['review_box'] ?? '' ) ?></textarea>
+        <textarea name="<?= $this->option_name ?>[review_box]" value="<?php echo esc_attr( $this->settings['review_box'] ?? '' ); ?>" class="regular-text rw-settings-textarea"><?= esc_html( $this->settings['review_box'] ?? '' ) ?></textarea>
 		<?php
 	}
 
 	public function render_review_entry_success_message() {
 		?>
         <textarea name="<?= $this->option_name ?>[entry_success_message]" value="<?php echo esc_attr( $this->settings['entry_success_message'] ?? '' ); ?>"
-                  class="regular-text"><?= esc_html( $this->settings['entry_success_message'] ?? '' ) ?></textarea>
+                  class="regular-text rw-settings-textarea"><?= esc_html( $this->settings['entry_success_message'] ?? '' ) ?></textarea>
 		<?php
 	}
 
 	public function render_review_username_placeholder() {
 		?>
-        <input type="text" name="<?= $this->option_name ?>[review_username_placeholder]" value="<?php echo esc_attr( $this->settings['review_username_placeholder'] ?? '' ); ?>" class="regular-text">
+        <input type="text" name="<?= $this->option_name ?>[review_username_placeholder]" value="<?php echo esc_attr( $this->settings['review_username_placeholder'] ?? '' ); ?>" class="regular-text rw-settings-input">
         <p><?= __( 'This is a text for the name', 'review-bird' ) ?></p>
 		<?php
 	}
 
 	public function render_review_text_placeholder() {
 		?>
-        <input type="text" name="<?= $this->option_name ?>[review_text_placeholder]" value="<?php echo esc_attr( $this->settings['review_text_placeholder'] ?? '' ); ?>" class="regular-text">
+        <input type="text" name="<?= $this->option_name ?>[review_text_placeholder]" value="<?php echo esc_attr( $this->settings['review_text_placeholder'] ?? '' ); ?>" class="regular-text rw-settings-input">
         <p><?= __( 'This is a text for the review field', 'review-bird' ) ?></p>
 		<?php
 	}
 
 	public function render_notify_to_emails() {
 		?>
-        <input type="text" name="<?= $this->option_name ?>[review_notify_to_emails]" value="<?php echo esc_attr( $this->settings['review_notify_to_emails'] ?? '' ); ?>" class="regular-text">
+        <input type="text" name="<?= $this->option_name ?>[review_notify_to_emails]" value="<?php echo esc_attr( $this->settings['review_notify_to_emails'] ?? '' ); ?>" class="regular-text rw-settings-input">
         <p><?= __( 'Email address(es) to receive negative feedback. You can enter multiple addresses, separated by commas.', 'review-bird' ) ?></p>
 		<?php
 	}

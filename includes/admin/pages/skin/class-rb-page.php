@@ -13,8 +13,7 @@ class Page {
 	}
 
 	public function render() {
-		// include Review_Bird()->get_plugin_dir_path() . 'templates/.../index.php';
-		echo 'Skin!';
+		include Review_Bird()->get_plugin_dir_path() . 'templates/admin/pages/skin.php';
 	}
 
 	public function register_settings_styles(): void {

@@ -1,0 +1,91 @@
+& {
+  --rw-admin-black: #000;
+  --rw-admin-white: #fff;
+  --rw-admin-main-color: var(--rw-admin-black);
+  --rw-flow-rgb-black: 0, 0, 0;
+  --rw-flow-white: #fff;
+  --rw-flow-default-color: 25, 115, 232;
+  --rw-flow-success-color: #49B329;
+  --rw-flow-error-color: #E62323;
+
+  --rw-flow-primary-color: #1973E8;
+  --rw-flow-primary-rgb-color: 25, 115, 232;
+  --rw-flow-secondary-color: var(--rw-flow-white);
+  --rw-flow-secondary-rgb-color: 255, 255, 255;
+  --rw-flow-tertiary-color: #F9BC07;
+
+  //button colors
+  --rw-admin-button-primary-color: #1a73e8;
+
+  //  border color
+  --rw-flow-border-color: #E0EEF3;
+  --rw-flow-input-border-color: #BDBDBD;
+
+
+  // blue theme
+  --rw-flow-blue-theme-box-bg:#FFFFFF;
+  --rw-flow-blue-theme-box-border-bg:#E0EEF3;
+  --rw-flow-blue-theme-box-button-bg:#1A73E8;
+  --rw-flow-blue-theme-box-color:#222222;
+
+  // green theme
+  --rw-flow-green-theme-box-bg:#FFFFFF;
+  --rw-flow-green-theme-box-border-bg:#D8EAD3;
+  --rw-flow-green-theme-box-button-bg:#4CAF50;
+  --rw-flow-green-theme-box-color:#2B2B2B;
+
+  //braun theme
+  --rw-flow-braun-theme-box-bg:#FFFFFF;
+  --rw-flow-braun-theme-box-border-bg:#D9CBB8;
+  --rw-flow-braun-theme-box-button-bg:#A9744F;
+  --rw-flow-braun-theme-box-color:#3E2F1C;
+
+  //orange theme
+  --rw-flow-orange-theme-box-bg:#FFFFFF;
+  --rw-flow-orange-theme-box-border-bg:#FFD4B8;
+  --rw-flow-orange-theme-box-button-bg:#FF7A29;
+  --rw-flow-orange-theme-box-color:#2A2A2A;
+
+  //lilia theme
+  --rw-flow-lilia-theme-box-bg:#FFFFFF;
+  --rw-flow-lilia-theme-box-border-bg:#DAD1E8;
+  --rw-flow-lilia-theme-box-button-bg:#7E57C2;
+  --rw-flow-lilia-theme-box-color:#1D1B33;
+
+  //rot theme
+  --rw-flow-rot-theme-box-bg:#FFFFFF;
+  --rw-flow-rot-theme-box-border-bg:#F5C2C7;
+  --rw-flow-rot-theme-box-button-bg:#D93025;
+  --rw-flow-rot-theme-box-color:#2B2B2B;
+
+
+  //font size
+  --rw-admin-fs-10: 10px;
+  --rw-admin-fs-12: 12px;
+  --rw-admin-fs-14: 14px;
+  --rw-admin-fs-16: 16px;
+  --rw-admin-fs-18: 18px;
+  --rw-admin-fs-20: 20px;
+  --rw-admin-fs-22: 22px;
+  --rw-admin-fs-24: 24px;
+
+  //  font-weight
+  --rw-admin-fw-400: 400;
+  --rw-admin-fw-500: 500;
+  --rw-admin-fw-600: 600;
+  --rw-admin-fw-700: 700;
+
+  //  line-height
+  --rw-admin-lh-18: 18px;
+  --rw-admin-lh-20: 20px;
+  --rw-admin-lh-22: 22px;
+  --rw-admin-lh-24: 24px;
+  --rw-admin-lh-26: 26px;
+  --rw-admin-lh-28: 28px;
+  --rw-admin-lh-30: 30px;
+  --rw-admin-lh-32: 32px;
+}
+
+$rw-admin-wp-breakpoint: 782px;
+$rw-admin-wp-md-breakpoint: 960px;
+$rw-admin-wp-lg-breakpoint: 1200px;
