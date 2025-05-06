@@ -84,6 +84,7 @@
     padding-inline: 40px;
 
     &-in {
+      width: 100%;
       max-width: 1000px;
     }
 
@@ -141,8 +142,9 @@
   }
 
   &-image {
-    max-width: 400px;
+    width: 100%;
     height: auto;
+    max-width: 400px;
     @include max-width($rw-admin-wp-lg-breakpoint) {
       max-width: 100%;
     }
@@ -224,11 +226,6 @@
     &-in {
       font-size: var(--rw-admin-fs-14);
       white-space: nowrap;
-
-      &:not(:last-child) {
-        margin-block-end: 10px;
-      }
-
     }
 
     &.active {
