@@ -1,6 +1,24 @@
+.rw-skin-button {
+  margin-block-start: var(--rw-button-mbs);
+  padding-block: var(--rw-admin-button-pb);
+  padding-inline: var(--rw-admin-button-pi);
+  background-color: var(--rw-admin-button-bg);
+  color: var(--rw-admin-button-color);
+  border: 1px solid var(--rw-admin-button-border-color);
+  cursor: pointer;
+
+  &-primary {
+    --rw-button-mbs: 40px;
+    --rw-admin-button-pb: 10px;
+    --rw-admin-button-pi: 40px;
+    --rw-admin-button-bg: var(--rw-admin-button-primary-color);
+    --rw-admin-button-color: var(--rw-admin-white);
+    --rw-admin-button-border-color: var(--rw-admin-black);
+  }
+}
+
 .rw-flow {
   &-button {
-
     &, &:not(:hover):not(:active):not(.has-background) {
       width: var(--rw-flow-button-width);
       height: var(--rw-flow-button-height);
@@ -8,7 +26,7 @@
       padding: var(--rw-flow-button-pb) var(--rw-flow-button-pi);
       background-color: var(--rw-flow-button-local-bg);
       color: var(--rw-flow-button-local-color);
-      border: 1px solid var(--rw-flow-button-border);
+      border: 1px solid var(--rw-feedback-local-border-color);
       border-radius: var(--rw-flow-border-r);
       cursor: pointer;
     }
@@ -20,15 +38,15 @@
       --rw-flow-button-pi: 10px;
       --rw-flow-button-nested-p: 10px;
       --rw-flow-button-local-bg: transparent;
-      --rw-flow-button-in-local-bg: var(--rw-flow-theme-local-box-button-bg);
-      --rw-flow-button-border: var(--rw-flow-theme-local-box-border-bg);
+      --rw-flow-button-in-local-bg: var(--rw-feedback-local-button-color);
+      --rw-flow-button-border: var(--rw-flow-border-color);
       --rw-flow-border-r: 50%;
-      @include min-width($rw-flow-wp-breakpoint) {
-        --rw-flow-button-width: 155px;
-        --rw-flow-button-height: 155px;
-        --rw-flow-button-pb: 16px;
-        --rw-flow-button-pi: 16px;
-        --rw-flow-button-nested-p: 30px;
+      @include min-width($rw-admin-wp-breakpoint) {
+        --rw-flow-button-width: 70px;
+        --rw-flow-button-height: 70px;
+        --rw-flow-button-pb: 8px;
+        --rw-flow-button-pi: 8px;
+        --rw-flow-button-nested-p: 15px;
       }
 
       &-in {
@@ -44,6 +62,7 @@
 
       &-i {
         width: 100%;
+        height: auto;
         fill: var(--rw-flow-white);
       }
 
@@ -177,5 +196,13 @@
         --rw-flow-button-local-bg: rgba(var(--rw-flow-rgb-black), 0.1)
       }
     }
+  }
+}
+
+.rw-button {
+  &-admin {
+    padding: 15px 35px;
+    border: 1px solid var(--rw-admin-black);
+    cursor: pointer;
   }
 }

@@ -3,9 +3,8 @@
     &-row {
       max-width: 600px;
       margin-inline: auto;
-      background-color: var(--rw-flow-theme-local-box-bg);
-      border:1px solid var(--rw-flow-theme-local-box-border-bg);
-
+      background-color: var(--rw-feedback-local-bg);
+      border: 1px solid var(--rw-feedback-local-border-color);
       &.none {
         display: none;
       }
@@ -13,7 +12,7 @@
 
     &-public-review {
       &-row {
-        @include min-width($rw-flow-wp-lg-breakpoint) {
+        @include min-width($rw-admin-wp-lg-breakpoint) {
           max-width: 800px;
         }
       }
@@ -23,7 +22,7 @@
       position: relative;
       display: flex;
       padding-block: 30px 37px;
-      border-bottom: 1px solid var(--rw-flow-theme-local-box-border-bg);
+      border-bottom: 1px solid var(--rw-feedback-local-border-color);
     }
 
     &-body {
@@ -31,7 +30,7 @@
       margin-inline: auto;
       padding-inline: 30px;
 
-      @include min-width($rw-flow-wp-lg-breakpoint) {
+      @include min-width($rw-admin-wp-lg-breakpoint) {
         padding-inline: 50px;
       }
     }

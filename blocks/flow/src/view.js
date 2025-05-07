@@ -21,20 +21,20 @@
  */
 
 import {createRoot} from '@wordpress/element';
-import Flow from "./components/flow";
+import Flow from "./components/flow/flow";
 
 window.addEventListener('DOMContentLoaded', () => {
     const flows = document.querySelectorAll('.review-bird-flow');
     if (flows) {
         flows.forEach(flowEl => {
             const flowID = flowEl.getAttribute('data-flow_id'),
-                flowData = JSON.parse(flowEl.getAttribute('data-flow_data'));
+                flowAttributes = JSON.parse(flowEl.getAttribute('data-flow_attributes'));
             // Remove attributes
             flowEl.removeAttribute('data-flow_id');
-            flowEl.removeAttribute('data-flow_data');
+            flowEl.removeAttribute('data-flow_attributes');
             // Render chatbot
             const root = createRoot(flowEl);
-            root.render(<Flow id={flowID} data={flowData}/>);
+            root.render(<Flow id={flowID} attributes={flowAttributes}/>);
         });
     }
 });

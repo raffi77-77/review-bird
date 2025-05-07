@@ -1,0 +1,38 @@
+.rw-admin-table {
+  width: 100%;
+
+  &-title {
+    font-size: var(--rw-admin-fs-14);
+    padding-block-start: 34px;
+  }
+
+  &-head {
+    &-item {
+      padding-block: 10px;
+    }
+
+    &-desc {
+      font-size: var(--rw-admin-fs-12);
+      font-weight: var(--rw-admin-fw-700);
+    }
+  }
+
+  &-body {
+    border: 1px solid black;
+
+    &-in {
+      border: 1px solid black;
+    }
+
+    &-item {
+      border: 1px solid black;
+      padding: 10px 20px;
+      text-align: center;
+    }
+  }
+
+  &-desc {
+    font-size: var(--rw-admin-fs-12);
+    font-weight: var(--rw-admin-fw-500);
+  }
+}

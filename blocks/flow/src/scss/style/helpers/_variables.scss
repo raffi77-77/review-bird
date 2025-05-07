@@ -1,4 +1,6 @@
 & {
+  background-color: var(--rw-flow-theme-local-bg);
+
   --rw-flow-black: #000;
   --rw-flow-rgb-black: 0, 0, 0;
   --rw-flow-white: #fff;
@@ -27,6 +29,98 @@
   //  border color
   --rw-flow-border-color: rgba(158, 192, 216, 50%);
   --rw-flow-input-border-color: #BDBDBD;
+
+  //blue theme
+  &.rw-flow-theme-blue {
+    --rw-flow-blue-theme-bg: #F4F9FB;
+    --rw-flow-blue-theme-box-bg: #FFFFFF;
+    --rw-flow-blue-theme-box-border-bg: #E0EEF3;
+    --rw-flow-blue-theme-box-button-bg: #1A73E8;
+    --rw-flow-blue-theme-box-color: #222222;
+
+    --rw-flow-theme-local-bg: var(--rw-flow-blue-theme-bg);
+    --rw-flow-theme-local-box-bg: var(--rw-flow-blue-theme-box-bg);
+    --rw-flow-theme-local-box-border-bg: var(--rw-flow-blue-theme-box-border-bg);
+    --rw-flow-theme-local-box-button-bg: var(--rw-flow-blue-theme-box-button-bg);
+    --rw-flow-theme-local-box-color: var(--rw-flow-blue-theme-box-color);
+
+  }
+
+  // green theme
+  &.rw-flow-theme-green {
+    --rw-flow-green-theme-bg: #EAF6EA;
+    --rw-flow-green-theme-box-bg: #FFFFFF;
+    --rw-flow-green-theme-box-border-bg: #D8EAD3;
+    --rw-flow-green-theme-box-button-bg: #4CAF50;
+    --rw-flow-green-theme-box-color: #2B2B2B;
+
+    --rw-flow-theme-local-bg: var(--rw-flow-green-theme-bg);
+    --rw-flow-theme-local-box-bg: var(--rw-flow-green-theme-box-bg);
+    --rw-flow-theme-local-box-border-bg: var(--rw-flow-green-theme-box-border-bg);
+    --rw-flow-theme-local-box-button-bg: var(--rw-flow-green-theme-box-button-bg);
+    --rw-flow-theme-local-box-color: var(--rw-flow-green-theme-box-color);
+  }
+
+  //braun theme
+  &.rw-flow-theme-braun {
+    --rw-flow-braun-theme-bg: #F5F1EC;
+    --rw-flow-braun-theme-box-bg: #FFFFFF;
+    --rw-flow-braun-theme-box-border-bg: #D9CBB8;
+    --rw-flow-braun-theme-box-button-bg: #A9744F;
+    --rw-flow-braun-theme-box-color: #3E2F1C;
+
+    --rw-flow-theme-local-bg: var(--rw-flow-braun-theme-bg);
+    --rw-flow-theme-local-box-bg: var(--rw-flow-braun-theme-box-bg);
+    --rw-flow-theme-local-box-border-bg: var(--rw-flow-braun-theme-box-border-bg);
+    --rw-flow-theme-local-box-button-bg: var(--rw-flow-braun-theme-box-button-bg);
+    --rw-flow-theme-local-box-color: var(--rw-flow-braun-theme-box-color);
+  }
+
+  //orange theme
+  &.rw-flow-theme-orange {
+    --rw-flow-orange-theme-bg: #FFF7F2;
+    --rw-flow-orange-theme-box-bg: #FFFFFF;
+    --rw-flow-orange-theme-box-border-bg: #FFD4B8;
+    --rw-flow-orange-theme-box-button-bg: #FF7A29;
+    --rw-flow-orange-theme-box-color: #2A2A2A;
+
+    --rw-flow-theme-local-bg: var(--rw-flow-orange-theme-bg);
+    --rw-flow-theme-local-box-bg: var(--rw-flow-orange-theme-box-bg);
+    --rw-flow-theme-local-box-border-bg: var(--rw-flow-orange-theme-box-border-bg);
+    --rw-flow-theme-local-box-button-bg: var(--rw-flow-orange-theme-box-button-bg);
+    --rw-flow-theme-local-box-color: var(--rw-flow-orange-theme-box-color);
+  }
+
+  //lilia theme
+  &.rw-flow-theme-lilia {
+    --rw-flow-lilia-theme-bg: #F4F0FA;
+    --rw-flow-lilia-theme-box-bg: #FFFFFF;
+    --rw-flow-lilia-theme-box-border-bg: #DAD1E8;
+    --rw-flow-lilia-theme-box-button-bg: #7E57C2;
+    --rw-flow-lilia-theme-box-color: #1D1B33;
+
+    --rw-flow-theme-local-bg: var(--rw-flow-lilia-theme-bg);
+    --rw-flow-theme-local-box-bg: var(--rw-flow-lilia-theme-box-bg);
+    --rw-flow-theme-local-box-border-bg: var(--rw-flow-lilia-theme-box-border-bg);
+    --rw-flow-theme-local-box-button-bg: var(--rw-flow-lilia-theme-box-button-bg);
+    --rw-flow-theme-local-box-color: var(--rw-flow-lilia-theme-box-color);
+  }
+
+  //rot theme
+  &.rw-flow-theme-rot {
+    --rw-flow-rot-theme-bg: #FDEDED;
+    --rw-flow-rot-theme-box-bg: #FFFFFF;
+    --rw-flow-rot-theme-box-border-bg: #F5C2C7;
+    --rw-flow-rot-theme-box-button-bg: #D93025;
+    --rw-flow-rot-theme-box-color: #2B2B2B;
+
+    --rw-flow-theme-local-bg: var(--rw-flow-rot-theme-bg);
+    --rw-flow-theme-local-box-bg: var(--rw-flow-rot-theme-box-bg);
+    --rw-flow-theme-local-box-border-bg: var(--rw-flow-rot-theme-box-border-bg);
+    --rw-flow-theme-local-box-button-bg: var(--rw-flow-rot-theme-box-button-bg);
+    --rw-flow-theme-local-box-color: var(--rw-flow-rot-theme-box-color);
+
+  }
 
   //font-size
   --rw-flow-fs-10: 10px;

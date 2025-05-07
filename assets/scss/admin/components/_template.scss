@@ -1,0 +1,76 @@
+.rw-skin {
+  &-template {
+    width: 100%;
+    max-width: 400px;
+
+    &:not(:last-child) {
+      margin-block-end: 40px;
+    }
+
+    &-header {
+      display: flex;
+      align-items: center;
+      padding-block-end: 20px;
+    }
+
+    &-body {
+      display: flex;
+    }
+
+    &-item {
+      width: 40%;
+      height: 80%;
+      margin: auto;
+    }
+
+    &-desc {
+      font-size: var(--rw-admin-fs-12);
+
+    }
+
+
+    &.blue {
+
+      --rw-feedback-local-bg: var(--rw-flow-white);
+      --rw-feedback-local-color: #222222;
+      --rw-feedback-local-border-color: var(--rw-flow-border-color);
+      --rw-feedback-local-button-color: rgba(var(--rw-flow-default-color), .4);
+    }
+
+    &.green {
+      --rw-feedback-local-bg:var(--rw-flow-green-theme-box-bg);
+      --rw-feedback-local-color: var(--rw-flow-green-theme-box-color);
+      --rw-feedback-local-border-color: var(--rw-flow-green-theme-box-border-bg);
+      --rw-feedback-local-button-color: var(--rw-flow-green-theme-box-button-bg);
+    }
+
+    &.braun {
+      --rw-feedback-local-bg:var(--rw-flow-braun-theme-box-bg);
+      --rw-feedback-local-color: var(--rw-flow-braun-theme-box-color);
+      --rw-feedback-local-border-color: var(--rw-flow-braun-theme-box-border-bg);
+      --rw-feedback-local-button-color: var(--rw-flow-braun-theme-box-button-bg);
+    }
+
+    &.orange {
+      --rw-feedback-local-bg:var(--rw-flow-orange-theme-box-bg);
+      --rw-feedback-local-color: var(--rw-flow-orange-theme-box-color);
+      --rw-feedback-local-border-color: var(--rw-flow-orange-theme-box-border-bg);
+      --rw-feedback-local-button-color: var(--rw-flow-orange-theme-box-button-bg);
+    }
+
+    &.lilia {
+      --rw-feedback-local-bg:var(--rw-flow-lilia-theme-box-bg);
+      --rw-feedback-local-color: var(--rw-flow-lilia-theme-box-color);
+      --rw-feedback-local-border-color: var(--rw-flow-lilia-theme-box-border-bg);
+      --rw-feedback-local-button-color: var(--rw-flow-lilia-theme-box-button-bg);
+    }
+
+    &.rot {
+      --rw-feedback-local-bg:var(--rw-flow-rot-theme-box-bg);
+      --rw-feedback-local-color: var(--rw-flow-rot-theme-box-color);
+      --rw-feedback-local-border-color: var(--rw-flow-rot-theme-box-border-bg);
+      --rw-feedback-local-button-color: var(--rw-flow-rot-theme-box-button-bg);
+    }
+
+  }
+}
