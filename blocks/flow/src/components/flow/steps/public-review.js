@@ -1,18 +1,14 @@
-import {useState} from "@wordpress/element";
 import StepLayout from "./components/layout";
 
 export default function PublicReview({destinations}) {
-    const [destinationsSlugs, setDestinationsSlugs] = useState([
-        'youtube',
-        'wordpress',
-        'forsquare',
-        'google',
-        'app',
-        'audible',
-        'trustpilot',
-        'doctolib',
-        'jameda',
-    ]);
+    const renderDestination = (destination, index) => {
+        return <button key={index} className="rw-flow-button rw-flow-button-platform">
+            <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
+                 fill='none' viewBox='0 0 24 24'>
+                <use href={`#rw-flow-${destination}`}/>
+            </svg>
+        </button>
+    }
 
     return <StepLayout className={destinations.length > 0 ? 'rw-flow-feedback-public-review-row' : ''}>
         <div className="rw-flow-title">
@@ -29,60 +25,7 @@ export default function PublicReview({destinations}) {
         {destinations.length > 0 &&
             <div className="rw-flow-feedback-actions rw-flow-platform-slide">
                 <div className="rw-flow-feedback-actions-in rw-flow-platform-slide-in">
-                    <button className="rw-flow-button rw-flow-button-platform">
-                        <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
-                             fill='none' viewBox='0 0 24 24'>
-                            <use href='#rw-flow-'/>
-                        </svg>
-                    </button>
-                    <button className="rw-flow-button rw-flow-button-platform">
-                        <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
-                             fill='none' viewBox='0 0 24 24'>
-                            <use href='#rw-flow-'/>
-                        </svg>
-                    </button>
-                    <button className="rw-flow-button rw-flow-button-platform">
-                        <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
-                             fill='none' viewBox='0 0 24 24'>
-                            <use href='#rw-flow-'/>
-                        </svg>
-                    </button>
-                    <button className="rw-flow-button rw-flow-button-platform">
-                        <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
-                             fill='none' viewBox='0 0 24 24'>
-                            <use href='#rw-flow--play'/>
-                        </svg>
-                    </button>
-                    <button className="rw-flow-button rw-flow-button-platform app-store">
-                        <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
-                             fill='none' viewBox='0 0 24 24'>
-                            <use href='#rw-flow--store'/>
-                        </svg>
-                    </button>
-                    <button className="rw-flow-button rw-flow-button-platform">
-                        <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
-                             fill='none' viewBox='0 0 24 24'>
-                            <use href='#rw-flow-'/>
-                        </svg>
-                    </button>
-                    <button className="rw-flow-button rw-flow-button-platform">
-                        <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
-                             fill='none' viewBox='0 0 24 24'>
-                            <use href='#rw-flow-'/>
-                        </svg>
-                    </button>
-                    <button className="rw-flow-button rw-flow-button-platform">
-                        <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
-                             fill='none' viewBox='0 0 24 24'>
-                            <use href='#rw-flow-'/>
-                        </svg>
-                    </button>
-                    <button className="rw-flow-button rw-flow-button-platform">
-                        <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
-                             fill='none' viewBox='0 0 24 24'>
-                            <use href='#rw-flow-'/>
-                        </svg>
-                    </button>
+                    {destinations.map(renderDestination)}
                 </div>
             </div>}
         {!destinations.length &&

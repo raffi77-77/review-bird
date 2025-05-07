@@ -10,8 +10,19 @@ export default function Flow({id, attributes}) {
     const [loading, setLoading] = useState(0);
     const [step, setStep] = useState('vote');
     const [flowData, setFlowData] = useState(null);
-    const [destinations, setDestinations] = useState([]);
+    const [destinations, setDestinations] = useState([
+        'youtube',
+        'wordpress',
+        'forsquare',
+        'google-play',
+        'app-store',
+        'audible',
+        'trustpilot',
+        'doctolib',
+        'jameda',
+    ]);
     const [theme, setTheme] = useState('rw-flow-theme-blue');
+    const [reviewGating, setReviewGating] = useState(true);
 
     useEffect(() => {
         getData(id);
@@ -23,6 +34,8 @@ export default function Flow({id, attributes}) {
             // Theme
             const flowTheme = flowData.metas.find(meta => meta.key === 'theme')?.value || 'blue';
             setTheme(`rw-flow-theme-${flowTheme}`);
+            // Review gating
+            setReviewGating(!flowData.metas.find(meta => meta.key === 'review_gating_off')?.value);
         }
     }, [flowData?.metas]);
 
@@ -45,7 +58,7 @@ export default function Flow({id, attributes}) {
             {step === 'vote' &&
                 <Vote flowId={id} setStep={setStep}/>}
             {step === 'review' &&
-                <ReviewWithStars setStep={setStep}/>}
+                <ReviewWithStars flowId={id} reviewGating={reviewGating} setStep={setStep}/>}
             {step === 'public-review' &&
                 <PublicReview destinations={destinations}/>}
             <div>

@@ -51,17 +51,14 @@
       align-items: center;
       flex-direction: column;
     }
+
     &-link {
       &, &:not(:hover):not(:active):not(.has-background) {
         margin-block-start: 10px;
         padding: 10px 20px;
-        border: 1px dashed var(--rw-flow-black);
-        border-radius: 10px;
         color: var(--rw-flow-primary-color);
         font-size: var(--rw-flow-fs-14);
-      }
-      &:hover {
-        text-decoration-style:solid;
+        text-decoration: underline;
       }
     }
   }

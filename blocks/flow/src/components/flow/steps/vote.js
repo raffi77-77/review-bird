@@ -10,7 +10,7 @@ export default function Vote({flowId, setStep}) {
         try {
             const res = await CreateReview(ReviewBird.rest.url, ReviewBird.rest.nonce, {
                 flow_uuid: flowId,
-                // TODO - API call redirect data
+                like: 1
             });
             // TODO - redirect
         } catch (e) {

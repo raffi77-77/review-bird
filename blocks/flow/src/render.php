@@ -2,7 +2,7 @@
 /**
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
-$flow_id   = $attributes['flow_id'] ?? false;
+$flow_id   = $attributes['flow_id'] ? get_post_meta( $attributes['flow_id'], '_uuid', true ) : false;
 $flow_attributes = json_encode( $attributes ); // $flow_id ? get_post_meta( $flow_id ) : null;
 
 ob_start();
