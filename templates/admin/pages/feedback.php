@@ -31,6 +31,9 @@
                 <span>Get an Offer</span>
             </button>
         </div>
+        <img class="rw-sms-feedback-image"
+             src="<?php echo Review_Bird()->get_plugin_dir_url() . 'resources/admin/sms-feedback.svg' ?>">
+
     </div>
 
     <p class="rw-sms-feedback-desc rw-sms-feedback-nested-desc">Did you know that 98% of SMS get read within 5 Minutes

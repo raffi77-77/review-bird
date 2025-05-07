@@ -84,6 +84,7 @@
     padding-inline: 40px;
 
     &-in {
+      width: 100%;
       max-width: 1000px;
     }
 
@@ -141,6 +142,8 @@
   }
 
   &-image {
+    width: 100%;
+    height: auto;
     max-width: 400px;
     height: auto;
     @include max-width($rw-admin-wp-lg-breakpoint) {
