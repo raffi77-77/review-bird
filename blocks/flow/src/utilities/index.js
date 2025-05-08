@@ -113,33 +113,61 @@ function Utilities() {
                         </clipPath>
                     </defs>
                 </symbol>
-                <symbol viewBox='0 0 33 32' id='rw-flow-app-store'>
-
-                    <g clipPath="url(#clip0_34_1182)">
-                        <path
-                            fill="url(#paint0_linear_34_1182)"
-                            d="M26.249 0H7.177A6.46 6.46 0 0 0 .713 6.464V25.54A6.46 6.46 0 0 0 7.177 32h19.076a6.464 6.464 0 0 0 6.464-6.464V6.464A6.467 6.467 0 0 0 26.249 0"
-                        ></path>
-                        <path
-                            fill="#fff"
-                            d="m16.577 7.352.648-1.12a1.458 1.458 0 1 1 2.528 1.456l-6.244 10.808h4.516c1.464 0 2.284 1.72 1.648 2.912H6.433a1.45 1.45 0 0 1-1.456-1.456c0-.808.648-1.456 1.456-1.456h3.712l4.752-8.236-1.484-2.576a1.46 1.46 0 0 1 2.528-1.456zM10.96 22.908l-1.4 2.428a1.458 1.458 0 1 1-2.528-1.456l1.04-1.8c1.176-.364 2.132-.084 2.888.828m12.056-4.404h3.788c.808 0 1.456.648 1.456 1.456s-.648 1.456-1.456 1.456H24.7l1.42 2.464a1.46 1.46 0 0 1-2.528 1.456c-2.392-4.148-4.188-7.252-5.38-9.32-1.22-2.104-.348-4.216.512-4.932.956 1.64 2.384 4.116 4.292 7.42"
-                        ></path>
+                <symbol viewBox='0 0 163 90' id='rw-flow-app-store'>
+                    <g filter="url(#filter0_d_258_2)">
+                        <g mask="url(#mask0_258_2)">
+                            <path
+                                fill="url(#paint0_linear_258_2)"
+                                d="M101.072 13H62.928C55.784 13 50 18.784 50 25.928V64.08C50 71.216 55.784 77 62.928 77h38.152c7.136 0 12.928-5.784 12.928-12.928V25.928C114 18.784 108.216 13 101.072 13"
+                            ></path>
+                            <path
+                                fill="#fff"
+                                d="m81.728 27.705 1.296-2.24a2.916 2.916 0 0 1 3.984-1.072c1.4.8 1.872 2.584 1.072 3.984L75.592 49.993h9.032c2.928 0 4.568 3.44 3.296 5.824H61.44a2.9 2.9 0 0 1-2.912-2.912 2.9 2.9 0 0 1 2.912-2.912h7.424l9.504-16.472-2.968-5.152a2.92 2.92 0 0 1 1.072-3.984 2.92 2.92 0 0 1 3.984 1.072zM70.496 58.817l-2.8 4.856a2.916 2.916 0 0 1-3.984 1.072 2.916 2.916 0 0 1-1.072-3.984l2.08-3.6c2.352-.728 4.264-.168 5.776 1.656m24.112-8.808h7.576a2.9 2.9 0 0 1 2.912 2.912 2.9 2.9 0 0 1-2.912 2.912h-4.208l2.84 4.928a2.92 2.92 0 0 1-1.072 3.984 2.92 2.92 0 0 1-3.984-1.072c-4.784-8.296-8.376-14.504-10.76-18.64-2.44-4.208-.696-8.432 1.024-9.864 1.912 3.28 4.768 8.232 8.584 14.84"
+                            ></path>
+                        </g>
                     </g>
                     <defs>
                         <linearGradient
-                            id="paint0_linear_34_1182"
-                            x1="16.715"
-                            x2="16.715"
-                            y1="0"
-                            y2="32"
+                            id="paint0_linear_258_2"
+                            x1="82.004"
+                            x2="82.004"
+                            y1="13"
+                            y2="77"
                             gradientUnits="userSpaceOnUse"
                         >
                             <stop stopColor="#18BFFB"></stop>
                             <stop offset="1" stopColor="#2072F3"></stop>
                         </linearGradient>
-                        <clipPath id="clip0_34_1182">
-                            <path fill="#fff" d="M.713 0h32v32h-32z"></path>
-                        </clipPath>
+                        <filter
+                            id="filter0_d_258_2"
+                            width="80.432"
+                            height="80.432"
+                            x="41.784"
+                            y="6.427"
+                            colorInterpolationFilters="sRGB"
+                            filterUnits="userSpaceOnUse"
+                        >
+                            <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
+                            <feColorMatrix
+                                in="SourceAlpha"
+                                result="hardAlpha"
+                                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                            ></feColorMatrix>
+                            <feOffset dy="1.643"></feOffset>
+                            <feGaussianBlur stdDeviation="4.108"></feGaussianBlur>
+                            <feComposite in2="hardAlpha" operator="out"></feComposite>
+                            <feColorMatrix
+                                values="0 0 0 0 0.0352941 0 0 0 0 0.137255 0 0 0 0 0.235294 0 0 0 0.1 0"></feColorMatrix>
+                            <feBlend
+                                in2="BackgroundImageFix"
+                                result="effect1_dropShadow_258_2"
+                            ></feBlend>
+                            <feBlend
+                                in="SourceGraphic"
+                                in2="effect1_dropShadow_258_2"
+                                result="shape"
+                            ></feBlend>
+                        </filter>
                     </defs>
                 </symbol>
                 <symbol viewBox='0 0 80 23' id='rw-flow-audible'>

@@ -1,13 +1,17 @@
 .rw-flow {
   &-feedback {
     &-row {
-      max-width: 600px;
+      max-width: 90%;
       margin-inline: auto;
       background-color: var(--rw-flow-theme-local-box-bg);
       border: 1px solid var(--rw-flow-theme-local-box-border-bg);
 
       &.none {
         display: none;
+      }
+
+      @include min-width($rw-flow-wp-breakpoint) {
+        max-width: 600px;
       }
     }
 
@@ -56,7 +60,7 @@
       &, &:not(:hover):not(:active):not(.has-background) {
         margin-block-start: 10px;
         padding: 10px 20px;
-        color: var(--rw-flow-primary-color);
+        color: var(--rw-flow-theme-box-button-bg);
         font-size: var(--rw-flow-fs-14);
         text-decoration: underline;
       }

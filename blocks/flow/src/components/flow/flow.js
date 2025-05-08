@@ -21,7 +21,7 @@ export default function Flow({id, attributes}) {
         'doctolib',
         'jameda',
     ]);
-    const [theme, setTheme] = useState('rw-flow-theme-blue');
+    const [theme, setTheme] = useState('rw-flow-theme blue');
     const [reviewGating, setReviewGating] = useState(true);
 
     useEffect(() => {
@@ -33,7 +33,7 @@ export default function Flow({id, attributes}) {
             // TODO - set destinations
             // Theme
             const flowTheme = flowData.metas.find(meta => meta.key === 'theme')?.value || 'blue';
-            setTheme(`rw-flow-theme-${flowTheme}`);
+            setTheme(`rw-flow-theme ${flowTheme}`);
             // Review gating
             setReviewGating(!flowData.metas.find(meta => meta.key === 'review_gating_off')?.value);
         }
