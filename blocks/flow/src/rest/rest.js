@@ -41,19 +41,19 @@ export const handleResponse = async (res) => {
         data = await res.json();
     } catch (e) {
         // Invalid response
-        throw new Error(__("Something went wrong", 'limb'));
+        throw new Error(__("Something went wrong", 'review-bird'));
     }
     if (!res.ok) {
         let message = data.message;
         if (data.data?.details) {
             const messages = Object.values(data.data.details);
             if (messages.length) {
-                message = messages.map(item => __(item.message, 'limb')).join("<br/>");
+                message = messages.map(item => __(item.message, 'review-bird')).join("<br/>");
             }
         } else if (data.data?.message) {
             message = data.data?.message;
         }
-        throw new Error(message ? message : __("Something went wrong", 'limb'));
+        throw new Error(message ? message : __("Something went wrong", 'review-bird'));
     }
     return data;
 }

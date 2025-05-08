@@ -210,7 +210,7 @@
 
         <div class="rw-admin-body">
             <div class="rw-skin-content-title">
-                <h2 class=" rw-admin-table-title">Review Target Discribution</h2>
+                <h2 class=" rw-admin-table-title">Review Target Distribution</h2>
             </div>
             <div class="rw-skin-content-in rw-admin-row">
                 <table class="rw-admin-table">

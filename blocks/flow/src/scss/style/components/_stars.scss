@@ -18,7 +18,7 @@
     stroke: var(--rw-flow-stars-local-color);
     fill: var(--rw-flow-stars-local-fill);
 
-    &:hover {
+    &:hover, &.wanted {
       --rw-flow-stars-local-fill: var(--rw-flow-star-active-fill);
       --rw-flow-stars-local-color: var(--rw-flow-stars-local-fill);
     }

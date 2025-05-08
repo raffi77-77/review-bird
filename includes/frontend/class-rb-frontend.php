@@ -30,6 +30,9 @@ class Frontend {
 				'url'   => get_rest_url( null, 'review-bird/v1/' ),
 				'nonce' => wp_create_nonce( 'wp_rest' ),
 			),
+			'site' => array(
+				'name' => get_bloginfo( 'name' ),
+			),
 //			'debug' => true,
 		) );
 //		wp_enqueue_script( $rb->get_plugin_name() . '-something-to-change' );
