@@ -1,0 +1,71 @@
+.rw-admin {
+  &-tooltip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    max-width: 600px;
+    display: block;
+    margin: auto;
+    background-color: var(--rw-admin-white);
+    border-radius: 8px;
+    box-shadow: 0 0 8.22px rgba(8, 35, 60, 0.1);
+    transform: translate3d(-50%, -50%, 0);
+    z-index: 9999;
+
+    &-layout {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 9999;
+    }
+
+    &-overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(var(--rw-admin-white-rgb), 0.7);
+    }
+
+    &-in {
+      font-size: var(--rw-admin-fs-16);
+      line-height: var(--rw-admin-lh-20);
+    }
+
+    &-body {
+      padding: 20px;
+
+      &-in {
+        max-height: 400px;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+    }
+
+    &-close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+    }
+  }
+
+  &-label {
+    &-tooltip {
+      &-in {
+        width: 20px;
+        height: 20px;
+        fill: var(--rw-admin-button-primary-color);
+        cursor: pointer;
+      }
+
+      &:not(:last-child) {
+        margin-inline-end: 10px;
+      }
+    }
+  }
+}

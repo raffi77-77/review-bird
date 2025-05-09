@@ -12,10 +12,10 @@ export default function Tooltip({children}) {
             </svg>
         </button>
         {opened &&
-            <div className="rw-admin-model-layout">
-                <div className="rw-admin-model-overlay" onClick={() => setOpened(false)}/>
-                <div className="rw-admin-modal">
-                    <button type="button" className="rw-flow-button-close rw-flow-button-30"
+            <div className="rw-admin-tooltip-layout">
+                <div className="rw-admin-tooltip-overlay" onClick={() => setOpened(false)}/>
+                <div className="rw-admin-tooltip">
+                    <button type="button" className="rw-flow-button-30 rw-admin-tooltip-close"
                             onClick={() => setOpened(false)}>
                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
@@ -23,8 +23,10 @@ export default function Tooltip({children}) {
                                   strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </button>
-                    <div className="rw-admin-modal-body">
-                        {children}
+                    <div className="rw-admin-tooltip-body">
+                        <div className="rw-admin-tooltip-body-in">
+                            {children}
+                        </div>
                     </div>
                 </div>
             </div>}
