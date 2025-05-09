@@ -1,5 +1,5 @@
 import domReady from '@wordpress/dom-ready';
-import {createRoot, StrictMode} from '@wordpress/element';
+import {createRoot} from '@wordpress/element';
 import PositiveReviewResponse from './posts/components/postbox/positive-review-response';
 
 domReady(() => {
@@ -10,9 +10,5 @@ domReady(() => {
     }
     const root = createRoot(container);
 
-    root.render(
-        <StrictMode>
-            <PositiveReviewResponse/>
-        </StrictMode>
-    );
+    root.render(<PositiveReviewResponse/>);
 });

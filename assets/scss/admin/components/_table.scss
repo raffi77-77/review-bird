@@ -29,8 +29,24 @@
       padding: 10px 20px;
       text-align: center;
 
+      &.clickable {
+        &:not(.disabled) {
+          cursor: pointer;
+        }
+
+        &:not(.selected):hover {
+          background-color: #E1E1E1;
+        }
+      }
+
       &.selected {
         background-color: #D1D1D1;
+      }
+
+      &.disabled {
+        pointer-events: none;
+        opacity: .5;
+        cursor: not-allowed;
       }
     }
   }

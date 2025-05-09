@@ -1,6 +1,8 @@
-import {useState} from "@wordpress/element";
+import {useEffect, useState} from "@wordpress/element";
 import {__, sprintf} from "@wordpress/i18n";
 import Tooltip from "../../../components/tooltip";
+import {GetFlow} from "../../../../../../blocks/flow/src/rest/rest";
+import {addDataToForm, addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
 
 const REVIEW_TARGET_DISTRIBUTIONS = [
     [
@@ -31,18 +33,110 @@ const REVIEW_TARGET_DISTRIBUTIONS = [
 ];
 
 export default function PositiveReviewResponse() {
-    const [reviewTargets, setReviewTargets] = useState([
-        {
-            url: '',
+    const [loading, setLoading] = useState(0);
+    const [flowData, setFlowData] = useState(null);
+    const settings = {
+        'review_targets': useState([
+            {
+                url: '',
+                percent: 100
+            }
+        ]),
+        'multiple_targets': useState(0),
+    };
+
+    useEffect(() => {
+        settings['review_targets'][1](prevState => {
+            const targetsCount = prevState.length;
+            if (targetsCount === 1) {
+                return prevState.map((reviewTarget, index) => ({
+                    ...reviewTarget,
+                    percent: 100
+                }))
+            } else {
+                return prevState.map((reviewTarget, index) => ({
+                    ...reviewTarget,
+                    percent: REVIEW_TARGET_DISTRIBUTIONS[0][targetsCount - 2][index]
+                }))
+            }
+        })
+    }, [settings['review_targets'][0].length]);
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const getData = async () => {
+        setLoading(prev => prev + 1);
+        try {
+            const res = await GetFlow(ReviewBird.rest.url, ReviewBird.rest.nonce, ReviewBird.flow_uuid, {
+                include: ['metas']
+            });
+            if (res.metas.length) {
+                for (const meta of res.metas) {
+                    if (meta.key in settings) {
+                        settings[meta.key][1](meta.value);
+                    }
+                }
+            }
+            setFlowData(res);
+        } catch (e) {
+            console.error(e);
         }
-    ]);
-    const [multipleTargets, setMultipleTargets] = useState(0);
-    const [reviewTargetDistribution, setReviewTargetDistribution] = useState(null);
+        setLoading(prev => prev - 1);
+    }
+
+    /**
+     * Handle form#post submission
+     */
+    useEffect(() => {
+        // form#post submission
+        document.querySelector('#post').addEventListener('submit', handleSubmit);
+
+        return () => {
+            document.querySelector('#post').removeEventListener('submit', handleSubmit);
+        }
+    }, [settings]);
+
+    /**
+     * Handle post form submit
+     *
+     * @param e
+     */
+    const handleSubmit = (e) => {
+        const data = getSettingsDataToSave(settings);
+        if (data.length) {
+            const form = e.target;
+            // Add fields to form data
+            for (const i in data) {
+                // Meta key
+                addDataToForm(form, `metas[${i}][meta_key]`, data[i].key);
+                // Meta value
+                addObjectDataToForm(form, `metas[${i}][meta_value]`, data[i].value);
+            }
+        }
+    }
+
+    /**
+     * Select distribution
+     *
+     * @param {number[]} distribution Distributions
+     */
+    const selectDistribution = (distribution) => {
+        settings['review_targets'][1](prevState =>
+            prevState.map((reviewTarget, index) => ({
+                ...reviewTarget,
+                percent: distribution[index]
+            }))
+        );
+    }
 
     const renderReviewTarget = (currentReviewTarget, index) => {
-        return <div key={index} className="rw-admin-body rw-admin-body-nested">
+        const currentIndex = index + 1;
+
+        return <div key={currentIndex} className="rw-admin-body rw-admin-body-nested">
             <div className="rw-skin-content-title rw-admin-title">
-                <h2 className="rw-admin-title-in">{__("Target", 'review-bird')} #{index + 2}:</h2>
+                <h2 className="rw-admin-title-in">{__("Target", 'review-bird')} #{currentIndex + 1}:</h2>
                 {/*<svg className="rw-admin-label-tooltip-in" viewBox="-0.5 0 48 48"
                              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <g id="Icons" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -82,9 +176,9 @@ export default function PositiveReviewResponse() {
                 <div className="rw-admin-row rw-admin-row-nested">
                     <input type="text" placeholder="https://" className="rw-admin-input"
                            value={currentReviewTarget.url}
-                           onChange={(e) => setReviewTargets(prevState =>
+                           onChange={(e) => settings['review_targets'][1](prevState =>
                                prevState.map((reviewTarget, i) => {
-                                   if (i === index) {
+                                   if (i === currentIndex) {
                                        return {
                                            ...reviewTarget,
                                            url: e.target.value
@@ -107,10 +201,10 @@ export default function PositiveReviewResponse() {
             <div className="rw-skin-content-in">
                 <div className="rw-admin-row">
                     {/*TODO - icon is missing*/}
-                    <input id="review-target-main" type="text" name="review_targets[0][url]" className="rw-admin-input"
+                    <input id="review-target-main" type="text" className="rw-admin-input"
                            placeholder="https://"
-                           value={reviewTargets[0]?.url || ''}
-                           onChange={(e) => setReviewTargets(prevState =>
+                           value={settings['review_targets'][0][0]?.url || ''}
+                           onChange={(e) => settings['review_targets'][1](prevState =>
                                prevState.map((reviewTarget, index) => {
                                    if (index === 0) {
                                        return {
@@ -213,19 +307,21 @@ export default function PositiveReviewResponse() {
                 <div className="rw-admin-row">
                     <div className="rw-admin-row-in">
                         <div className="rw-admin-label">
-                            <div className={`rw-skin-select-radio${multipleTargets ? ' active' : ''}`}>
-                                <input id="rw-multiple-targets-yes" type="radio" name="multiple_targets"
-                                       className="rw-skin-select-radio-in" value={1} checked={!!multipleTargets}
-                                       onChange={() => setMultipleTargets(1)}/>
+                            <div className={`rw-skin-select-radio${settings['multiple_targets'][0] ? ' active' : ''}`}>
+                                <input id="rw-multiple-targets-yes" type="radio"
+                                       className="rw-skin-select-radio-in" value={1}
+                                       checked={!!settings['multiple_targets'][0]}
+                                       onChange={() => settings['multiple_targets'][1](1)}/>
                             </div>
                             <label htmlFor="rw-multiple-targets-yes"
                                    className="rw-admin-desc-in">{__("Yes", 'review-bird')}</label>
                         </div>
                         <div className="rw-admin-label">
-                            <div className={`rw-skin-select-radio${!multipleTargets ? ' active' : ''}`}>
-                                <input id="rw-multiple-targets-no" type="radio" name="multiple_targets"
-                                       className="rw-skin-select-radio-in" value={0} checked={!multipleTargets}
-                                       onChange={() => setMultipleTargets(0)}/>
+                            <div className={`rw-skin-select-radio${!settings['multiple_targets'][0] ? ' active' : ''}`}>
+                                <input id="rw-multiple-targets-no" type="radio"
+                                       className="rw-skin-select-radio-in" value={0}
+                                       checked={!settings['multiple_targets'][0]}
+                                       onChange={() => settings['multiple_targets'][1](0)}/>
                             </div>
                             <label htmlFor="rw-multiple-targets-no"
                                    className="rw-admin-desc-in">{__("No", 'review-bird')}</label>
@@ -234,12 +330,15 @@ export default function PositiveReviewResponse() {
                 </div>
             </div>
         </div>
-        {!!multipleTargets && reviewTargets.length > 1 && reviewTargets.slice(1).map(renderReviewTarget)}
-        {!!multipleTargets && reviewTargets.length < 4 &&
+        {!!settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 && settings['review_targets'][0].slice(1).map(renderReviewTarget)}
+        {!!settings['multiple_targets'][0] && settings['review_targets'][0].length < 4 &&
             <div className="rw-admin-body rw-admin-body-nested">
                 <div className="rw-skin-content-title rw-admin-title">
                     <button type="button" className="rw-admin-add"
-                            onClick={() => setReviewTargets(prevState => [...prevState, {url: '',}])}>
+                            onClick={() => settings['review_targets'][1](prevState => [...prevState, {
+                                url: '',
+                                percent: 50
+                            }])}>
                         <svg className="rw-admin-i rw-admin-add-i" xmlns="http://www.w3.org/2000/svg" height="24px"
                              viewBox="0 -960 960 960">
                             <path
@@ -248,7 +347,7 @@ export default function PositiveReviewResponse() {
                     </button>
                 </div>
             </div>}
-        {!!multipleTargets &&
+        {!!settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 &&
             <div className="rw-admin-body">
                 <div className="rw-skin-content-title">
                     <h2 className=" rw-admin-table-title">{__("Review Target Distribution", 'review-bird')}</h2>
@@ -276,11 +375,13 @@ export default function PositiveReviewResponse() {
                             return <tr key={index} className="rw-admin-table-body-in">
                                 {distributionsRow.map((distribution, index) => {
                                     const value = distribution.join('-');
-                                    const selectedValue = reviewTargetDistribution && reviewTargetDistribution.join('-');
+                                    const selectedValue = settings['review_targets'][0].map(reviewTarget => reviewTarget.percent).join('-');
 
-                                    return <td className={`rw-admin-table-body-item${selectedValue === value ? ' selected' : ''}`}
-                                               onClick={() => setReviewTargetDistribution(distribution)}>
-                                        <span className="rw-admin-table-desc">{distribution.map(item => `${item}%`).join(' / ')}</span>
+                                    return <td key={value}
+                                        className={`rw-admin-table-body-item clickable${selectedValue === value ? ' selected' : ''}${distribution.length !== settings['review_targets'][0].length ? ' disabled' : ''}`}
+                                        onClick={() => selectDistribution(distribution)}>
+                                        <span
+                                            className="rw-admin-table-desc">{distribution.map(item => `${item}%`).join(' / ')}</span>
                                     </td>
                                 })}
                             </tr>

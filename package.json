@@ -4,8 +4,8 @@
   "scripts": {
     "watch:flow": "wp-scripts start --webpack-src-dir=blocks/flow/src --output-path=blocks/flow/build",
     "build:flow": "wp-scripts build --webpack-src-dir=blocks/flow/src --output-path=blocks/flow/build",
-    "build:admin-js": "wp-scripts build assets/js/admin/*.js --output-path=dist/js/admin",
     "watch:admin-js": "wp-scripts start assets/js/admin/*.js --output-path=dist/js/admin",
+    "build:admin-js": "wp-scripts build assets/js/admin/*.js --output-path=dist/js/admin",
     "watch:scss": "sass --watch assets/scss/:dist/css/ --style compressed",
     "build:scss": "sass --no-source-map assets/scss/:dist/css/ --style compressed"
   },
