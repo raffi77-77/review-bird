@@ -1,4 +1,4 @@
-<div id='rw-admin' class="blue">
+<div class="blue">
     <div class="rw-skin-container">
         <div class="rw-skin-content">
             <div class='rw-skin-header'>

@@ -1,4 +1,4 @@
-<div id="rw-admin" class="rw-sms-feedback">
+<div class="rw-sms-feedback">
     <div class="rw-sms-feedback-row">
         <div class="rw-sms-feedback-row-in">
             <h1 class="rw-sms-feedback-title">Turn Happy Customers into 5-Star Reviews – Automatically</h1>
