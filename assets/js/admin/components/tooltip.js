@@ -1,6 +1,6 @@
 import {useState} from "@wordpress/element";
 
-export default function Tooltip({children}) {
+export default function Tooltip({title, subTitle, children}) {
     const [opened, setOpened] = useState(false);
 
     return <>
@@ -15,17 +15,25 @@ export default function Tooltip({children}) {
             <div className="rw-admin-tooltip-layout">
                 <div className="rw-admin-tooltip-overlay" onClick={() => setOpened(false)}/>
                 <div className="rw-admin-tooltip">
-                    <button type="button" className="rw-flow-button-30 rw-admin-tooltip-close"
-                            onClick={() => setOpened(false)}>
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7.5 22.5L22.5 7.5M7.5 7.5L22.5 22.5" stroke="#005086" strokeWidth="2"
-                                  strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                    </button>
-                    <div className="rw-admin-tooltip-body">
-                        <div className="rw-admin-tooltip-body-in">
-                            {children}
+                    <div className="rw-admin-tooltip-in">
+                        <div className="rw-admin-tooltip-header">
+                            <div className="rw-admin-tooltip-header-in">
+                                <p className="rw-admin-tooltip-title">{title}</p>
+                                <p className="rw-admin-tooltip-desc">{subTitle}</p>
+                            </div>
+                            <button type="button" className="rw-flow-button-30 rw-admin-tooltip-close"
+                                    onClick={() => setOpened(false)}>
+                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.5 22.5L22.5 7.5M7.5 7.5L22.5 22.5" stroke="#005086" strokeWidth="2"
+                                          strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="rw-admin-tooltip-body">
+                            <div className="rw-admin-tooltip-body-in">
+                                {children}
+                            </div>
                         </div>
                     </div>
                 </div>
