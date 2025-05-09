@@ -10,11 +10,18 @@ class Frontend {
 
 	public function init() {
 		add_shortcode( 'sr_rb_shortcode', array( $this, 'shortcode' ) );
+		add_action( 'wp', array( $this, 'hide_admin_bar' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_flow_block_js' ) );
 	}
 
 	public function openai_output_shortcode() {
 		echo 'RB shortcode';
+	}
+
+	public function hide_admin_bar() {
+		if ( is_singular( 'review_bird_flow' ) ) {
+			show_admin_bar( false );
+		}
 	}
 
 	public function enqueue() {

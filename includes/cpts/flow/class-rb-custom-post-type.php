@@ -124,8 +124,15 @@ class Custom_Post_Type {
 		// Get the current screen
 		$screen = get_current_screen();
 
-		if ($screen->post_type === self::NAME) {
+		if ( $screen->post_type === self::NAME ) {
 			$rb = Review_Bird();
+			// Scripts
+			if ( ! wp_style_is( $rb->get_plugin_name() . '-post-' . self::NAME . '-js', 'registered' ) ) {
+				$flow_script_asset = include( $rb->get_plugin_dir_path() . 'dist/js/admin/single-review_bird_flow.asset.php' );
+				wp_register_script( $rb->get_plugin_name() . '-post-' . self::NAME . '-js', $rb->get_plugin_dir_url() . 'dist/js/admin/single-review_bird_flow.js', $flow_script_asset['dependencies'], $flow_script_asset['version'] );
+			}
+			wp_enqueue_script( $rb->get_plugin_name() . '-post-' . self::NAME . '-js' );
+			// Styles
 			if ( ! wp_style_is( $rb->get_plugin_name() . '-post-' . self::NAME . '-style', 'registered' ) ) {
 				wp_register_style( $rb->get_plugin_name() . '-post-' . self::NAME . '-style', $rb->get_plugin_dir_url() . 'dist/css/admin/posts/flow.css', array(), $rb->get_version() );
 			}
