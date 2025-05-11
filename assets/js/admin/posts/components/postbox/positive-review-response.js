@@ -216,9 +216,7 @@ export default function PositiveReviewResponse() {
                                }))}/>
                     <p className="rw-admin-desc">{__("This field is required.", 'review-bird')}</p>
                     <div className="rw-admin-label">
-                        <Tooltip>
-                            <p className="rw-admin-title-in">⭐ Quick Review Link Guide by Platform</p>
-                            <p className="rw-admin-title-in">Is there a quick review link?</p>
+                        <Tooltip title="⭐ Quick Review Link Guide by Platform" subTitle = "Is there a quick review link?">
                             <p className="rw-admin-desc">
                                 1. Google
                                 ✅ Yes – Use the Google Place ID to generate a direct link:
