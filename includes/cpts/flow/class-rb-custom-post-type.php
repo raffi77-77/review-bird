@@ -127,12 +127,12 @@ class Custom_Post_Type {
 		if ( $screen->post_type === self::NAME ) {
 			$rb = Review_Bird();
 			// Scripts
-			if ( ! wp_style_is( $rb->get_plugin_name() . '-post-' . self::NAME . '-js', 'registered' ) ) {
-				$flow_script_asset = include( $rb->get_plugin_dir_path() . 'dist/js/admin/single-review_bird_flow.asset.php' );
-				wp_register_script( $rb->get_plugin_name() . '-post-' . self::NAME . '-js', $rb->get_plugin_dir_url() . 'dist/js/admin/single-review_bird_flow.js', $flow_script_asset['dependencies'], $flow_script_asset['version'] );
+			if ( ! wp_style_is( $rb->get_plugin_name() . '-single-' . self::NAME . '-js', 'registered' ) ) {
+				$flow_script_asset = include( $rb->get_plugin_dir_path() . 'dist/js/admin/single-' . self::NAME . '.asset.php' );
+				wp_register_script( $rb->get_plugin_name() . '-single-' . self::NAME . '-js', $rb->get_plugin_dir_url() . 'dist/js/admin/single-' . self::NAME . '.js', $flow_script_asset['dependencies'], $flow_script_asset['version'] );
 			}
-			wp_enqueue_script( $rb->get_plugin_name() . '-post-' . self::NAME . '-js' );
-			wp_localize_script( $rb->get_plugin_name() . '-post-' . self::NAME . '-js', 'ReviewBird', array(
+			wp_enqueue_script( $rb->get_plugin_name() . '-single-' . self::NAME . '-js' );
+			wp_localize_script( $rb->get_plugin_name() . '-single-' . self::NAME . '-js', 'ReviewBird', array(
 				'rest' => array(
 					'url'   => get_rest_url( null, 'review-bird/v1/' ),
 					'nonce' => wp_create_nonce( 'wp_rest' ),
@@ -140,10 +140,12 @@ class Custom_Post_Type {
 				'flow_uuid' => get_post_meta( get_the_ID(), '_uuid', true ),
 			) );
 			// Styles
-			if ( ! wp_style_is( $rb->get_plugin_name() . '-post-' . self::NAME . '-style', 'registered' ) ) {
-				wp_register_style( $rb->get_plugin_name() . '-post-' . self::NAME . '-style', $rb->get_plugin_dir_url() . 'dist/css/admin/posts/flow.css', array(), $rb->get_version() );
+			if ( ! wp_style_is( $rb->get_plugin_name() . '-single-' . self::NAME . '-style', 'registered' ) ) {
+				wp_register_style( $rb->get_plugin_name() . '-single-' . self::NAME . '-style', $rb->get_plugin_dir_url() . 'dist/css/admin/posts/flow.css', array(), $rb->get_version() );
 			}
-			wp_enqueue_style( $rb->get_plugin_name() . '-post-' . self::NAME . '-style' );
+			wp_enqueue_style( $rb->get_plugin_name() . '-single-' . self::NAME . '-style' );
+			// Media uploader
+			wp_enqueue_media();
 		}
 	}
 }

@@ -3,6 +3,7 @@ import {__, sprintf} from "@wordpress/i18n";
 import Tooltip from "../../../components/tooltip";
 import {GetFlow} from "../../../../../../blocks/flow/src/rest/rest";
 import {addDataToForm, addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
+import MediaUploaderButton from "../../../components/media-uploader-button";
 
 const REVIEW_TARGET_DISTRIBUTIONS = [
     [
@@ -39,7 +40,8 @@ export default function PositiveReviewResponse() {
         'review_targets': useState([
             {
                 url: '',
-                percent: 100
+                percent: 100,
+                media: null,
             }
         ]),
         'multiple_targets': useState(0),
@@ -131,6 +133,13 @@ export default function PositiveReviewResponse() {
         );
     }
 
+    /**
+     * Render review target
+     *
+     * @param {object} currentReviewTarget Current review target
+     * @param {number} index Index
+     * @return {JSX.Element}
+     */
     const renderReviewTarget = (currentReviewTarget, index) => {
         const currentIndex = index + 1;
 
@@ -166,11 +175,29 @@ export default function PositiveReviewResponse() {
                                 </g>
                             </g>
                         </svg>*/}
-                <svg className="rw-admin-i" xmlns="http://www.w3.org/2000/svg" height="24px"
-                     viewBox="0 -960 960 960" width="24px">
-                    <path
-                        d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>
-                </svg>
+                <MediaUploaderButton
+                    onSelect={media => settings['review_targets'][1](prevState =>
+                        prevState.map((reviewTarget, i) => {
+                            if (i === currentIndex) {
+                                return {
+                                    ...reviewTarget,
+                                    media: media,
+                                }
+                            }
+                            return reviewTarget;
+                        })
+                    )}>
+                    {!currentReviewTarget.media?.sizes?.thumbnail &&
+                        <svg className="rw-admin-i" xmlns="http://www.w3.org/2000/svg" height="24px"
+                             viewBox="0 -960 960 960" width="24px">
+                            <path
+                                d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>
+                        </svg>}
+                    {currentReviewTarget.media?.sizes?.thumbnail &&
+                        <img width={currentReviewTarget.media.sizes.thumbnail.width}
+                             height={currentReviewTarget.media.sizes.thumbnail.height}
+                             src={currentReviewTarget.media.sizes.thumbnail.url} alt={currentReviewTarget.media.alt}/>}
+                </MediaUploaderButton>
             </div>
             <div className="rw-skin-content-in">
                 <div className="rw-admin-row rw-admin-row-nested">
@@ -216,7 +243,7 @@ export default function PositiveReviewResponse() {
                                }))}/>
                     <p className="rw-admin-desc">{__("This field is required.", 'review-bird')}</p>
                     <div className="rw-admin-label">
-                        <Tooltip title="⭐ Quick Review Link Guide by Platform" subTitle = "Is there a quick review link?">
+                        <Tooltip title="⭐ Quick Review Link Guide by Platform" subTitle="Is there a quick review link?">
                             <p className="rw-admin-desc">
                                 1. Google
                                 ✅ Yes – Use the Google Place ID to generate a direct link:
@@ -335,7 +362,8 @@ export default function PositiveReviewResponse() {
                     <button type="button" className="rw-admin-add"
                             onClick={() => settings['review_targets'][1](prevState => [...prevState, {
                                 url: '',
-                                percent: 50
+                                percent: 50,
+                                media: null,
                             }])}>
                         <svg className="rw-admin-i rw-admin-add-i" xmlns="http://www.w3.org/2000/svg" height="24px"
                              viewBox="0 -960 960 960">
@@ -376,8 +404,8 @@ export default function PositiveReviewResponse() {
                                     const selectedValue = settings['review_targets'][0].map(reviewTarget => reviewTarget.percent).join('-');
 
                                     return <td key={value}
-                                        className={`rw-admin-table-body-item clickable${selectedValue === value ? ' selected' : ''}${distribution.length !== settings['review_targets'][0].length ? ' disabled' : ''}`}
-                                        onClick={() => selectDistribution(distribution)}>
+                                               className={`rw-admin-table-body-item clickable${selectedValue === value ? ' selected' : ''}${distribution.length !== settings['review_targets'][0].length ? ' disabled' : ''}`}
+                                               onClick={() => selectDistribution(distribution)}>
                                         <span
                                             className="rw-admin-table-desc">{distribution.map(item => `${item}%`).join(' / ')}</span>
                                     </td>
