@@ -1,20 +1,46 @@
 import domReady from '@wordpress/dom-ready';
 import {createRoot} from '@wordpress/element';
+import TitleQuestion from "./posts/components/postbox/title-question";
 import PositiveReviewResponse from './posts/components/postbox/positive-review-response';
 import NegativeReviewResponse from "./posts/components/postbox/negative-review-response";
+import EmailSettings from "./posts/components/postbox/email-settings";
+import {GetFlow} from "../../../blocks/flow/src/rest/rest";
 
-domReady(() => {
+domReady(async () => {
+    let flowData = null;
+    try {
+        flowData = await GetFlow(ReviewBird.rest.url, ReviewBird.rest.nonce, ReviewBird.flow_uuid, {
+            include: ['metas']
+        });
+    } catch (e) {
+        console.error(e);
+    }
+
+    const titleQuestion = document.querySelector('#title-question .inside');
+    if (titleQuestion) {
+        const root = createRoot(titleQuestion);
+
+        root.render(<TitleQuestion flowData={flowData}/>);
+    }
+
     const positiveReviewResponse = document.querySelector('#positive-review-response .inside');
     if (positiveReviewResponse) {
         const root = createRoot(positiveReviewResponse);
 
-        root.render(<PositiveReviewResponse/>);
+        root.render(<PositiveReviewResponse flowData={flowData}/>);
     }
 
     const negativeReviewResponse = document.querySelector('#negative-review-response .inside');
     if (negativeReviewResponse) {
         const root = createRoot(negativeReviewResponse);
 
-        root.render(<NegativeReviewResponse/>);
+        root.render(<NegativeReviewResponse flowData={flowData}/>);
+    }
+
+    const emailSettings = document.querySelector('#email-settings .inside');
+    if (emailSettings) {
+        const root = createRoot(emailSettings);
+
+        root.render(<EmailSettings flowData={flowData}/>);
     }
 });

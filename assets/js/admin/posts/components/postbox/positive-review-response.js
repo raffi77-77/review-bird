@@ -33,9 +33,8 @@ const REVIEW_TARGET_DISTRIBUTIONS = [
     ],
 ];
 
-export default function PositiveReviewResponse() {
+export default function PositiveReviewResponse({flowData}) {
     const [loading, setLoading] = useState(0);
-    const [flowData, setFlowData] = useState(null);
     const settings = {
         'review_targets': useState([
             {
@@ -66,22 +65,18 @@ export default function PositiveReviewResponse() {
 
     useEffect(() => {
         getData();
-    }, []);
+    }, [flowData]);
 
     const getData = async () => {
         setLoading(prev => prev + 1);
         try {
-            const res = await GetFlow(ReviewBird.rest.url, ReviewBird.rest.nonce, ReviewBird.flow_uuid, {
-                include: ['metas']
-            });
-            if (res.metas.length) {
-                for (const meta of res.metas) {
+            if (flowData?.metas?.length) {
+                for (const meta of flowData.metas) {
                     if (meta.key in settings) {
                         settings[meta.key][1](meta.value);
                     }
                 }
             }
-            setFlowData(res);
         } catch (e) {
             console.error(e);
         }

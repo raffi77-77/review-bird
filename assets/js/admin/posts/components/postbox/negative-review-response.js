@@ -1,14 +1,12 @@
 import {useEffect, useState} from "@wordpress/element";
 import {__} from "@wordpress/i18n";
 import Tooltip from "../../../components/tooltip";
-import {GetFlow} from "../../../../../../blocks/flow/src/rest/rest";
 import {addDataToForm, addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
 
-export default function NegativeReviewResponse() {
+export default function NegativeReviewResponse({flowData}) {
     const [loading, setLoading] = useState(0);
-    const [flowData, setFlowData] = useState(null);
     const settings = {
-        'question': useState(''),
+        'negative_review_question': useState(''),
         'field_name_placeholder': useState(''),
         'field_review_placeholder': useState(''),
         'success_message': useState(''),
@@ -17,22 +15,18 @@ export default function NegativeReviewResponse() {
 
     useEffect(() => {
         getData();
-    }, []);
+    }, [flowData]);
 
     const getData = async () => {
         setLoading(prev => prev + 1);
         try {
-            const res = await GetFlow(ReviewBird.rest.url, ReviewBird.rest.nonce, ReviewBird.flow_uuid, {
-                include: ['metas']
-            });
-            if (res.metas.length) {
-                for (const meta of res.metas) {
+            if (flowData?.metas?.length) {
+                for (const meta of flowData.metas) {
                     if (meta.key in settings) {
                         settings[meta.key][1](meta.value);
                     }
                 }
             }
-            setFlowData(res);
         } catch (e) {
             console.error(e);
         }
@@ -73,13 +67,14 @@ export default function NegativeReviewResponse() {
     return <div className="rw-skin-content">
         <div className="rw-admin-body">
             <div className="rw-skin-content-title">
-                <h2 className="rw-admin-title-in">{__("Review-Box Text", 'review-bird')}</h2>
+                <label htmlFor="rw-negative-review-question"
+                       className="rw-admin-title-in">{__("Review-Box Text", 'review-bird')}</label>
             </div>
             <div className="rw-skin-content-in">
                 <div className="rw-admin-row">
-                    <textarea className="rw-admin-textarea"
-                              value={settings['question'][0]}
-                              onChange={e => settings['question'][1](e.target.value)}
+                    <textarea id="rw-negative-review-question" className="rw-admin-textarea"
+                              value={settings['negative_review_question'][0]}
+                              onChange={e => settings['negative_review_question'][1](e.target.value)}
                               placeholder={__("Would you recommend {site-name} to others?", 'review-bird')}
                               rows="3"/>
                 </div>
@@ -111,7 +106,8 @@ export default function NegativeReviewResponse() {
         </div>
         <div className="rw-admin-body">
             <div className="rw-skin-content-title">
-                <h2 className="rw-admin-title-in">{__("Enter success Message", 'review-bird')}</h2>
+                <label htmlFor="rw-negative-success-message"
+                       className="rw-admin-title-in">{__("Enter success Message", 'review-bird')}</label>
             </div>
         </div>
         <div className="rw-admin-body">
@@ -119,7 +115,7 @@ export default function NegativeReviewResponse() {
             <div className="rw-skin-content-in">
                 <div className="rw-admin-row">
                     <div className="rw-admin-row-nested">
-                        <input type="text" className="rw-admin-input"
+                        <input id="rw-negative-success-message" type="text" className="rw-admin-input"
                                value={settings['success_message'][0]}
                                onChange={e => settings['success_message'][1](e.target.value)}
                                placeholder={__("Your review was submitted successfully", 'review-bird')}/>
