@@ -44,7 +44,7 @@ export default function PositiveReviewResponse() {
                 media: null,
             }
         ]),
-        'multiple_targets': useState(0),
+        'multiple_targets': useState(false),
     };
 
     useEffect(() => {
@@ -114,7 +114,19 @@ export default function PositiveReviewResponse() {
                 // Meta key
                 addDataToForm(form, `metas[${i}][meta_key]`, data[i].key);
                 // Meta value
-                addObjectDataToForm(form, `metas[${i}][meta_value]`, data[i].value);
+                if (data[i].key === 'review_targets') {
+                    addObjectDataToForm(
+                        form,
+                        `metas[${i}][meta_value]`,
+                        data[i].value.map((reviewTarget, index) => ({
+                            url: reviewTarget.url,
+                            percent: reviewTarget.percent,
+                            media_id: reviewTarget.media?.id || false,
+                        }))
+                    );
+                } else {
+                    addObjectDataToForm(form, `metas[${i}][meta_value]`, data[i].value);
+                }
             }
         }
     }
@@ -335,8 +347,8 @@ export default function PositiveReviewResponse() {
                             <div className={`rw-skin-select-radio${settings['multiple_targets'][0] ? ' active' : ''}`}>
                                 <input id="rw-multiple-targets-yes" type="radio"
                                        className="rw-skin-select-radio-in" value={1}
-                                       checked={!!settings['multiple_targets'][0]}
-                                       onChange={() => settings['multiple_targets'][1](1)}/>
+                                       checked={settings['multiple_targets'][0]}
+                                       onChange={() => settings['multiple_targets'][1](true)}/>
                             </div>
                             <label htmlFor="rw-multiple-targets-yes"
                                    className="rw-admin-desc-in">{__("Yes", 'review-bird')}</label>
@@ -346,7 +358,7 @@ export default function PositiveReviewResponse() {
                                 <input id="rw-multiple-targets-no" type="radio"
                                        className="rw-skin-select-radio-in" value={0}
                                        checked={!settings['multiple_targets'][0]}
-                                       onChange={() => settings['multiple_targets'][1](0)}/>
+                                       onChange={() => settings['multiple_targets'][1](false)}/>
                             </div>
                             <label htmlFor="rw-multiple-targets-no"
                                    className="rw-admin-desc-in">{__("No", 'review-bird')}</label>
@@ -355,8 +367,8 @@ export default function PositiveReviewResponse() {
                 </div>
             </div>
         </div>
-        {!!settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 && settings['review_targets'][0].slice(1).map(renderReviewTarget)}
-        {!!settings['multiple_targets'][0] && settings['review_targets'][0].length < 4 &&
+        {settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 && settings['review_targets'][0].slice(1).map(renderReviewTarget)}
+        {settings['multiple_targets'][0] && settings['review_targets'][0].length < 4 &&
             <div className="rw-admin-body rw-admin-body-nested">
                 <div className="rw-skin-content-title rw-admin-title">
                     <button type="button" className="rw-admin-add"
@@ -373,7 +385,7 @@ export default function PositiveReviewResponse() {
                     </button>
                 </div>
             </div>}
-        {!!settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 &&
+        {settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 &&
             <div className="rw-admin-body">
                 <div className="rw-skin-content-title">
                     <h2 className=" rw-admin-table-title">{__("Review Target Distribution", 'review-bird')}</h2>
