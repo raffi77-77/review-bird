@@ -5,32 +5,7 @@ import {REVIEW_TARGET_LOGOS} from "./data/data";
 import {getPartOfUrl} from "../../../../../../assets/js/helpers/helper";
 
 export default function PublicReview({flowData}) {
-    const [reviewTargets, setReviewTargets] = useState([
-        {
-            url: "vaxo.com",
-            percent: 50,
-            image: {
-                alt: 'vaxo',
-                sizes: {
-                    thumbnail: {
-                        url: "http://wp.loc/wp-content/uploads/2023/10/cropped-3e3a3de7b4a8f7e1fd80f2f9180874c5_moon-on-earth-150x150.png"
-                    }
-                }
-            }
-        },
-        {
-            url: "gago.com",
-            percent: 50,
-            image: {
-                alt: 'gago',
-                sizes: {
-                    thumbnail: {
-                        url: "http://wp.loc/wp-content/uploads/2023/10/cropped-3e3a3de7b4a8f7e1fd80f2f9180874c5_moon-on-earth-150x150.png"
-                    }
-                }
-            }
-        },
-    ]);
+    const [reviewTargets, setReviewTargets] = useState([]);
 
     useEffect(() => {
         if (flowData?.metas?.length) {
