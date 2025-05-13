@@ -64,7 +64,7 @@ export default function EmailSettings({flowData}) {
     return <div className="rw-skin-content">
         <div className="rw-skin-body rw-admin-body">
             <div className="rw-skin-content-title">
-                <h2 className="rw-admin-title-in">{__("E-mail", 'review-bird')}</h2>
+                <label className="rw-admin-title-in">{__("E-mail", 'review-bird')}</label>
             </div>
             <div className="rw-skin-content-in">
                 <div className="rw-admin-row">

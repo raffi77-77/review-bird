@@ -41,40 +41,6 @@
   }
 }
 
-
-.rw-flow {
-  &-row {
-    width: 100%;
-    height: max-content;
-    margin: auto;
-    background-color: var(--rw-feedback-local-bg);
-    border: 1px solid var(--rw-flow-border-color);
-  }
-
-  &-logo {
-    margin-inline: 10px auto;
-    @include min-width($rw-admin-wp-lg-breakpoint) {
-
-      margin: auto;
-    }
-  }
-
-  &-title {
-    padding-block-end: 0;
-
-    &:not(:last-child) {
-      padding-block-end: 50px;
-    }
-
-    &-in {
-      font-size: var(--rw-admin-fs-14);
-      font-weight: var(--rw-admin-fw-600);
-      line-height: var(--rw-admin-lh-18);
-      text-align: center;
-    }
-  }
-}
-
 .rw-sms-feedback {
   &-row {
     display: flex;
@@ -168,7 +134,7 @@
     width: 100%;
     display: block;
     max-width: 800px;
-    padding-block-end: 20px;
+    padding-block-end: 0;
 
     &:not(:last-child) {
       padding-block-end: 20px;
@@ -210,10 +176,10 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    font-size: var(--rw-admin-fs-14);
 
     &-in {
       font-size: var(--rw-admin-fs-14);
-      white-space: nowrap;
 
       &:not(:last-child) {
         margin-block-end: 10px;
@@ -228,42 +194,10 @@
     }
   }
 
-  &-textarea {
-    width: 100%;
-    margin-block-end: 0;
-    padding-inline: 20px;
-    border-radius: 0;
-    font-size: var(--rw-admin-fs-12);
-
-    &:not(:last-child) {
-      margin-block-end: 10px;
-    }
-  }
-
-  &-input {
-    width: 100%;
-    margin-block-end: 0;
-    padding-inline: 20px;
-    border-radius: 0;
-    font-size: var(--rw-admin-fs-12);
-
-    &:not(:last-child) {
-      margin-block-end: 10px;
-    }
-
-    &-minimal {
-      max-width: 200px;
-
-      &:not(:last-child) {
-        margin-block-end: 0;
-      }
-    }
-  }
-
   &-desc {
     font-size: var(--rw-admin-fs-12);
     line-height: var(--rw-admin-lh-18);
-
+    text-align: left;
     &:not(:last-child) {
       padding-block-end: 10px;
     }

@@ -152,7 +152,7 @@ export default function PositiveReviewResponse({flowData}) {
 
         return <div key={currentIndex} className="rw-admin-body rw-admin-body-nested">
             <div className="rw-skin-content-title rw-admin-title">
-                <h2 className="rw-admin-title-in">{__("Target", 'review-bird')} #{currentIndex + 1}:</h2>
+                <label className="rw-admin-title">{__("Target", 'review-bird')} #{currentIndex + 1}:</label>
                 {/*<svg className="rw-admin-label-tooltip-in" viewBox="-0.5 0 48 48"
                              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <g id="Icons" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -183,6 +183,7 @@ export default function PositiveReviewResponse({flowData}) {
                             </g>
                         </svg>*/}
                 <MediaUploaderButton
+                    className='rw-button-upload-media'
                     onSelect={media => settings['review_targets'][1](prevState =>
                         prevState.map((reviewTarget, i) => {
                             if (i === currentIndex) {
@@ -201,7 +202,8 @@ export default function PositiveReviewResponse({flowData}) {
                                 d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>
                         </svg>}
                     {currentReviewTarget.media?.sizes?.thumbnail &&
-                        <img width={currentReviewTarget.media.sizes.thumbnail.width}
+                        <img className='rw-button-upload-media-pic'
+                             width={currentReviewTarget.media.sizes.thumbnail.width}
                              height={currentReviewTarget.media.sizes.thumbnail.height}
                              src={currentReviewTarget.media.sizes.thumbnail.url} alt={currentReviewTarget.media.alt}/>}
                 </MediaUploaderButton>
@@ -364,7 +366,7 @@ export default function PositiveReviewResponse({flowData}) {
         </div>
         {settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 && settings['review_targets'][0].slice(1).map(renderReviewTarget)}
         {settings['multiple_targets'][0] && settings['review_targets'][0].length < 4 &&
-            <div className="rw-admin-body rw-admin-body-nested">
+            <div className='rw-admin-body rw-admin-body-nested'>
                 <div className="rw-skin-content-title rw-admin-title">
                     <button type="button" className="rw-admin-add"
                             onClick={() => settings['review_targets'][1](prevState => [...prevState, {
@@ -382,8 +384,8 @@ export default function PositiveReviewResponse({flowData}) {
             </div>}
         {settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 &&
             <div className="rw-admin-body">
-                <div className="rw-skin-content-title">
-                    <h2 className=" rw-admin-table-title">{__("Review Target Distribution", 'review-bird')}</h2>
+                <div className="rw-skin-content-title rw-admin-table-title">
+                    <label className=" rw-admin-table-title-in">{__("Review Target Distribution", 'review-bird')}</label>
                 </div>
                 <div className="rw-skin-content-in rw-admin-row">
                     <table className="rw-admin-table">

@@ -1,0 +1,12 @@
+.rw-admin {
+  &-textarea {
+    width: 100%;
+    margin-block-end: 0;
+    padding-inline: 20px;
+    font-size: var(--rw-admin-fs-12);
+
+    &:not(:last-child) {
+      margin-block-end: 10px;
+    }
+  }
+}

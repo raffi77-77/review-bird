@@ -2,8 +2,10 @@
   width: 100%;
 
   &-title {
-    font-size: var(--rw-admin-fs-14);
     padding-block-start: 34px;
+    &-in {
+      font-size: var(--rw-admin-fs-14);
+    }
   }
 
   &-head {

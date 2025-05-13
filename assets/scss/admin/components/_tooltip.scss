@@ -18,6 +18,10 @@
     &-in {
       max-width: 600px;
       max-height: 80vh;
+    }
+
+    &-body {
+      max-height: 60vh;
       overflow-x: hidden;
       overflow-y: auto;
     }
@@ -76,9 +80,12 @@
 
   &-label {
     &-tooltip {
+      width: 20px;
+      height: 20px;
+
       &-in {
-        width: 20px;
-        height: 20px;
+        width: 100%;
+        height: 100%;
         fill: var(--rw-admin-button-primary-color);
         cursor: pointer;
       }

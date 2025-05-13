@@ -44,6 +44,35 @@
         justify-content: center;
       }
     }
-
   }
+    &-row {
+      width: 100%;
+      height: max-content;
+      margin: auto;
+      background-color: var(--rw-feedback-local-bg);
+      border: 1px solid var(--rw-flow-border-color);
+    }
+
+    &-logo {
+      margin-inline: 10px auto;
+      @include min-width($rw-admin-wp-lg-breakpoint) {
+
+        margin: auto;
+      }
+    }
+
+    &-title {
+      padding-block-end: 0;
+
+      &:not(:last-child) {
+        padding-block-end: 50px;
+      }
+
+      &-in {
+        font-size: var(--rw-admin-fs-14);
+        font-weight: var(--rw-admin-fw-600);
+        line-height: var(--rw-admin-lh-18);
+        text-align: center;
+      }
+    }
 }

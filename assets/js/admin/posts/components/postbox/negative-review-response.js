@@ -82,11 +82,8 @@ export default function NegativeReviewResponse({flowData}) {
         </div>
         <div className="rw-admin-body">
             <div className="rw-skin-content-title">
-                <h2 className="rw-admin-title-in">{__("Placeholder Text Form Fields", 'review-bird')}</h2>
+                <label className="rw-admin-title-in">{__("Placeholder Text Form Fields", 'review-bird')}</label>
             </div>
-        </div>
-        <div className="rw-admin-body">
-            <div className="rw-skin-content-title"/>
             <div className="rw-skin-content-in">
                 <div className="rw-admin-row">
                     <div className="rw-admin-row-nested">
@@ -109,9 +106,6 @@ export default function NegativeReviewResponse({flowData}) {
                 <label htmlFor="rw-negative-success-message"
                        className="rw-admin-title-in">{__("Enter success Message", 'review-bird')}</label>
             </div>
-        </div>
-        <div className="rw-admin-body">
-            <div className="rw-skin-content-title"/>
             <div className="rw-skin-content-in">
                 <div className="rw-admin-row">
                     <div className="rw-admin-row-nested">
@@ -125,7 +119,7 @@ export default function NegativeReviewResponse({flowData}) {
         </div>
         <div className="rw-admin-body">
             <div className="rw-skin-content-title rw-admin-title active">
-                <h2 className="rw-admin-title-in">{__("Turn off Review Gating", 'review-bird')}</h2>
+                <label className="rw-admin-title">{__("Turn off Review Gating", 'review-bird')}</label>
                 <Tooltip title="Why Review Gating Hurts Your Business">
                     <p className="rw-admin-desc">Review gating is harmful because it filters out negative feedback,
                         giving an unrealistic and overly positive impression of your business. Not only does this damage
@@ -137,18 +131,16 @@ export default function NegativeReviewResponse({flowData}) {
                         unfiltered.</p>
                 </Tooltip>
             </div>
-        </div>
-        <div className="rw-admin-body">
-            <div className="rw-skin-content-title"/>
             <div className="rw-skin-content-in">
                 <div className="rw-admin-row">
                     <div className="rw-admin-row-in">
                         <input type="checkbox"
+                               className='rw-admin-row-input'
                                checked={settings['review_gating_off'][0]}
                                onChange={e => settings['review_gating_off'][1](e.target.checked)}/>
                         <p className="rw-admin-desc">{__("Enable negative responses to be forwarded to the review destination.", 'review-bird')}</p>
                     </div>
-                    <div className="rw-admin-row-in">
+                    <div className="rw-admin-row-in rw-admin-row-nested">
                         <p className="rw-admin-desc">{__("Review gating typically violates the terms and conditions of review platforms (such as Google, Trustpilot, Yelp, etc.). To comply with their policies—specifically the rule against selectively requesting reviews only from users with positive feedback—make sure to keep review gating disabled.", 'review-bird')}</p>
                     </div>
                 </div>
