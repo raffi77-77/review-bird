@@ -1,4 +1,25 @@
 /**
+ * Normalize URL
+ *
+ * @param {string} url URL
+ * @return {false|string}
+ */
+export const normalizeUrl = (url) => {
+    try {
+        new URL(url);
+        return url;
+    } catch {
+        try {
+            const newUrl = `https://${url}`;
+            new URL(newUrl);
+            return newUrl;
+        } catch {
+            return false;
+        }
+    }
+}
+
+/**
  * Get part of URL
  *
  * @param {string} url Url
@@ -7,10 +28,9 @@
  */
 export const getPartOfUrl = (url, part) => {
     try {
-        const urlObj = new URL(url);
+        const urlObj = new URL(normalizeUrl(url));
         return part in urlObj ? urlObj[part] : false;
-    } catch (e) {
-        console.error(e);
+    } catch {
         return false;
     }
 }

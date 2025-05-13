@@ -1,9 +1,10 @@
 import {useEffect, useState} from "@wordpress/element";
 import {__, sprintf} from "@wordpress/i18n";
 import Tooltip from "../../../components/tooltip";
-import {GetFlow} from "../../../../../../blocks/flow/src/rest/rest";
-import {addDataToForm, addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
+import {addDataToForm, addObjectDataToForm, getPartOfUrl, getSettingsDataToSave} from "../../../../helpers/helper";
 import MediaUploaderButton from "../../../components/media-uploader-button";
+import {REVIEW_TARGET_LOGOS} from "../../../../../../blocks/flow/src/components/flow/steps/data/data";
+import Utilities from "../../../../../../blocks/flow/src/utilities";
 
 const REVIEW_TARGET_DISTRIBUTIONS = [
     [
@@ -149,8 +150,21 @@ export default function PositiveReviewResponse({flowData}) {
      */
     const renderReviewTarget = (currentReviewTarget, index) => {
         const currentIndex = index + 1;
+        let svgId;
+        const hostname = getPartOfUrl(currentReviewTarget.url, 'hostname');
+        if (hostname) {
+            const i = REVIEW_TARGET_LOGOS.findIndex(item => hostname.indexOf(`${item}.`) !== -1);
+            if (i !== -1) {
+                svgId = REVIEW_TARGET_LOGOS[i];
+            } else {
+                svgId = false;
+            }
+        } else {
+            svgId = false;
+        }
 
         return <div key={currentIndex} className="rw-admin-body rw-admin-body-nested">
+            <Utilities/>
             <div className="rw-skin-content-title rw-admin-title">
                 <label className="rw-admin-title">{__("Target", 'review-bird')} #{currentIndex + 1}:</label>
                 {/*<svg className="rw-admin-label-tooltip-in" viewBox="-0.5 0 48 48"
@@ -195,17 +209,26 @@ export default function PositiveReviewResponse({flowData}) {
                             return reviewTarget;
                         })
                     )}>
-                    {!currentReviewTarget.media?.sizes?.thumbnail &&
-                        <svg className="rw-admin-i" xmlns="http://www.w3.org/2000/svg" height="24px"
-                             viewBox="0 -960 960 960" width="24px">
-                            <path
-                                d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>
-                        </svg>}
-                    {currentReviewTarget.media?.sizes?.thumbnail &&
+                    {currentReviewTarget.media?.sizes?.thumbnail ?
                         <img className='rw-button-upload-media-pic'
                              width={currentReviewTarget.media.sizes.thumbnail.width}
                              height={currentReviewTarget.media.sizes.thumbnail.height}
-                             src={currentReviewTarget.media.sizes.thumbnail.url} alt={currentReviewTarget.media.alt}/>}
+                             src={currentReviewTarget.media.sizes.thumbnail.url}
+                             alt={currentReviewTarget.media.alt}/>
+                        :
+                        (
+                            svgId ?
+                                <svg className='rw-admin-label-tooltip-in' xmlns='http://www.w3.org/2000/svg'
+                                     fill='none' viewBox='0 0 24 24'>
+                                    <use href={`#rw-flow-${svgId}`}/>
+                                </svg>
+                                :
+                                <svg className="rw-admin-i" xmlns="http://www.w3.org/2000/svg" height="24px"
+                                     viewBox="0 -960 960 960" width="24px">
+                                    <path
+                                        d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>
+                                </svg>
+                        )}
                 </MediaUploaderButton>
             </div>
             <div className="rw-skin-content-in">

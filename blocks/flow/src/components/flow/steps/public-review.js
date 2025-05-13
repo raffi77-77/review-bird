@@ -22,9 +22,11 @@ export default function PublicReview({flowData}) {
     const renderReviewTarget = (reviewTarget, index) => {
         let svgId = false;
         const hostname = getPartOfUrl(reviewTarget.url, 'hostname');
-        const i = REVIEW_TARGET_LOGOS.findIndex(item => hostname.indexOf(`${item}.`));
-        if (i !== -1) {
-            svgId = REVIEW_TARGET_LOGOS[i];
+        if (hostname) {
+            const i = REVIEW_TARGET_LOGOS.findIndex(item => hostname.indexOf(`${item}.`) !== -1);
+            if (i !== -1) {
+                svgId = REVIEW_TARGET_LOGOS[i];
+            }
         }
 
         return <button key={index} className='rw-flow-button rw-flow-button-platform'>
