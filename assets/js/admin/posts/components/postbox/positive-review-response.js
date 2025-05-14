@@ -163,11 +163,11 @@ export default function PositiveReviewResponse({flowData}) {
             svgId = false;
         }
 
-        return <div key={currentIndex} className="rw-admin-body rw-admin-body-nested">
-            <Utilities/>
-            <div className="rw-skin-content-title rw-admin-title">
-                <label className="rw-admin-title">{__("Target", 'review-bird')} #{currentIndex + 1}:</label>
-                {/*<svg className="rw-admin-label-tooltip-in" viewBox="-0.5 0 48 48"
+        return <tr key={currentIndex} className="rw-cont-table-in">
+            <th className="rw-cont-table-item-title">
+                <div className="rw-admin-label">
+                    <label className="rw-admin-title">{__("Target", 'review-bird')} #{currentIndex + 1}:</label>
+                    {/*<svg className="rw-admin-label-tooltip-in" viewBox="-0.5 0 48 48"
                              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <g id="Icons" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                                 <g id="Color-" transform="translate(-401.000000, -860.000000)">
@@ -196,42 +196,44 @@ export default function PositiveReviewResponse({flowData}) {
                                 </g>
                             </g>
                         </svg>*/}
-                <MediaUploaderButton
-                    className='rw-button-upload-media'
-                    onSelect={media => settings['review_targets'][1](prevState =>
-                        prevState.map((reviewTarget, i) => {
-                            if (i === currentIndex) {
-                                return {
-                                    ...reviewTarget,
-                                    media: media,
+                    <MediaUploaderButton
+                        className='rw-button-upload-media update'
+                        onSelect={media => settings['review_targets'][1](prevState =>
+                            prevState.map((reviewTarget, i) => {
+                                if (i === currentIndex) {
+                                    return {
+                                        ...reviewTarget,
+                                        media: media,
+                                    }
                                 }
-                            }
-                            return reviewTarget;
-                        })
-                    )}>
-                    {currentReviewTarget.media?.sizes?.thumbnail ?
-                        <img className='rw-button-upload-media-pic'
-                             width={currentReviewTarget.media.sizes.thumbnail.width}
-                             height={currentReviewTarget.media.sizes.thumbnail.height}
-                             src={currentReviewTarget.media.sizes.thumbnail.url}
-                             alt={currentReviewTarget.media.alt}/>
-                        :
-                        (
-                            svgId ?
-                                <svg className='rw-admin-label-tooltip-in' xmlns='http://www.w3.org/2000/svg'
-                                     fill='none' viewBox='0 0 24 24'>
-                                    <use href={`#rw-flow-${svgId}`}/>
-                                </svg>
-                                :
-                                <svg className="rw-admin-i" xmlns="http://www.w3.org/2000/svg" height="24px"
-                                     viewBox="0 -960 960 960" width="24px">
-                                    <path
-                                        d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>
-                                </svg>
-                        )}
-                </MediaUploaderButton>
-            </div>
-            <div className="rw-skin-content-in">
+                                return reviewTarget;
+                            })
+                        )}>
+                        {currentReviewTarget.media?.sizes?.thumbnail ?
+                            <img className='rw-button-upload-media-pic'
+                                 width={currentReviewTarget.media.sizes.thumbnail.width}
+                                 height={currentReviewTarget.media.sizes.thumbnail.height}
+                                 src={currentReviewTarget.media.sizes.thumbnail.url}
+                                 alt={currentReviewTarget.media.alt}/>
+                            :
+                            (
+                                svgId ?
+                                    <svg className='rw-admin-label-tooltip-in' xmlns='http://www.w3.org/2000/svg'
+                                         fill='none' viewBox='0 0 24 24'>
+                                        <use href={`#rw-flow-${svgId}`}/>
+                                    </svg>
+                                    :
+                                    <svg className="rw-admin-i rw-button-upload-media-i"
+                                         xmlns="http://www.w3.org/2000/svg" height="24px"
+                                         viewBox="0 -960 960 960" width="24px">
+                                        <path
+                                            d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>
+                                    </svg>
+                            )}
+                    </MediaUploaderButton>
+                </div>
+            </th>
+            <td className="rw-cont-table-item">
                 <div className="rw-admin-row rw-admin-row-nested">
                     <input type="text" placeholder="https://" className="rw-admin-input"
                            value={currentReviewTarget.url}
@@ -247,18 +249,21 @@ export default function PositiveReviewResponse({flowData}) {
                                })
                            )}/>
                 </div>
-            </div>
-        </div>
+            </td>
+        </tr>
     }
 
     return <div className="rw-skin-content">
-        <div className="rw-admin-body">
-            <div className="rw-skin-content-title">
-                <label htmlFor="review-target-main"
-                       className="rw-admin-title-in">{__("Review Target", 'review-bird')} #1</label>
-            </div>
-            <div className="rw-skin-content-in">
-                <div className="rw-admin-row">
+
+        <Utilities/>
+        <table className="rw-cont-table">
+            <tbody className="rw-cont-table-tbody">
+            <tr className="rw-cont-table-in">
+                <th className="rw-cont-table-item-title">
+                    <label htmlFor="review-target-main"
+                           className="rw-admin-title-in">{__("Review Target", 'review-bird')} #1</label>
+                </th>
+                <td className="rw-cont-table-item">
                     {/*TODO - icon is missing*/}
                     <input id="review-target-main" type="text" className="rw-admin-input"
                            placeholder="https://"
@@ -352,101 +357,112 @@ export default function PositiveReviewResponse({flowData}) {
                         </Tooltip>
                         <p className="rw-admin-desc">{__("How to find the right URL", 'review-bird')}</p>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div className="rw-admin-body">
-            <div className="rw-skin-content-title">
-                <label htmlFor="rw-multiple-targets"
-                       className="rw-admin-title-in">{__("Enable Multiple Targets", 'review-bird')}</label>
-            </div>
-            <div className="rw-skin-content-in">
-                <div className="rw-admin-row">
-                    <div className="rw-admin-row-in">
-                        <div className="rw-admin-label">
-                            <div className={`rw-skin-select-radio${settings['multiple_targets'][0] ? ' active' : ''}`}>
-                                <input id="rw-multiple-targets-yes" type="radio"
-                                       className="rw-skin-select-radio-in" value={1}
-                                       checked={settings['multiple_targets'][0]}
-                                       onChange={() => settings['multiple_targets'][1](true)}/>
+                </td>
+            </tr>
+
+            <tr className="rw-cont-table-in">
+                <th className="rw-cont-table-item-title">
+                    <label htmlFor="rw-multiple-targets"
+                           className="rw-admin-title-in">{__("Enable Multiple Targets", 'review-bird')}</label>
+                </th>
+                <td className="rw-cont-table-item">
+                    <div className="rw-admin-row">
+                        <div className="rw-admin-row-in">
+                            <div className="rw-admin-label">
+                                <div
+                                    className={`rw-skin-select-radio${settings['multiple_targets'][0] ? ' active' : ''}`}>
+                                    <input id="rw-multiple-targets-yes" type="radio"
+                                           className="rw-skin-select-radio-in" value={1}
+                                           checked={settings['multiple_targets'][0]}
+                                           onChange={() => settings['multiple_targets'][1](true)}/>
+                                </div>
+                                <label htmlFor="rw-multiple-targets-yes"
+                                       className="rw-admin-desc-in">{__("Yes", 'review-bird')}</label>
                             </div>
-                            <label htmlFor="rw-multiple-targets-yes"
-                                   className="rw-admin-desc-in">{__("Yes", 'review-bird')}</label>
-                        </div>
-                        <div className="rw-admin-label">
-                            <div className={`rw-skin-select-radio${!settings['multiple_targets'][0] ? ' active' : ''}`}>
-                                <input id="rw-multiple-targets-no" type="radio"
-                                       className="rw-skin-select-radio-in" value={0}
-                                       checked={!settings['multiple_targets'][0]}
-                                       onChange={() => settings['multiple_targets'][1](false)}/>
+                            <div className="rw-admin-label">
+                                <div
+                                    className={`rw-skin-select-radio${!settings['multiple_targets'][0] ? ' active' : ''}`}>
+                                    <input id="rw-multiple-targets-no" type="radio"
+                                           className="rw-skin-select-radio-in" value={0}
+                                           checked={!settings['multiple_targets'][0]}
+                                           onChange={() => settings['multiple_targets'][1](false)}/>
+                                </div>
+                                <label htmlFor="rw-multiple-targets-no"
+                                       className="rw-admin-desc-in">{__("No", 'review-bird')}</label>
                             </div>
-                            <label htmlFor="rw-multiple-targets-no"
-                                   className="rw-admin-desc-in">{__("No", 'review-bird')}</label>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        {settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 && settings['review_targets'][0].slice(1).map(renderReviewTarget)}
-        {settings['multiple_targets'][0] && settings['review_targets'][0].length < 4 &&
-            <div className='rw-admin-body rw-admin-body-nested'>
-                <div className="rw-skin-content-title rw-admin-title">
-                    <button type="button" className="rw-admin-add"
-                            onClick={() => settings['review_targets'][1](prevState => [...prevState, {
-                                url: '',
-                                percent: 50,
-                                media: null,
-                            }])}>
-                        <svg className="rw-admin-i rw-admin-add-i" xmlns="http://www.w3.org/2000/svg" height="24px"
-                             viewBox="0 -960 960 960">
-                            <path
-                                d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>}
-        {settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 &&
-            <div className="rw-admin-body">
-                <div className="rw-skin-content-title rw-admin-table-title">
-                    <label className=" rw-admin-table-title-in">{__("Review Target Distribution", 'review-bird')}</label>
-                </div>
-                <div className="rw-skin-content-in rw-admin-row">
-                    <table className="rw-admin-table">
-                        <thead className="rw-admin-table-head">
-                        <tr className="rw-admin-table-head-in">
-                            <th className="rw-admin-table-head-item">
-                                <span
-                                    className="rw-admin-table-head-desc">{sprintf(__("if %d targets are chosen", 'review-bird'), 2)}</span>
-                            </th>
-                            <th className="rw-admin-table-head-item">
-                                <span
-                                    className="rw-admin-table-head-desc">{sprintf(__("if %d targets are chosen", 'review-bird'), 3)}</span>
-                            </th>
-                            <th className="rw-admin-table-head-item">
-                                <span
-                                    className="rw-admin-table-head-desc">{sprintf(__("if %d targets are chosen", 'review-bird'), 4)}</span>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody className="rw-admin-table-body">
-                        {REVIEW_TARGET_DISTRIBUTIONS.map((distributionsRow, index) => {
-                            return <tr key={index} className="rw-admin-table-body-in">
-                                {distributionsRow.map((distribution, index) => {
-                                    const value = distribution.join('-');
-                                    const selectedValue = settings['review_targets'][0].map(reviewTarget => reviewTarget.percent).join('-');
+                </td>
+            </tr>
+            {settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 && settings['review_targets'][0].slice(1).map(renderReviewTarget)}
+            {settings['multiple_targets'][0] && settings['review_targets'][0].length < 4 &&
+                <tr className="rw-cont-table-in">
+                    <th className="rw-cont-table-item-title">
+                        <div className="rw-skin-content-title rw-admin-title">
+                            <button type="button" className="rw-admin-add"
+                                    onClick={() => settings['review_targets'][1](prevState => [...prevState, {
+                                        url: '',
+                                        percent: 50,
+                                        media: null,
+                                    }])}>
+                                <svg className="rw-admin-i rw-admin-add-i" xmlns="http://www.w3.org/2000/svg"
+                                     height="24px"
+                                     viewBox="0 -960 960 960">
+                                    <path
+                                        d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </th>
+                    <td className="rw-cont-table-item">
+                    </td>
+                </tr>}
 
-                                    return <td key={value}
-                                               className={`rw-admin-table-body-item clickable${selectedValue === value ? ' selected' : ''}${distribution.length !== settings['review_targets'][0].length ? ' disabled' : ''}`}
-                                               onClick={() => selectDistribution(distribution)}>
-                                        <span
-                                            className="rw-admin-table-desc">{distribution.map(item => `${item}%`).join(' / ')}</span>
-                                    </td>
-                                })}
+            {settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 &&
+                <tr className="rw-cont-table-in">
+                    <th className="rw-cont-table-item-title distribution">
+                        <label
+                            className=" rw-admin-table-title-in">{__("Review Target Distribution", 'review-bird')}</label>
+                    </th>
+                    <td className="rw-cont-table-item">
+                        <table className="rw-admin-table">
+                            <thead className="rw-admin-table-head">
+                            <tr className="rw-admin-table-head-in">
+                                <th className="rw-admin-table-head-item">
+                                    <span
+                                        className="rw-admin-table-head-desc">{sprintf(__("if %d targets are chosen", 'review-bird'), 2)}</span>
+                                </th>
+                                <th className="rw-admin-table-head-item">
+                                    <span
+                                        className="rw-admin-table-head-desc">{sprintf(__("if %d targets are chosen", 'review-bird'), 3)}</span>
+                                </th>
+                                <th className="rw-admin-table-head-item">
+                                    <span
+                                        className="rw-admin-table-head-desc">{sprintf(__("if %d targets are chosen", 'review-bird'), 4)}</span>
+                                </th>
                             </tr>
-                        })}
-                        </tbody>
-                    </table>
-                </div>
-            </div>}
+                            </thead>
+                            <tbody className="rw-admin-table-body">
+                            {REVIEW_TARGET_DISTRIBUTIONS.map((distributionsRow, index) => {
+                                return <tr key={index} className="rw-admin-table-body-in">
+                                    {distributionsRow.map((distribution, index) => {
+                                        const value = distribution.join('-');
+                                        const selectedValue = settings['review_targets'][0].map(reviewTarget => reviewTarget.percent).join('-');
+
+                                        return <td key={value}
+                                                   className={`rw-admin-table-body-item clickable${selectedValue === value ? ' selected' : ''}${distribution.length !== settings['review_targets'][0].length ? ' disabled' : ''}`}
+                                                   onClick={() => selectDistribution(distribution)}>
+                                            <span
+                                                className="rw-admin-table-desc">{distribution.map(item => `${item}%`).join(' / ')}</span>
+                                        </td>
+                                    })}
+                                </tr>
+                            })}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>}
+            </tbody>
+        </table>
     </div>
 }

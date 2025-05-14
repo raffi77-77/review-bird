@@ -60,21 +60,25 @@ export default function TitleQuestion({flowData}) {
     }
 
     return <div className="rw-skin-content">
-        <div className="rw-admin-body">
-            <div className="rw-skin-content-title">
-                <label htmlFor="rw-question"
-                       className="rw-admin-title-in">{__("Define Question", 'review-bird')}</label>
-            </div>
-            <div className="rw-skin-content-in">
-                <div className="rw-admin-row">
+        <table className="rw-cont-table">
+            <tbody className="rw-cont-table-tbody">
+            <tr className="rw-cont-table-in">
+                <th className="rw-cont-table-item-title">
+                    <label htmlFor="rw-question"
+                           className="rw-admin-title-in">{__("Define Question", 'review-bird')}</label>
+                </th>
+                <td className="rw-cont-table-item">
+                    <div className="rw-admin-row">
                     <textarea id="rw-question" className="rw-admin-textarea"
                               value={settings['question'][0]}
                               onChange={e => settings['question'][1](e.target.value)}
                               placeholder={__("Would you recommend {site-name} to others?", 'review-bird')}
                               rows="3"/>
-                    <p className="rw-admin-desc">{"The shortcode {site-name} displays the site name as defined in WordPress under Settings → General."}</p>
-                </div>
-            </div>
-        </div>
+                        <p className="rw-admin-desc">{"The shortcode {site-name} displays the site name as defined in WordPress under Settings → General."}</p>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 }

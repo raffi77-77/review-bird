@@ -1,0 +1,27 @@
+.rw-cont-table {
+  width: 100%;
+
+  &-item {
+    margin-bottom: 9px;
+    padding: 15px 10px;
+    line-height: 1.3;
+    vertical-align: middle;
+
+    &-title {
+      width: 200px;
+      padding: 19px 10px 20px 0;
+      vertical-align: top;
+      font-weight: 600;
+      text-align: left;
+      line-height: 1.3;
+
+      &.nested {
+        padding-block-start: 15px;
+      }
+
+      &.distribution {
+        padding-block-start: 58px;
+      }
+    }
+  }
+}

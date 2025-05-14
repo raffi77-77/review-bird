@@ -62,24 +62,29 @@ export default function EmailSettings({flowData}) {
     }
 
     return <div className="rw-skin-content">
-        <div className="rw-skin-body rw-admin-body">
-            <div className="rw-skin-content-title">
-                <label className="rw-admin-title-in">{__("E-mail", 'review-bird')}</label>
-            </div>
-            <div className="rw-skin-content-in">
-                <div className="rw-admin-row">
-                    <div className="rw-admin-row-in">
-                        <input type="checkbox" checked={settings['negative_review_email_send'][0]}
-                               onChange={e => settings['negative_review_email_send'][1](e.target.checked)}/>
-                        <p className="rw-admin-desc">{__("When a negative Review is received sent an email", 'review-bird')}</p>
+
+        <table className="rw-cont-table">
+            <tbody className="rw-cont-table-tbody">
+            <tr className="rw-cont-table-in">
+                <th className="rw-cont-table-item-title">
+                    <label className="rw-admin-title-in">{__("E-mail", 'review-bird')}</label>
+                </th>
+                <td className="rw-cont-table-item">
+                    <div className="rw-admin-row">
+                        <div className="rw-admin-row-in">
+                            <input type="checkbox" checked={settings['negative_review_email_send'][0]}
+                                   onChange={e => settings['negative_review_email_send'][1](e.target.checked)}/>
+                            <p className="rw-admin-desc">{__("When a negative Review is received sent an email", 'review-bird')}</p>
+                        </div>
+                        <div className="rw-admin-row-in">
+                            <input type="text" className="rw-admin-input rw-admin-input-minimal"
+                                   placeholder="Email"/>
+                            <p className="rw-admin-desc">{__("Emails will be sent to this email address", 'review-bird')}</p>
+                        </div>
                     </div>
-                    <div className="rw-admin-row-in">
-                        <input type="text" className="rw-admin-input rw-admin-input-minimal"
-                               placeholder="Email"/>
-                        <p className="rw-admin-desc">{__("Emails will be sent to this email address", 'review-bird')}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 }

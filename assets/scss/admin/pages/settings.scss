@@ -2,10 +2,12 @@
   &-input {
     width: 35em;
     background: transparent !important;
+    border-radius: 3px;
   }
 
   &-textarea {
     width: 45em;
     background: transparent;
+    border-radius: 3px;
   }
 }

@@ -65,27 +65,29 @@ export default function NegativeReviewResponse({flowData}) {
     }
 
     return <div className="rw-skin-content">
-        <div className="rw-admin-body">
-            <div className="rw-skin-content-title">
-                <label htmlFor="rw-negative-review-question"
-                       className="rw-admin-title-in">{__("Review-Box Text", 'review-bird')}</label>
-            </div>
-            <div className="rw-skin-content-in">
-                <div className="rw-admin-row">
+        <table className="rw-cont-table">
+            <tbody className="rw-cont-table-tbody">
+            <tr className="rw-cont-table-in">
+                <th className="rw-cont-table-item-title">
+                    <label htmlFor="rw-negative-review-question"
+                           className="rw-admin-title-in">{__("Review-Box Text", 'review-bird')}</label>
+                </th>
+                <td className="rw-cont-table-item">
+                    <div className="rw-admin-row">
                     <textarea id="rw-negative-review-question" className="rw-admin-textarea"
                               value={settings['negative_review_question'][0]}
                               onChange={e => settings['negative_review_question'][1](e.target.value)}
                               placeholder={__("Would you recommend {site-name} to others?", 'review-bird')}
                               rows="3"/>
-                </div>
-            </div>
-        </div>
-        <div className="rw-admin-body">
-            <div className="rw-skin-content-title">
-                <label className="rw-admin-title-in">{__("Placeholder Text Form Fields", 'review-bird')}</label>
-            </div>
-            <div className="rw-skin-content-in">
-                <div className="rw-admin-row">
+                    </div>
+                </td>
+            </tr>
+            <tr className="rw-cont-table-in">
+                <th className="rw-cont-table-item-title">
+                    <label className="rw-admin-title-in">{__("Placeholder Text Form Fields", 'review-bird')}</label>
+
+                </th>
+                <td className="rw-cont-table-item">
                     <div className="rw-admin-row-nested">
                         <input type="text" className="rw-admin-input"
                                value={settings['field_name_placeholder'][0]}
@@ -98,53 +100,60 @@ export default function NegativeReviewResponse({flowData}) {
                            onChange={e => settings['field_review_placeholder'][1](e.target.value)}
                            placeholder={__("Share your impressions and experiences (Optional)", 'review-bird')}/>
                     <p className="rw-admin-desc">{__("This is the text for the review field itself", 'review-bird')}</p>
-                </div>
-            </div>
-        </div>
-        <div className="rw-admin-body">
-            <div className="rw-skin-content-title">
-                <label htmlFor="rw-negative-success-message"
-                       className="rw-admin-title-in">{__("Enter success Message", 'review-bird')}</label>
-            </div>
-            <div className="rw-skin-content-in">
-                <div className="rw-admin-row">
+                </td>
+            </tr>
+            <tr className="rw-cont-table-in">
+                <th className="rw-cont-table-item-title">
+                    <label htmlFor="rw-negative-success-message"
+                           className="rw-admin-title-in">{__("Enter success Message", 'review-bird')}</label>
+                </th>
+                <td className="rw-cont-table-item">
                     <div className="rw-admin-row-nested">
                         <input id="rw-negative-success-message" type="text" className="rw-admin-input"
                                value={settings['success_message'][0]}
                                onChange={e => settings['success_message'][1](e.target.value)}
                                placeholder={__("Your review was submitted successfully", 'review-bird')}/>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div className="rw-admin-body">
-            <div className="rw-skin-content-title rw-admin-title active">
-                <label className="rw-admin-title">{__("Turn off Review Gating", 'review-bird')}</label>
-                <Tooltip title="Why Review Gating Hurts Your Business">
-                    <p className="rw-admin-desc">Review gating is harmful because it filters out negative feedback,
-                        giving an unrealistic and overly positive impression of your business. Not only does this damage
-                        customer trust when they notice the lack of honest criticism, but it also violates the terms of
-                        service of major review platforms like Google and Yelp. These platforms strictly prohibit review
-                        gating, and breaking their rules can result in penalties or removal of your business profile. In
-                        contrast, a few bad reviews can actually benefit your reputation—they show that your review
-                        profile is genuine, helping potential customers trust that the feedback is real and
-                        unfiltered.</p>
-                </Tooltip>
-            </div>
-            <div className="rw-skin-content-in">
-                <div className="rw-admin-row">
-                    <div className="rw-admin-row-in">
-                        <input type="checkbox"
-                               className='rw-admin-row-input'
-                               checked={settings['review_gating_off'][0]}
-                               onChange={e => settings['review_gating_off'][1](e.target.checked)}/>
-                        <p className="rw-admin-desc">{__("Enable negative responses to be forwarded to the review destination.", 'review-bird')}</p>
+                </td>
+            </tr>
+            <tr className="rw-cont-table-in">
+                <th className="rw-cont-table-item-title nested">
+                    <div className="rw-skin-content-title rw-admin-title active">
+                        <label className="rw-admin-title">{__("Turn off Review Gating", 'review-bird')}</label>
+                        <Tooltip title="Why Review Gating Hurts Your Business">
+                            <p className="rw-admin-desc">Review gating is harmful because it filters out negative
+                                feedback,
+                                giving an unrealistic and overly positive impression of your business. Not only does
+                                this damage
+                                customer trust when they notice the lack of honest criticism, but it also violates the
+                                terms of
+                                service of major review platforms like Google and Yelp. These platforms strictly
+                                prohibit review
+                                gating, and breaking their rules can result in penalties or removal of your business
+                                profile. In
+                                contrast, a few bad reviews can actually benefit your reputation—they show that your
+                                review
+                                profile is genuine, helping potential customers trust that the feedback is real and
+                                unfiltered.</p>
+                        </Tooltip>
                     </div>
-                    <div className="rw-admin-row-in rw-admin-row-nested">
-                        <p className="rw-admin-desc">{__("Review gating typically violates the terms and conditions of review platforms (such as Google, Trustpilot, Yelp, etc.). To comply with their policies—specifically the rule against selectively requesting reviews only from users with positive feedback—make sure to keep review gating disabled.", 'review-bird')}</p>
+                </th>
+                <td className="rw-cont-table-item">
+                    <div className="rw-admin-row">
+                        <div className="rw-admin-row-in">
+                            <input type="checkbox"
+                                   className='rw-admin-row-input'
+                                   checked={settings['review_gating_off'][0]}
+                                   onChange={e => settings['review_gating_off'][1](e.target.checked)}/>
+                            <p className="rw-admin-desc">{__("Enable negative responses to be forwarded to the review destination.", 'review-bird')}</p>
+                        </div>
+                        <div className="rw-admin-row-in rw-admin-row-nested">
+                            <p className="rw-admin-desc">{__("Review gating typically violates the terms and conditions of review platforms (such as Google, Trustpilot, Yelp, etc.). To comply with their policies—specifically the rule against selectively requesting reviews only from users with positive feedback—make sure to keep review gating disabled.", 'review-bird')}</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 }

@@ -1,4 +1,6 @@
-@import "../helpers/index";
-@import "../base/index";
-@import "../layout/index";
-@import "../components/index";
+.rw-skin-content {
+  @import "../helpers/index";
+  @import "../base/index";
+  @import "../layout/index";
+  @import "../components/index";
+}
