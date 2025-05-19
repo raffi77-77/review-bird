@@ -8,4 +8,8 @@ class Review_Repository {
 	public function create( array $data ) {
 		return Review::create( $data );
 	}
+	
+	public function update(array $where, array $data ) {
+		return Review::update( $where, $data );
+	}
 }

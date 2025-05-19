@@ -15,12 +15,29 @@ class Flow_Repository {
 	public function get_items( ?array $params = [] ) {
 		return Flow::where( $params );
 	}
-	
-	public function create( array $data ) {
-		
+
+	public function create( int $id, array $data ) {
+		$flow = Flow::find( $id );
+		if ( empty( $flow->get_meta( 'uuid' ) ) ) {
+			Flow_Meta::create( [ 'flow_id' => $id, 'meta_key' => '_uuid', 'meta_value' => Helper::get_uuid() ] );
+		}
+		if ( ! empty( $data['metas'] ) ) {
+			foreach ( $data['metas'] as $key => $value ) {
+				Flow_Meta::create( [ 'flow_id' => $id, 'meta_key' => $key, 'meta_value' => $value ] );
+			}
+		}
+
+		return $flow;
 	}
-	
+
 	public function update( int $id, array $data ) {
-		Flow_Meta::create([ 'post_id' => $id, 'meta_key' => '_uuid', 'meta_value' => Helper::get_uuid() ]);
+		$flow = Flow::find( $id );
+		if ( ! empty( $data['metas'] ) ) {
+			foreach ( $data['metas'] as $key => $value ) {
+				Flow_Meta::update( [ 'flow_id' => $id, 'meta_key' => $key ], [ 'meta_value' => $value ] );
+			}
+		}
+
+		return $flow;
 	}
 }

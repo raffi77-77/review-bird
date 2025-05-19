@@ -9,36 +9,44 @@ class Page {
 
 	static string $menu_slug = 'sr-rb-settings';
 	static string $option_group = 'main';
-	protected string $option_name;
+	protected string $option_prefix;
 	protected ?array $settings;
+	public string $prefix;
 
 	public function __construct() {
-		$this->option_name = Review_Bird::get_instance()->get_plugin_prefix() . '_general_settings';
+		$this->option_prefix = Review_Bird::get_instance()->get_plugin_prefix() . '_utilities_flow_';
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
 	}
 
 	public function add_submenu_page() {
 		$settings = add_submenu_page( 'review-bird', __( 'Settings', 'review-bird' ), __( 'Settings', 'review-bird' ), 'manage_options', self::$menu_slug, array( $this, 'render' ), 1 );
 		// add_action( 'admin_print_scripts-' . $settings, array( $this, 'register_settings_scripts' ) );
-		 add_action( 'admin_print_styles-' . $settings, array( $this, 'register_settings_styles' ) );
+		add_action( 'admin_print_styles-' . $settings, array( $this, 'register_settings_styles' ) );
 	}
 
 	public function register_settings() {
-		$this->settings = Setting::find( $this->option_name )->get_value();
-		register_setting( self::$option_group, $this->option_name, [ 'type' => 'array', 'sanitize_callback' => [ $this, 'sanitize_settings' ], ] );
+		$prefix = $this->option_prefix;
+		// Sections        
 		add_settings_section( 'flow_slug', '', null, self::$menu_slug );
 		add_settings_section( 'new_flow', __( 'Defaults for Flows', 'review-bird' ), null, self::$menu_slug );
-		add_settings_field( 'flow_slug', __( 'Flow Slug:', 'review-bird' ), [ $this, 'render_flow_slug_field' ], self::$menu_slug, 'flow_slug' );
-		add_settings_field( 'define_question', __( 'Question:', 'review-bird' ), [ $this, 'render_question_field' ], self::$menu_slug, 'new_flow' );
+		register_setting( self::$option_group, $prefix . 'flow_slug', [ 'type' => 'string', 'sanitize_callback' => 'sanitize_key', ] );
+		add_settings_field( $prefix . 'flow_slug', __( 'Flow Slug:', 'review-bird' ), [ $this, 'render_flow_slug_field' ], self::$menu_slug, 'flow_slug' );
+		register_setting( self::$option_group, $prefix . 'question', [ 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', ] );
+		add_settings_field( $prefix . 'question', __( 'Question:', 'review-bird' ), [ $this, 'render_question_field' ], self::$menu_slug, 'new_flow' );
 		add_settings_field( 'negative_review_response', 'Negative Review', function () {
 		}, self::$menu_slug, 'new_flow' );
-		add_settings_field( 'negative_review_box_text', __( 'Box Text:', 'review-bird' ), [ $this, 'render_negative_review_box_field' ], self::$menu_slug, 'new_flow' );
-		add_settings_field( 'negative_review_entry_success_message', __( 'Success Message:', 'review-bird' ), [ $this, 'render_review_entry_success_message' ], self::$menu_slug, 'new_flow' );
+		register_setting( self::$option_group, $prefix . 'negative_review_text', [ 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', ] );
+		add_settings_field( $prefix . 'negative_review_text', __( 'Box Text:', 'review-bird' ), [ $this, 'render_negative_review_box_field' ], self::$menu_slug, 'new_flow' );
+		register_setting( self::$option_group, $prefix . 'negative_review_entry_success_message', [ 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', ] );
+		add_settings_field( $prefix . 'negative_review_entry_success_message', __( 'Success Message:', 'review-bird' ), [ $this, 'render_review_entry_success_message' ], self::$menu_slug, 'new_flow' );
 		add_settings_field( 'negative_review_responses', 'Form Placeholders', function () {
 		}, self::$menu_slug, 'new_flow' );
-		add_settings_field( 'negative_review_username_placeholder', __( 'Username field:', 'review-bird' ), [ $this, 'render_review_username_placeholder' ], self::$menu_slug, 'new_flow' );
-		add_settings_field( 'negative_review_text_placeholder', __( 'Review field:', 'review-bird' ), [ $this, 'render_review_text_placeholder' ], self::$menu_slug, 'new_flow' );
-		add_settings_field( 'negative_review_email_feedback_to', __( 'Notify To E-Mails', 'review-bird' ), [ $this, 'render_notify_to_emails' ], self::$menu_slug, 'new_flow' );
+		register_setting( self::$option_group, $prefix . 'negative_review_username_placeholder', [ 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', ] );
+		add_settings_field( $prefix . 'negative_review_username_placeholder', __( 'Username field:', 'review-bird' ), [ $this, 'render_review_username_placeholder' ], self::$menu_slug, 'new_flow' );
+		register_setting( self::$option_group, $prefix . 'negative_review_text_placeholder', [ 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', ] );
+		add_settings_field( $prefix . 'negative_review_text_placeholder', __( 'Review field:', 'review-bird' ), [ $this, 'render_review_text_placeholder' ], self::$menu_slug, 'new_flow' );
+		register_setting( self::$option_group, $prefix . 'negative_review_notify_to_emails', [ 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', ] );
+		add_settings_field( $prefix . 'negative_review_notify_to_emails', __( 'Notify To E-Mails', 'review-bird' ), [ $this, 'render_notify_to_emails' ], self::$menu_slug, 'new_flow' );
 	}
 
 	public function render() {
@@ -58,47 +66,51 @@ class Page {
 
 	public function render_flow_slug_field() {
 		?>
-        <input type="text" placeholder="Review" name="<?= $this->option_name ?>[flow_slug]" value="<?php echo esc_attr( $this->settings['flow_slug'] ?? '' ); ?>" class="regular-text rw-settings-input">
+        <input type="text" placeholder="Review" name="<?= $this->option_prefix ?>flow_slug" value="<?php echo esc_attr( Setting::find( 'utilities.flow.flow_slug' )->get_value() ?? '' ); ?>" class="regular-text 
+        rw-settings-input">
 		<?php
 	}
 
 	public function render_question_field() {
 		?>
-        <textarea name="<?= $this->option_name ?>[question]" value="<?php echo esc_attr( $this->settings['question'] ?? '' ); ?>" class="regular-text rw-settings-textarea"><?= esc_html( $this->settings['question'] ?? '' ) ?></textarea>
+        <textarea name="<?= $this->option_prefix ?>question" value="<?php echo esc_attr( $this->settings['question'] ?? '' ); ?>" class="regular-text rw-settings-textarea"><?= esc_html( $this->settings['question'] ??
+		                                                                                                                                                                                  '' ) ?></textarea>
         <p><?= __( 'The shortcode {site-name} displays the site name as defined in WordPress under Settings → General.', 'review-bird' ) ?></p>
 		<?php
 	}
 
 	public function render_negative_review_box_field() {
 		?>
-        <textarea name="<?= $this->option_name ?>[review_box]" value="<?php echo esc_attr( $this->settings['review_box'] ?? '' ); ?>" class="regular-text rw-settings-textarea"><?= esc_html( $this->settings['review_box'] ?? '' ) ?></textarea>
+        <textarea name="<?= $this->option_prefix ?>negative_review_text" value="<?php echo esc_attr( $this->settings['review_box'] ?? '' ); ?>"
+                  class="regular-text rw-settings-textarea"><?= esc_html( $this->settings['review_box'] ?? '' ) ?></textarea>
 		<?php
 	}
 
 	public function render_review_entry_success_message() {
 		?>
-        <textarea name="<?= $this->option_name ?>[entry_success_message]" value="<?php echo esc_attr( $this->settings['entry_success_message'] ?? '' ); ?>"
+        <textarea name="<?= $this->option_prefix ?>negative_review_entry_success_message" value="<?php echo esc_attr( $this->settings['entry_success_message'] ?? '' ); ?>"
                   class="regular-text rw-settings-textarea"><?= esc_html( $this->settings['entry_success_message'] ?? '' ) ?></textarea>
 		<?php
 	}
 
 	public function render_review_username_placeholder() {
 		?>
-        <input type="text" name="<?= $this->option_name ?>[review_username_placeholder]" value="<?php echo esc_attr( $this->settings['review_username_placeholder'] ?? '' ); ?>" class="regular-text rw-settings-input">
+        <input type="text" name="<?= $this->option_prefix ?>negative_review_username_placeholder" value="<?php echo esc_attr( $this->settings['review_username_placeholder'] ?? '' ); ?>"
+               class="regular-text rw-settings-input">
         <p><?= __( 'This is a text for the name', 'review-bird' ) ?></p>
 		<?php
 	}
 
 	public function render_review_text_placeholder() {
 		?>
-        <input type="text" name="<?= $this->option_name ?>[review_text_placeholder]" value="<?php echo esc_attr( $this->settings['review_text_placeholder'] ?? '' ); ?>" class="regular-text rw-settings-input">
+        <input type="text" name="<?= $this->option_prefix ?>negative_review_text_placeholder" value="<?php echo esc_attr( $this->settings['review_text_placeholder'] ?? '' ); ?>" class="regular-text rw-settings-input">
         <p><?= __( 'This is a text for the review field', 'review-bird' ) ?></p>
 		<?php
 	}
 
 	public function render_notify_to_emails() {
 		?>
-        <input type="text" name="<?= $this->option_name ?>[review_notify_to_emails]" value="<?php echo esc_attr( $this->settings['review_notify_to_emails'] ?? '' ); ?>" class="regular-text rw-settings-input">
+        <input type="text" name="<?= $this->option_prefix ?>negative_review_notify_to_emails" value="<?php echo esc_attr( $this->settings['review_notify_to_emails'] ?? '' ); ?>" class="regular-text rw-settings-input">
         <p><?= __( 'Email address(es) to receive negative feedback. You can enter multiple addresses, separated by commas.', 'review-bird' ) ?></p>
 		<?php
 	}

@@ -3,8 +3,8 @@
 namespace Review_Bird\Includes\Data_Objects;
 
 use Review_Bird\Includes\Database_Strategies\WPDB;
+use Review_Bird\Includes\Services\Collection;
 use Review_Bird\Includes\Services\Data_Object_Collection;
-use Review_Bird\Includes\Services\Helper;
 
 class WPDB_Data_Object extends Data_Object {
 
@@ -135,7 +135,7 @@ class WPDB_Data_Object extends Data_Object {
 	 */
 	public static function update( $where, $data ) {
 		foreach ( $data as $key => $value ) {
-			if ( is_array( $key ) || is_array( $value ) ) {
+			if ( is_array( $key ) || is_array( $value ) || $value instanceof Collection ) {
 				$data[ $key ] = json_encode( $value );
 			}
 		}

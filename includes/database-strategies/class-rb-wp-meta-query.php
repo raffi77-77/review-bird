@@ -3,6 +3,7 @@
 namespace Review_Bird\Includes\Database_Strategies;
 
 use Review_Bird\Includes\Database_Strategy_Interface;
+use Review_Bird\Includes\Services\Collection;
 use Review_Bird\Includes\Traits\SingletonTrait;
 
 class WP_Meta_Query extends Database_Strategy implements Database_Strategy_Interface {
@@ -75,7 +76,9 @@ class WP_Meta_Query extends Database_Strategy implements Database_Strategy_Inter
 
 	public function update( $where, $data ) {
 		$where['meta_key'] = str_starts_with( $where['meta_key'], '_' ) ? $where['meta_key'] : '_' . $where['meta_key'];
-
+		if ( ! empty($data['meta_value']) && (is_array($data['meta_value']) || is_object($data['meta_value']) || $data['meta_value'] instanceOf Collection )) {
+			$data['meta_value'] = json_encode($data['meta_value']);
+		}
 		return update_post_meta( $where['post_id'], $where['meta_key'], $data['meta_value'] );
 	}
 }

@@ -31,12 +31,12 @@ class Custom_Post_Type {
 				$sanitizer = new Sanitizer( $this->meta_scheme );
 				$validator = new Validator( $this->meta_scheme );
 				$sanitizer->sanitize( $metas );
-				if ( !$validator->validate( $sanitizer->get_sanitized() ) ) {
+				if ( ! $validator->validate( $sanitizer->get_sanitized() ) ) {
 					error_log( "Validation errors: " . print_r( $validator->get_errors(), true ) );
 
 					return;
 				}
-				$this->repository->update( $post_id, [ 'metas' => $validator->get_validated() ] );
+				$flow = $update ? $this->repository->update( $post_id, [ 'metas' => $validator->get_validated() ] ) : $this->repository->create( $post_id, [ 'metas' => $validator->get_validated() ] );
 			}
 		} catch ( Exception $exception ) {
 			Helper::log( $exception, __( 'Failed to save chatbot.', 'review-bird' ) );

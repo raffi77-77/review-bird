@@ -15,7 +15,7 @@ abstract class Rest_Controller extends \WP_REST_Controller {
 			// So no matter from where the request came from, the user is authorized
 			return true;
 		} else {
-			// If not logged in, then nonce should be verified alongside with current user existence
+			// If not logged in, then nonce should be verified
 			if ( $this->nonce_is_verified( $request ) ) {
 				return true;
 			}
