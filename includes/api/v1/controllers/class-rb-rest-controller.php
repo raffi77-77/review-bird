@@ -31,14 +31,14 @@ abstract class Rest_Controller extends \WP_REST_Controller {
 	public function get_collection_params() {
 		return parent::get_collection_params() + array(
 				'orderby' => array(
-					'description'       => __( 'Sort the collection by attribute.', 'limb-ai' ),
+					'description'       => __( 'Sort the collection by attribute.', 'review-bird' ),
 					'type'              => 'string',
 					'default'           => 'created_at',
 					'enum'              => array( 'created_at', 'id', 'updated_at' ),
 					'validate_callback' => 'rest_validate_request_arg',
 				),
 				'order'   => array(
-					'description'       => __( 'Order sort attribute ascending or descending.', 'limb-ai' ),
+					'description'       => __( 'Order sort attribute ascending or descending.', 'review-bird' ),
 					'type'              => 'string',
 					'default'           => 'desc',
 					'enum'              => array( 'asc', 'desc' ),

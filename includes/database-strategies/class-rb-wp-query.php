@@ -14,7 +14,7 @@ class WP_Query extends Database_Strategy implements Database_Strategy_Interface 
 		if ( $id && ! is_wp_error( $id ) ) {
 			return get_post( $id );
 		} else {
-			throw new \Exception( __( 'Error on creating post.', 'limb-ai' ) );
+			throw new \Exception( __( 'Error on creating post.', 'review-bird' ) );
 		}
 	}
 

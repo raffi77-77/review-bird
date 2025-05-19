@@ -2,24 +2,44 @@
 
 namespace Review_Bird\Includes\Cpts\Flow;
 
-use Review_Bird\Includes\Data_Objects\Flow_Meta;
+use Exception;
+use Review_Bird\Includes\Repositories\Flow_Repository;
 use Review_Bird\Includes\Review_Bird;
 use Review_Bird\Includes\Services\Helper;
+use Review_Bird\Includes\Services\Sanitizer;
+use Review_Bird\Includes\Services\Validator;
 use Review_Bird\Includes\Traits\SingletonTrait;
 
 class Custom_Post_Type {
 	use SingletonTrait;
 
 	const NAME = 'review_bird_flow';
+	protected Flow_Repository $repository;
+	protected Meta_Scheme $meta_scheme;
 
 	public function __construct() {
+		$this->repository  = new Flow_Repository();
+		$this->meta_scheme = new Meta_Scheme();
 		add_filter( 'template_include', array( $this, 'rewrite_template' ) );
 		add_action( 'save_post_' . self::NAME, array( $this, 'save_post' ), 10, 3 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_settings_styles' ) );
 	}
 
-	public function save_post($post_id, $post, $update) {
-		Flow_Meta::create([ 'post_id' => $post_id, 'meta_key' => '_uuid', 'meta_value' => Helper::get_uuid() ]);
+	public function save_post( $post_id, $post, $update ) {
+		try {
+			if ( $metas = $_POST['metas'] ?? null ) {
+				$sanitized = ( new Sanitizer( $this->meta_scheme ) )->sanitize( $metas );
+				$errors    = ( new Validator( $this->meta_scheme ) )->validate( $sanitized );
+				if ( ! empty( $errors ) ) {
+					error_log( "Validation errors: " . print_r( $errors, true ) );
+
+					return;
+				}
+				$this->repository->update( $post_id, [ 'metas' => $sanitized ] );
+			}
+		} catch ( Exception $exception ) {
+			Helper::log( $exception, __( 'Failed to save chatbot.', 'review-bird' ) );
+		}
 	}
 
 	public function register() {
@@ -123,17 +143,17 @@ class Custom_Post_Type {
 	public function register_settings_styles() {
 		// Get the current screen
 		$screen = get_current_screen();
-
 		if ( $screen->post_type === self::NAME ) {
 			$rb = Review_Bird();
 			// Scripts
 			if ( ! wp_style_is( $rb->get_plugin_name() . '-single-' . self::NAME . '-js', 'registered' ) ) {
 				$flow_script_asset = include( $rb->get_plugin_dir_path() . 'dist/js/admin/single-' . self::NAME . '.asset.php' );
-				wp_register_script( $rb->get_plugin_name() . '-single-' . self::NAME . '-js', $rb->get_plugin_dir_url() . 'dist/js/admin/single-' . self::NAME . '.js', $flow_script_asset['dependencies'], $flow_script_asset['version'] );
+				wp_register_script( $rb->get_plugin_name() . '-single-' . self::NAME . '-js', $rb->get_plugin_dir_url() . 'dist/js/admin/single-' . self::NAME . '.js', $flow_script_asset['dependencies'],
+					$flow_script_asset['version'] );
 			}
 			wp_enqueue_script( $rb->get_plugin_name() . '-single-' . self::NAME . '-js' );
 			wp_localize_script( $rb->get_plugin_name() . '-single-' . self::NAME . '-js', 'ReviewBird', array(
-				'rest' => array(
+				'rest'      => array(
 					'url'   => get_rest_url( null, 'review-bird/v1/' ),
 					'nonce' => wp_create_nonce( 'wp_rest' ),
 				),

@@ -35,11 +35,12 @@ class Asset {
 	}
 
 	public function block_editor_scripts() {
+		// TODO Vahan to we need this ?
 		$review_bird        = Review_Bird();
-		$hooks_script_asset = include( $review_bird->get_plugin_dir_path() . 'dist/js/admin/limb-ai-hooks.asset.php' );
-		wp_register_script( 'limb-ai-hooks', $review_bird->get_plugin_dir_url() . 'dist/js/admin/limb-ai-hooks.js', $hooks_script_asset['dependencies'], $hooks_script_asset['version'] );
-		wp_enqueue_script( 'limb-ai-hooks' );
-		wp_localize_script( 'limb-ai-hooks', 'limb_chatbot_vars', $this->get_l_10_n() );
+		$hooks_script_asset = include( $review_bird->get_plugin_dir_path() . 'dist/js/admin/review-bird-hooks.asset.php' );
+		wp_register_script( 'review-bird-hooks', $review_bird->get_plugin_dir_url() . 'dist/js/admin/review-bird-hooks.js', $hooks_script_asset['dependencies'], $hooks_script_asset['version'] );
+		wp_enqueue_script( 'review-bird-hooks' );
+		wp_localize_script( 'review-bird-hooks', 'limb_chatbot_vars', $this->get_l_10_n() );
 	}
 
 	public function styles() {

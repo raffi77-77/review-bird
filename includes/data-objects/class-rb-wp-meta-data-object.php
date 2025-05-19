@@ -54,7 +54,7 @@ class WP_Meta_Data_Object extends Data_Object {
 		if ( ! $metas->is_empty() ) {
 			return $metas->first();
 		}
-		throw new Exception( __( 'Failed to update meta!', 'limb-ai' ) );
+		throw new Exception( __( 'Failed to update meta!', 'review-bird' ) );
 	}
 
 	public static function get_db_strategy() {

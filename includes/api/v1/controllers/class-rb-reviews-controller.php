@@ -48,33 +48,33 @@ class Reviews_Controller extends Rest_Controller {
 			'type'       => 'object',
 			'properties' => array(
 				'id'        => array(
-					'description' => __( 'Unique identifier for the resource.', 'limb-ai' ),
+					'description' => __( 'Unique identifier for the resource.', 'review-bird' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true
 				),
 				'message'   => array(
-					'description' => __( 'Review message', 'limb-ai' ),
+					'description' => __( 'Review message', 'review-bird' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'arg_options' => array(// 'sanitize_callback' => 'wp_filter_post_kses',
 					),
 				),
 				'username'  => array(
-					'description' => __( 'Review message', 'limb-ai' ),
+					'description' => __( 'Review message', 'review-bird' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'arg_options' => array(// 'sanitize_callback' => 'wp_filter_post_kses',
 					),
 				),
 				'uuid'      => array(
-					'description' => __( 'Universal unique identifier for the review', 'limb-ai' ),
+					'description' => __( 'Universal unique identifier for the review', 'review-bird' ),
 					'type'        => 'string',
 					'format'      => 'uuid',
 					'context'     => array( 'view' ),
 				),
 				'flow_uuid' => array(
-					'description' => __( 'Universal unique identifier for the flow', 'limb-ai' ),
+					'description' => __( 'Universal unique identifier for the flow', 'review-bird' ),
 					'type'        => 'string',
 					'format'      => 'uuid',
 					'required'    => true,
@@ -86,7 +86,7 @@ class Reviews_Controller extends Rest_Controller {
 					)
 				),
 				'rating'    => array(
-					'description' => __( 'Review rating', 'limb-ai' ),
+					'description' => __( 'Review rating', 'review-bird' ),
 					'type'        => 'integer',
 					'arg_options' => array(
 						'validate_callback' => function ( $value, $request, $param ) {
@@ -95,7 +95,7 @@ class Reviews_Controller extends Rest_Controller {
 					)
 				),
 				'like'      => array(
-					'description' => __( 'Review like', 'limb-ai' ),
+					'description' => __( 'Review like', 'review-bird' ),
 					'type'        => 'integer',
 					'enum'        => [ 0, 1 ]
 				)

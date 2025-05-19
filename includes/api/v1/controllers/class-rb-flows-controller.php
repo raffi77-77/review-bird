@@ -26,7 +26,7 @@ class Flows_Controller extends Rest_Controller {
 						}
 					),
 					'include' => array(
-						'description' => __( 'Include extra data with chatbot.', 'limb-ai' ),
+						'description' => __( 'Include extra data with chatbot.', 'review-bird' ),
 						'type'        => 'array'
 					)
 				)
@@ -49,7 +49,7 @@ class Flows_Controller extends Rest_Controller {
 			return $item;
 		}
 		if ( ! is_a( $item, Flow::class ) ) {
-			throw new Exception( __( 'Unknown item type.', 'limb-ai' ) );
+			throw new Exception( __( 'Unknown item type.', 'review-bird' ) );
 		}
 		$include = $request->get_param( 'include' );
 		if ( ! empty( $include ) && is_array( $include ) ) {

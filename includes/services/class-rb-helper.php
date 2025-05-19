@@ -167,4 +167,25 @@ class Helper {
 		}
 	}
 
+	public static function cast_value(string $type, $value) {
+		switch ($type) {
+			case 'int':
+				return (int) $value;
+			case 'float':
+				return (float) $value;
+			case 'string':
+				return (string) $value;
+			case 'bool':
+				return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+			case 'array':
+				return (array) $value;
+			case 'object':
+				return (object) $value;
+			case 'Limb_Chatbot\Includes\Services\Collection':
+				return $value;
+			default:
+				return null;
+		}
+	}
+
 }

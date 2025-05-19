@@ -36,6 +36,7 @@ final class Review_Bird {
 		require_once $this->plugin_dir_path . 'includes/traits/class-rb-json-serializable-trait.php.php';
 		
 		require_once $this->plugin_dir_path . 'includes/interfaces/class-rb-database-strategy-interface.php';
+		require_once $this->plugin_dir_path . 'includes/interfaces/class-rb-scheme-interface.php';
 		
 		require_once $this->plugin_dir_path . 'includes/repositories/class-rb-flow-repository.php';
 		require_once $this->plugin_dir_path . 'includes/repositories/class-rb-review-repository.php';
@@ -45,6 +46,8 @@ final class Review_Bird {
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-helper.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-install.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-freemius.php';
+		require_once $this->plugin_dir_path . 'includes/services/class-rb-sanitizer.php';
+		require_once $this->plugin_dir_path . 'includes/services/class-rb-validator.php';
 
 		require_once $this->plugin_dir_path . 'includes/api/class-rb-server.php';
 		require_once $this->plugin_dir_path . 'includes/api/v1/controllers/class-rb-rest-controller.php';
@@ -59,6 +62,7 @@ final class Review_Bird {
 		
 		require_once $this->plugin_dir_path . 'includes/cpts/class-rb-custom-post-types.php';
 		require_once $this->plugin_dir_path . 'includes/cpts/flow/class-rb-custom-post-type.php';
+		require_once $this->plugin_dir_path . 'includes/cpts/flow/class-rb-meta-scheme.php';
 		
 		require_once $this->plugin_dir_path . 'includes/admin/class-rb-admin.php';
 		require_once $this->plugin_dir_path . 'includes/admin/class-rb-asset.php';
@@ -84,6 +88,8 @@ final class Review_Bird {
 		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-flow-meta.php';
 		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-review.php';
 		require_once $this->plugin_dir_path . 'includes/data-objects/class-rb-setting.php';
+		
+		require_once $this->plugin_dir_path . 'includes/utilities/class-rb-flow-utility.php';
 	}
 
 	private function set_locale(): void {

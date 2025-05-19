@@ -2,6 +2,7 @@
   "name": "review-bird",
   "version": "1.0.0",
   "scripts": {
+    "build": "npm run build:flow && npm run build:admin-js && npm run build:scss",
     "watch:flow": "wp-scripts start --webpack-src-dir=blocks/flow/src --output-path=blocks/flow/build",
     "build:flow": "wp-scripts build --webpack-src-dir=blocks/flow/src --output-path=blocks/flow/build",
     "watch:admin-js": "wp-scripts start assets/js/admin/*.js --output-path=dist/js/admin",
