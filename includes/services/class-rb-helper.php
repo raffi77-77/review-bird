@@ -6,13 +6,13 @@ use Review_Bird\Includes\Exceptions\Review_Bird_Exception;
 use ReflectionClass;
 
 class Helper {
-	
+
 	public static function underscore_to_camelcase( $string ) {
 		$words = explode( '_', $string );
 
 		return ucfirst( implode( '', array_map( 'ucfirst', $words ) ) );
 	}
-	
+
 	public static function camelcase_to_underscore( $string, $separator = '_' ) {
 		// Use a regular expression to replace camel case with underscore
 		$output = preg_replace_callback( '/([a-z])([A-Z])/', function ( $matches ) use ( $separator ) {
@@ -21,19 +21,19 @@ class Helper {
 
 		return strtolower( $output );
 	}
-	
+
 	public static function underscore_to_hyphen( $string, $lowercase = false ) {
 		$string = str_replace( '_', '-', $string );
 
 		return $lowercase ? strtolower( $string ) : $string;
 	}
-	
+
 	public static function hyphen_to_underscore( $string, $lowercase = false ) {
 		$string = str_replace( '-', '_', $string );
 
 		return $lowercase ? strtolower( $string ) : $string;
 	}
-	
+
 	public static function get_wp_error( $e ) {
 		if ( $e instanceof Review_Bird_Exception ) {
 			return new \WP_Error( $e->get_error_code(), $e->getMessage(), $e->get_error_data() );
@@ -167,8 +167,8 @@ class Helper {
 		}
 	}
 
-	public static function cast_value(string $type, $value) {
-		switch ($type) {
+	public static function cast_value( string $type, $value ) {
+		switch ( $type ) {
 			case 'int':
 				return (int) $value;
 			case 'float':
@@ -176,7 +176,7 @@ class Helper {
 			case 'string':
 				return (string) $value;
 			case 'bool':
-				return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+				return filter_var( $value, FILTER_VALIDATE_BOOLEAN );
 			case 'array':
 				return (array) $value;
 			case 'object':
@@ -186,6 +186,29 @@ class Helper {
 			default:
 				return null;
 		}
+	}
+
+	public static function gettype( $value ): string {
+		if ( is_int( $value ) ) {
+			return 'int';
+		}
+		if ( is_bool( $value ) ) {
+			return 'bool';
+		}
+		if ( is_float( $value ) ) {
+			return 'float';
+		}
+		if ( is_string( $value ) ) {
+			return 'string';
+		}
+		if ( is_array( $value ) ) {
+			return 'array';
+		}
+		if ( is_object( $value ) ) {
+			return 'object';
+		}
+
+		return gettype( $value );
 	}
 
 }

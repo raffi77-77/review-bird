@@ -28,14 +28,15 @@ class Custom_Post_Type {
 	public function save_post( $post_id, $post, $update ) {
 		try {
 			if ( $metas = $_POST['metas'] ?? null ) {
-				$sanitized = ( new Sanitizer( $this->meta_scheme ) )->sanitize( $metas );
-				$errors    = ( new Validator( $this->meta_scheme ) )->validate( $sanitized );
-				if ( ! empty( $errors ) ) {
-					error_log( "Validation errors: " . print_r( $errors, true ) );
+				$sanitizer = new Sanitizer( $this->meta_scheme );
+				$validator = new Validator( $this->meta_scheme );
+				$sanitizer->sanitize( $metas );
+				if ( !$validator->validate( $sanitizer->get_sanitized() ) ) {
+					error_log( "Validation errors: " . print_r( $validator->get_errors(), true ) );
 
 					return;
 				}
-				$this->repository->update( $post_id, [ 'metas' => $sanitized ] );
+				$this->repository->update( $post_id, [ 'metas' => $validator->get_validated() ] );
 			}
 		} catch ( Exception $exception ) {
 			Helper::log( $exception, __( 'Failed to save chatbot.', 'review-bird' ) );

@@ -6,13 +6,14 @@ use Review_Bird\Includes\Scheme_Interface;
 
 class Sanitizer {
 	private Scheme_Interface $schema_class;
+	protected array $sanitized;
 
 	public function __construct( Scheme_Interface $schema_class ) {
 		$this->schema_class = $schema_class;
 	}
-	
-	public function sanitize( array $data ): array {
-		$result = [];
+
+	public function sanitize( array $data ): void {
+		$this->sanitized = [];
 		foreach ( $this->schema_class::rules() as $key => $rule ) {
 			if ( ! array_key_exists( $key, $data ) ) {
 				continue;
@@ -23,10 +24,8 @@ class Sanitizer {
 			} elseif ( isset( $rule['type'] ) ) {
 				$value = $this->sanitize_by_type( $value, $rule['type'] );
 			}
-			$result[ $key ] = $value;
+			$this->sanitized[ $key ] = $value;
 		}
-
-		return $result;
 	}
 
 	private function sanitize_by_type( $value, string $type ) {
@@ -44,5 +43,9 @@ class Sanitizer {
 			default:
 				return $value;
 		}
+	}
+
+	public function get_sanitized(): array {
+		return $this->sanitized;
 	}
 }
