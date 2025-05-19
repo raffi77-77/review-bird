@@ -25,14 +25,14 @@ class Meta_Scheme implements Scheme_Interface {
 				'required' => true,
 			],
 			'targets'                       => [
-				'type'              => 'object',
+				'type'              => 'array',
 				'required'          => true,
 				'sanitize_callback' => [ self::class, 'sanitize_targets' ],
 				'validate_callback' => [ self::class, 'validate_targets' ],
 			],
 			'target_distribution'           => [
 				'type'              => 'integer',
-				'validate_callback' => [ self::class, 'validate_targets' ],
+				'validate_callback' => [ self::class, 'validate_target_distribution' ],
 			],
 			'enable_multiple_targets'       => [
 				'type' => 'boolean',
@@ -64,17 +64,18 @@ class Meta_Scheme implements Scheme_Interface {
 	public static function sanitize_targets( $value ): array {
 		if ( is_array( $value ) ) {
 			foreach ( $value as &$item ) {
-				$item = sanitize_url( $item );
+				$item['url']      = sanitize_url( $item['url'] );
+				$item['media_id'] = (int) ( $item['media_id'] );
 			}
 		}
-		
+
 		return $value;
 	}
 
 	public static function validate_targets( $value ): bool {
 		if ( is_array( $value ) ) {
 			foreach ( $value as $item ) {
-				if ( ! filter_var( $item, FILTER_VALIDATE_URL ) ) {
+				if ( ! filter_var( $item['url'], FILTER_VALIDATE_URL ) || empty( wp_get_attachment_url( $item['media_id'] ) ) ) {
 					$valid = false;
 					break;
 				}

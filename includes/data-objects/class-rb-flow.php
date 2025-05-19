@@ -3,6 +3,7 @@
 namespace Review_Bird\Includes\Data_Objects;
 
 use Review_Bird\Includes\Database_Strategies\WP_Query;
+use Review_Bird\Includes\utilities\Flow_Utility;
 
 class Flow extends WP_Post_Data_Object {
 	const POST_TYPE = 'review_bird_flow';
@@ -12,8 +13,7 @@ class Flow extends WP_Post_Data_Object {
 	 */
 	public $id;
 	public ?string $uuid = null;
-	// TODO maybe some extra attributes needed
-	protected array $meta_properties = [ 'metas' ];
+	protected array $meta_properties = [ 'metas', 'utility' ];
 
 	/**
 	 * @json_excluded
@@ -47,8 +47,12 @@ class Flow extends WP_Post_Data_Object {
 		return ! empty( $post ) ? self::make( $post ) : null;
 	}
 
-	public function metas(){
-		return Flow_Meta::where(['post_id' => $this->id, 'meta_key' => ['_uuid']])->get();
+	public function metas() {
+		return Flow_Meta::where( [ 'post_id' => $this->id, 'meta_key' => [ '_uuid' ] ] )->get();
+	}
+
+	public function utility() {
+		return new Flow_Utility( $this );
 	}
 
 }

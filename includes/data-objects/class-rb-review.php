@@ -5,7 +5,7 @@ namespace Review_Bird\Includes\Data_Objects;
 class Review extends WPDB_Data_Object {
 
 	const TABLE_NAME = 'sr_rb_reviews';
-	const FILLABLE = array( 'uuid', 'flow_id', 'flow_uuid', 'message', 'user_id', 'username', 'rating', 'like', 'created_at', 'updated_at' );
+	const FILLABLE = array( 'uuid', 'flow_id', 'flow_uuid', 'message', 'user_id', 'username', 'rating', 'like', 'target', 'created_at', 'updated_at' );
 	public string $uuid;
 	/**
 	 * @json_excluded 
@@ -17,6 +17,7 @@ class Review extends WPDB_Data_Object {
 	public ?string $username = null;
 	public ?int $rating = null;
 	public ?bool $like = null;
+	public ?string $target = null;
 	public string $created_at;
 	public string $updated_at;
 	

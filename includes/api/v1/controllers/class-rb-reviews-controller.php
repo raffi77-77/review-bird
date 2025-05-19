@@ -6,10 +6,15 @@ use Exception;
 use Review_Bird\Includes\Data_Objects\Flow;
 use Review_Bird\Includes\Repositories\Review_Repository;
 use Review_Bird\Includes\Services\Helper;
+use Review_Bird\Includes\Services\Review_Service;
 use WP_REST_Server;
 
 class Reviews_Controller extends Rest_Controller {
 	protected string $generic_rest_base = 'reviews';
+	protected Review_Service  $review_service;
+	public function __construct() {
+		$this->review_service = new Review_Service();
+	}
 
 	public function register_routes() {
 		register_rest_route( $this->namespace, '/' . $this->generic_rest_base, array(
@@ -26,10 +31,8 @@ class Reviews_Controller extends Rest_Controller {
 	public function create_item( $request ) {
 		try {
 			$data            = $request->get_json_params();
-			$flow            = Flow::find_by_uuid( $data['flow_uuid'] );
-			$data['flow_id'] = $flow->id;
 
-			return rest_ensure_response( ( new Review_Repository() )->create( $data ) );
+			return rest_ensure_response( $this->review_service->create( $data ) );
 		} catch ( Exception $e ) {
 			Helper::log( $e, __METHOD__ );
 

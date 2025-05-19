@@ -48,6 +48,7 @@ final class Review_Bird {
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-freemius.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-sanitizer.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-validator.php';
+		require_once $this->plugin_dir_path . 'includes/services/class-rb-review-service.php';
 
 		require_once $this->plugin_dir_path . 'includes/api/class-rb-server.php';
 		require_once $this->plugin_dir_path . 'includes/api/v1/controllers/class-rb-rest-controller.php';

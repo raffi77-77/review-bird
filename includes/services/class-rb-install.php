@@ -52,6 +52,7 @@ CREATE TABLE {$wpdb->prefix}{$prefix}_reviews (
   username varchar(64) NULL, 
   rating smallint NULL,
   `like` tinyint(1) NULL,
+  target varchar(512) NULL,
   created_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   updated_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   PRIMARY KEY  (id),

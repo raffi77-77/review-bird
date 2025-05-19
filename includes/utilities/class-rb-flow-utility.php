@@ -14,6 +14,9 @@ class Flow_Utility implements JsonSerializable {
 
 	use Json_Serializable_Trait;
 
+	/**
+	 * @json_excluded
+	 */
 	const TARGET_DISTRIBUTIONS
 		= [
 			1  => [ 50, 50 ],
@@ -38,9 +41,27 @@ class Flow_Utility implements JsonSerializable {
 	 */
 	public Flow $flow;
 	public string $question = 'Would you recommend {site-name} to others?';
-	public array $targets = [];
-	public ?int $target_distribution = null;
-	public bool $enable_multiple_targets = false;
+	public array $targets
+		= [
+			[
+				'url' => 'gago.com',
+				'media_id' => null
+			],
+			[
+				'url' => 'vaxo.com',
+				'media_id' => null
+			],
+			[
+				'url' => 'petros.com',
+				'media_id' => null
+			],
+			[
+				'url' => 'antuan.com',
+				'media_id' => null
+			]
+		];
+	public ?int $target_distribution = 15;
+	public bool $enable_multiple_targets = true;
 	public string $negative_review_text = '';
 	public string $field_name_placeholder = '';
 	public string $field_review_placeholder = '';
@@ -80,5 +101,21 @@ class Flow_Utility implements JsonSerializable {
 			}
 			unset( $value );
 		}
+	}
+
+	public function calc_target_index( ?int $distribution_index ) {
+		$distribution_index = $distribution_index ?? 0;
+		$distribution = self::TARGET_DISTRIBUTIONS[ $distribution_index ];
+		$total        = array_sum( $distribution );
+		$rand         = rand( 1, $total );
+		$cumulative   = 0;
+		foreach ( $distribution as $index => $weight ) {
+			$cumulative += $weight;
+			if ( $rand <= $cumulative ) {
+				return $index;
+			}
+		}
+
+		return 0;
 	}
 }
