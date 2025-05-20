@@ -3,6 +3,7 @@
 namespace Review_Bird\Includes\Cpts\Flow;
 
 use Exception;
+use Review_Bird\Includes\Data_Objects\Setting;
 use Review_Bird\Includes\Repositories\Flow_Repository;
 use Review_Bird\Includes\Review_Bird;
 use Review_Bird\Includes\Services\Helper;
@@ -32,8 +33,7 @@ class Custom_Post_Type {
 				$validator = new Validator( $this->meta_scheme );
 				$sanitizer->sanitize( $metas );
 				if ( ! $validator->validate( $sanitizer->get_sanitized() ) ) {
-					error_log( "Validation errors: " . print_r( $validator->get_errors(), true ) );
-
+					Helper::log($validator->get_errors(), 'cpt save error');
 					return;
 				}
 				$flow = $update ? $this->repository->update( $post_id, [ 'metas' => $validator->get_validated() ] ) : $this->repository->create( $post_id, [ 'metas' => $validator->get_validated() ] );
@@ -65,7 +65,7 @@ class Custom_Post_Type {
 			'show_in_menu'        => 'review-bird',
 			'hierarchical'        => false,
 			'show_in_nav_menus'   => false,
-			'rewrite'             => [ 'slug' => 'review' ],
+			'rewrite'             => [ 'slug' => Setting::find(Review_Bird::get_instance()->get_plugin_prefix() . '_utilities_flow_flow_slug')->get_value() ?? 'review' ],
 			'query_var'           => true,
 			'has_archive'         => true,
 			'show_in_rest'        => false,

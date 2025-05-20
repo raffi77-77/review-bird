@@ -6,7 +6,7 @@ use Review_Bird\Includes\Review_Bird;
 
 class Page {
 
-	static $menu_slug = 'sr-rb-reviews';
+	static $menu_slug = 'review-bird-reviews';
 	public function __construct() {}
 	
 	public function add_submenu_page() {

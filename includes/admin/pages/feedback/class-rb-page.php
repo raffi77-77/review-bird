@@ -4,7 +4,7 @@ namespace Review_Bird\Includes\Admin\Pages\Feedback;
 
 class Page {
 
-	static $menu_slug = 'sr-rb-feedback';
+	static $menu_slug = 'review-bird-feedback';
 	public function __construct() {}
 	
 	public function add_submenu_page() {

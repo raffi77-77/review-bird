@@ -35,7 +35,7 @@ class Freemius {
 				'has_addons'          => false,
 				'has_paid_plans'      => false,
 				'menu'                => array(
-					'slug'           => 'sr-rb-settings',
+					'slug'           => 'review-bird',
 				),
 			) );
 		} catch ( Exception $e ) {

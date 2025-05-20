@@ -4,7 +4,7 @@ namespace Review_Bird\Includes\Admin\Pages\Skin;
 
 class Page {
 
-	static $menu_slug = 'sr-rb-skins';
+	static $menu_slug = 'review-bird-skins';
 	public function __construct() {}
 
 	public function add_submenu_page() {

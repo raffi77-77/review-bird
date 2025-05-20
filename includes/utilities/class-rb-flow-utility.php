@@ -62,14 +62,14 @@ class Flow_Utility implements JsonSerializable {
 			]
 		];
 	public ?int $target_distribution = 15;
-	public bool $enable_multiple_targets = true;
-	public string $negative_review_text = '';
-	public string $field_name_placeholder = '';
-	public string $field_review_placeholder = '';
-	public string $success_message = '';
-	public bool $review_gating = false;
-	public bool $sent_email_on_negative_review = false;
-	public string $email_on_negative_review = '';
+	public bool $multiple_targets = false;
+	public string $review_box_text = 'Please leave your name and share your experience with us. Your feedback helps us improve and lets others know what to expect. We appreciate your time!';
+	public string $username_placeholder = 'Enter your name (Optional)';
+	public string $review_placeholder = 'Tell us about your impressions and experiences';
+	public string $success_message = 'Thank you for your feedback!';
+	public bool $gating = false;
+	public bool $email_notify_on_negative_review = false;
+	public string $emails_on_negative_review = '';
 
 	// public ?Collection $some_collection = null;
 	public function __construct( Flow $flow ) {
