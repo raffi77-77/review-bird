@@ -69,6 +69,7 @@ class Page {
 		?>
         <input type="text" placeholder="Review" name="<?= $this->option_prefix ?>flow_slug" value="<?php echo esc_attr( Setting::find( $this->prefix . 'flow_slug' )->get_value() ?? 'review' ); ?>" class="regular-text 
         rw-settings-input">
+        <p><?= sprintf(__( 'After updating the slug, always update the permalinks %s here %s', 'review-bird' ), '<a href="options-permalink.php">', '</a>') ?></p>
 		<?php
 	}
 
