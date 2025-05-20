@@ -4,7 +4,6 @@ namespace Review_Bird\Includes\utilities;
 
 use JsonSerializable;
 use Review_Bird\Includes\Data_Objects\Flow;
-use Review_Bird\Includes\Data_Objects\Flow_Meta;
 use Review_Bird\Includes\Data_Objects\Setting;
 use Review_Bird\Includes\Services\Collection;
 use Review_Bird\Includes\Services\Helper;
@@ -14,6 +13,7 @@ use ReflectionClass;
 class Flow_Utility implements JsonSerializable {
 
 	use Json_Serializable_Trait;
+
 	const SETTING_PREFIX = 'utilities_flow_';
 	/**
 	 * @json_excluded
@@ -45,19 +45,19 @@ class Flow_Utility implements JsonSerializable {
 	public array $targets
 		= [
 			[
-				'url' => 'gago.com',
+				'url'      => 'gago.com',
 				'media_id' => null
 			],
 			[
-				'url' => 'vaxo.com',
+				'url'      => 'vaxo.com',
 				'media_id' => null
 			],
 			[
-				'url' => 'petros.com',
+				'url'      => 'petros.com',
 				'media_id' => null
 			],
 			[
-				'url' => 'antuan.com',
+				'url'      => 'antuan.com',
 				'media_id' => null
 			]
 		];
@@ -66,10 +66,16 @@ class Flow_Utility implements JsonSerializable {
 	public string $review_box_text = 'Please leave your name and share your experience with us. Your feedback helps us improve and lets others know what to expect. We appreciate your time!';
 	public string $username_placeholder = 'Enter your name (Optional)';
 	public string $review_placeholder = 'Tell us about your impressions and experiences';
-	public string $success_message = 'Thank you for your feedback!';
+	public string $success_message = 'Your review was submitted successfully!';
 	public bool $gating = false;
 	public bool $email_notify_on_negative_review = false;
 	public string $emails_on_negative_review = '';
+	/**
+	 * @var int|null
+	 * @json_excluded
+	 */
+	public ?int $thumbnail_id = null;
+	public ?string $thumbnail_url = null;
 
 	// public ?Collection $some_collection = null;
 	public function __construct( Flow $flow ) {
@@ -85,7 +91,7 @@ class Flow_Utility implements JsonSerializable {
 				// If not own property, pass it.
 				continue;
 			}
-			if ( ! $property->getType() || ( ! $property->getType()->isBuiltin() && ! ( $property->getType()->getName() == Collection::class )) ) {
+			if ( ! $property->getType() || ( ! $property->getType()->isBuiltin() && ! ( $property->getType()->getName() == Collection::class ) ) ) {
 				// If not built in property type, pass it.
 				continue;
 			}
@@ -94,9 +100,12 @@ class Flow_Utility implements JsonSerializable {
 				// Direct property from the CPT
 				$value = $this->flow->{$property_name};
 			}
-			$poxooooooos = self::SETTING_PREFIX.$property_name;
+			$poxooooooos = self::SETTING_PREFIX . $property_name;
 			// Or meta property or setting value
-			$value = $value ?? $this->flow->get_meta( $property_name ) ?? Setting::find(self::SETTING_PREFIX.$property_name)->get_value();
+			$value = $value ?? $this->flow->get_meta( $property_name ) ?? Setting::find( self::SETTING_PREFIX . $property_name )->get_value();
+			if ( $property_name === 'thumbnail_url' ) {
+				$value = $this->define_thumbnail_url();
+			}
 			if ( isset( $value ) ) {
 				$this->{$property_name} = Helper::cast_value( $property->getType()->getName(), $value );
 			}
@@ -106,10 +115,10 @@ class Flow_Utility implements JsonSerializable {
 
 	public function calc_target_index( ?int $distribution_index ) {
 		$distribution_index = $distribution_index ?? 0;
-		$distribution = self::TARGET_DISTRIBUTIONS[ $distribution_index ];
-		$total        = array_sum( $distribution );
-		$rand         = rand( 1, $total );
-		$cumulative   = 0;
+		$distribution       = self::TARGET_DISTRIBUTIONS[ $distribution_index ];
+		$total              = array_sum( $distribution );
+		$rand               = rand( 1, $total );
+		$cumulative         = 0;
 		foreach ( $distribution as $index => $weight ) {
 			$cumulative += $weight;
 			if ( $rand <= $cumulative ) {
@@ -118,5 +127,14 @@ class Flow_Utility implements JsonSerializable {
 		}
 
 		return 0;
+	}
+
+	protected function define_thumbnail_url() {
+		$thumbnail_id = $this->thumbnail_id ?? $this->flow->get_meta( 'thumbnail_id' ) ?? Setting::find( self::SETTING_PREFIX . 'thumbnail_id' )->get_value();
+		if ( $thumbnail_id ) {
+			return wp_get_attachment_url( $thumbnail_id );
+		}
+
+		return null;
 	}
 }

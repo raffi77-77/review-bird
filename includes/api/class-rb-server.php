@@ -34,8 +34,9 @@ class Server {
 
 	public function get_controllers(): array {
 		return [
-			'flows' => 'Review_Bird\\Includes\\Api\\V1\\Controllers\\Flows_Controller',
-			'reviews'    => 'Review_Bird\\Includes\\Api\\V1\\Controllers\\Reviews_Controller'
+			'flows'    => 'Review_Bird\\Includes\\Api\\V1\\Controllers\\Flows_Controller',
+			'reviews'  => 'Review_Bird\\Includes\\Api\\V1\\Controllers\\Reviews_Controller',
+			'settings' => 'Review_Bird\\Includes\\Api\\V1\\Controllers\\Settings_Controller',
 		];
 	}
 }

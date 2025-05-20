@@ -34,7 +34,7 @@ class Reviews_Controller extends Rest_Controller {
 				'permission_callback' => array( $this, 'permission_callback' ),
 				'args'                => array_merge( array(
 					'uuid' => array(
-						'description'       => __( 'Review uuid', 'limb-ai' ),
+						'description'       => __( 'Review uuid', 'review-bird' ),
 						'type'              => 'string',
 						'format'            => 'uuid',
 						'required'          => true,

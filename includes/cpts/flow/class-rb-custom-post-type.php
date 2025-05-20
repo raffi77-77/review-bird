@@ -36,7 +36,7 @@ class Custom_Post_Type {
 					Helper::log($validator->get_errors(), 'cpt save error');
 					return;
 				}
-				$flow = $update ? $this->repository->update( $post_id, [ 'metas' => $validator->get_validated() ] ) : $this->repository->create( $post_id, [ 'metas' => $validator->get_validated() ] );
+				$flow = $this->repository->save_on_hook($post_id, $post, [ 'metas' => $validator->get_validated() ]);
 			}
 		} catch ( Exception $exception ) {
 			Helper::log( $exception, __( 'Failed to save chatbot.', 'review-bird' ) );

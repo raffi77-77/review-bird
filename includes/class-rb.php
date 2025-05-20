@@ -40,6 +40,7 @@ final class Review_Bird {
 		
 		require_once $this->plugin_dir_path . 'includes/repositories/class-rb-flow-repository.php';
 		require_once $this->plugin_dir_path . 'includes/repositories/class-rb-review-repository.php';
+		require_once $this->plugin_dir_path . 'includes/repositories/class-rb-setting-repository.php';
 		
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-collection.php';
 		require_once $this->plugin_dir_path . 'includes/services/class-rb-data-object-collection.php';
@@ -54,6 +55,7 @@ final class Review_Bird {
 		require_once $this->plugin_dir_path . 'includes/api/v1/controllers/class-rb-rest-controller.php';
 		require_once $this->plugin_dir_path . 'includes/api/v1/controllers/class-rb-flows-controller.php';
 		require_once $this->plugin_dir_path . 'includes/api/v1/controllers/class-rb-reviews-controller.php';
+		require_once $this->plugin_dir_path . 'includes/api/v1/controllers/class-rb-settings-controller.php';
 
 		require_once $this->plugin_dir_path . 'includes/database-strategies/class-rb-database-strategy.php';
 		require_once $this->plugin_dir_path . 'includes/database-strategies/class-rb-wp-meta-query.php';

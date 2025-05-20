@@ -5,6 +5,7 @@ namespace Review_Bird\Includes\Repositories;
 use Review_Bird\Includes\Data_Objects\Flow;
 use Review_Bird\Includes\Data_Objects\Flow_Meta;
 use Review_Bird\Includes\Services\Helper;
+use WP_Post;
 
 class Flow_Repository {
 
@@ -16,11 +17,9 @@ class Flow_Repository {
 		return Flow::where( $params );
 	}
 
-	public function create( int $id, array $data ) {
+	public function create( int $id, array $data ): ?Flow {
 		$flow = Flow::find( $id );
-		if ( empty( $flow->get_meta( 'uuid' ) ) ) {
-			Flow_Meta::create( [ 'flow_id' => $id, 'meta_key' => '_uuid', 'meta_value' => Helper::get_uuid() ] );
-		}
+		Flow_Meta::create( [ 'flow_id' => $id, 'meta_key' => '_uuid', 'meta_value' => Helper::get_uuid() ] );
 		if ( ! empty( $data['metas'] ) ) {
 			foreach ( $data['metas'] as $key => $value ) {
 				Flow_Meta::create( [ 'flow_id' => $id, 'meta_key' => $key, 'meta_value' => $value ] );
@@ -30,7 +29,7 @@ class Flow_Repository {
 		return $flow;
 	}
 
-	public function update( int $id, array $data ) {
+	public function update( int $id, array $data ): ?Flow {
 		$flow = Flow::find( $id );
 		if ( ! empty( $data['metas'] ) ) {
 			foreach ( $data['metas'] as $key => $value ) {
@@ -39,5 +38,15 @@ class Flow_Repository {
 		}
 
 		return $flow;
+	}
+
+	public function save_on_hook( int $id, WP_Post $post, array $data ) {
+		if ( $post->post_status === 'publish' ) {
+			if ( empty( Flow_Meta::where( [ 'flow_id' => $id, 'meta_key' => '_uuid' ] )->first() ) ) {
+				return $this->create( $id, $data );
+			}
+		}
+
+		return $this->update( $id, $data );
 	}
 }

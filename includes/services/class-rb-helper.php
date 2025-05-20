@@ -181,7 +181,7 @@ class Helper {
 				return (array) $value;
 			case 'object':
 				return (object) $value;
-			case 'Limb_Chatbot\Includes\Services\Collection':
+			case 'Review_Bird\Includes\Services\Collection':
 				return $value;
 			default:
 				return null;
