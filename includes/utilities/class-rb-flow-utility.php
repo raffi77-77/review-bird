@@ -14,7 +14,7 @@ class Flow_Utility implements JsonSerializable {
 
 	use Json_Serializable_Trait;
 
-	const SETTING_PREFIX = 'utilities_flow_';
+	const SETTING_PREFIX = '_utilities_flow_';
 	/**
 	 * @json_excluded
 	 */
@@ -76,6 +76,7 @@ class Flow_Utility implements JsonSerializable {
 	 */
 	public ?int $thumbnail_id = null;
 	public ?string $thumbnail_url = null;
+	public string $skin;
 
 	// public ?Collection $some_collection = null;
 	public function __construct( Flow $flow ) {
