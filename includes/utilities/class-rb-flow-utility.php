@@ -42,32 +42,14 @@ class Flow_Utility implements JsonSerializable {
 	 */
 	public Flow $flow;
 	public string $question = 'Would you recommend {site-name} to others?';
-	public array $targets
-		= [
-			[
-				'url'      => 'gago.com',
-				'media_id' => null
-			],
-			[
-				'url'      => 'vaxo.com',
-				'media_id' => null
-			],
-			[
-				'url'      => 'petros.com',
-				'media_id' => null
-			],
-			[
-				'url'      => 'antuan.com',
-				'media_id' => null
-			]
-		];
-	public ?int $target_distribution = 15;
+	public array $targets = [];
+	public ?int $target_distribution = null;
 	public bool $multiple_targets = false;
 	public string $review_box_text = 'Please leave your name and share your experience with us. Your feedback helps us improve and lets others know what to expect. We appreciate your time!';
 	public string $username_placeholder = 'Enter your name (Optional)';
 	public string $review_placeholder = 'Tell us about your impressions and experiences';
 	public string $success_message = 'Your review was submitted successfully!';
-	public bool $gating = false;
+	public bool $gating = true;
 	public bool $email_notify_on_negative_review = false;
 	public string $emails_on_negative_review = '';
 	/**
@@ -101,7 +83,6 @@ class Flow_Utility implements JsonSerializable {
 				// Direct property from the CPT
 				$value = $this->flow->{$property_name};
 			}
-			$poxooooooos = self::SETTING_PREFIX . $property_name;
 			// Or meta property or setting value
 			$value = $value ?? $this->flow->get_meta( $property_name ) ?? Setting::find( self::SETTING_PREFIX . $property_name )->get_value();
 			if ( $property_name === 'thumbnail_url' ) {
