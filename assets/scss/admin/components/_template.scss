@@ -11,6 +11,7 @@
       display: flex;
       align-items: center;
       padding-block-end: 20px;
+      cursor: pointer;
     }
 
     &-body {
@@ -25,10 +26,9 @@
 
     &-desc {
       font-size: var(--rw-admin-fs-12);
+      font-weight: var(--rw-admin-fw-600);
       cursor: pointer;
-      font-weight: bold;
     }
-
 
     &.blue {
 
@@ -39,35 +39,35 @@
     }
 
     &.green {
-      --rw-feedback-local-bg:var(--rw-flow-green-theme-box-bg);
+      --rw-feedback-local-bg: var(--rw-flow-green-theme-box-bg);
       --rw-feedback-local-color: var(--rw-flow-green-theme-box-color);
       --rw-feedback-local-border-color: var(--rw-flow-green-theme-box-border-bg);
       --rw-feedback-local-button-color: var(--rw-flow-green-theme-box-button-bg);
     }
 
     &.braun {
-      --rw-feedback-local-bg:var(--rw-flow-braun-theme-box-bg);
+      --rw-feedback-local-bg: var(--rw-flow-braun-theme-box-bg);
       --rw-feedback-local-color: var(--rw-flow-braun-theme-box-color);
       --rw-feedback-local-border-color: var(--rw-flow-braun-theme-box-border-bg);
       --rw-feedback-local-button-color: var(--rw-flow-braun-theme-box-button-bg);
     }
 
     &.orange {
-      --rw-feedback-local-bg:var(--rw-flow-orange-theme-box-bg);
+      --rw-feedback-local-bg: var(--rw-flow-orange-theme-box-bg);
       --rw-feedback-local-color: var(--rw-flow-orange-theme-box-color);
       --rw-feedback-local-border-color: var(--rw-flow-orange-theme-box-border-bg);
       --rw-feedback-local-button-color: var(--rw-flow-orange-theme-box-button-bg);
     }
 
     &.lilia {
-      --rw-feedback-local-bg:var(--rw-flow-lilia-theme-box-bg);
+      --rw-feedback-local-bg: var(--rw-flow-lilia-theme-box-bg);
       --rw-feedback-local-color: var(--rw-flow-lilia-theme-box-color);
       --rw-feedback-local-border-color: var(--rw-flow-lilia-theme-box-border-bg);
       --rw-feedback-local-button-color: var(--rw-flow-lilia-theme-box-button-bg);
     }
 
     &.rot {
-      --rw-feedback-local-bg:var(--rw-flow-rot-theme-box-bg);
+      --rw-feedback-local-bg: var(--rw-flow-rot-theme-box-bg);
       --rw-feedback-local-color: var(--rw-flow-rot-theme-box-color);
       --rw-feedback-local-border-color: var(--rw-flow-rot-theme-box-border-bg);
       --rw-feedback-local-button-color: var(--rw-flow-rot-theme-box-button-bg);

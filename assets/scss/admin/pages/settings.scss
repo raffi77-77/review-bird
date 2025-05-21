@@ -3,11 +3,37 @@
     width: 35em;
     background: transparent !important;
     border-radius: 3px;
+    font-size: 12px;
   }
 
   &-textarea {
     width: 45em;
     background: transparent;
     border-radius: 3px;
+    font-size: 12px;
   }
+}
+
+h2 {
+  font-size: 14px;
+}
+
+.form-table th {
+  font-size: 14px;
+}
+
+.form-table td p {
+  font-size: 12px;
+}
+
+.wp-core-ui .button-primary {
+  font-size: 12px;
+}
+
+.wrap h1 {
+  font-size: 16px;
+}
+
+.fs-notice-body, .fs-close {
+  font-size: 12px;
 }

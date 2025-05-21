@@ -40,12 +40,16 @@
 }
 
 .rw-sms-feedback {
+  &-container {
+    max-width: 1200px;
+    padding-inline-end: 20px;
+  }
+
   &-row {
     display: flex;
     gap: 20px;
     justify-content: space-between;
     padding-block-start: 40px;
-    padding-inline: 40px;
 
     &-in {
       width: 100%;
@@ -53,10 +57,22 @@
     }
 
     @include max-width($rw-admin-wp-lg-breakpoint) {
-      flex-direction: column;
       &-in {
         margin-block-end: 20px;
       }
+    }
+    @include max-width($rw-admin-wp-breakpoint) {
+      flex-direction: column;
+    }
+  }
+
+  &-automatically {
+    @include max-width($rw-admin-wp-lg-breakpoint) {
+      flex-direction: row;
+    }
+
+    @include max-width($rw-admin-wp-breakpoint) {
+      flex-direction: column;
     }
   }
 
@@ -109,9 +125,16 @@
     width: 100%;
     height: auto;
     max-width: 400px;
-    height: auto;
+    max-height: 600px;
+    margin-block: auto;
+    margin-inline-start: auto;
     @include max-width($rw-admin-wp-lg-breakpoint) {
-      max-width: 100%;
+      max-width: 200px;
+      max-height: 400px;
+    }
+
+    &.automatically {
+      margin-block-end: 20px;
     }
   }
 }
@@ -161,6 +184,7 @@
   &-label {
     display: flex;
     align-items: center;
+    cursor: pointer;
 
     &.active {
       .rw-admin-overflow {
@@ -196,6 +220,7 @@
     font-size: var(--rw-admin-fs-12);
     line-height: var(--rw-admin-lh-18);
     text-align: left;
+
     &:not(:last-child) {
       padding-block-end: 10px;
     }
@@ -204,6 +229,7 @@
       font-size: var(--rw-admin-fs-12);
       font-weight: var(--rw-admin-fw-700);
       line-height: var(--rw-admin-lh-20);
+      cursor: pointer;
     }
   }
 
