@@ -5,6 +5,7 @@ import {CreateReview} from "../../../rest/rest";
 
 export default function ReviewWithStars({flowId, flowData, setStep}) {
     const [loading, setLoading] = useState(0);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [negativeReviewBoxText, setNegativeReviewBoxText] = useState('');
     const [negativeReviewSuccessMessage, setNegativeReviewSuccessMessage] = useState('');
     const [namePlaceholderText, setNamePlaceholderText] = useState('');
@@ -41,7 +42,7 @@ export default function ReviewWithStars({flowId, flowData, setStep}) {
                 rating
             });
             if (negativeReviewSuccessMessage) {
-                alert(negativeReviewSuccessMessage);
+                setShowSuccessMessage(true);
             }
         } catch (e) {
             console.log(e);
@@ -49,81 +50,90 @@ export default function ReviewWithStars({flowId, flowData, setStep}) {
         setLoading(prev => prev - 1);
     }
 
-    return <div className="rw-flow-feedback-cont">
-        <StepLayout logo={flowData?.utility?.thumbnail_url}>
-            <div className="rw-flow-desc">
-                <p className="rw-flow-desc-in">{negativeReviewBoxText}</p>
-            </div>
-            <div className="rw-flow-label">
-                <input type="text" placeholder={namePlaceholderText}
-                       className="rw-flow-input"
-                       onChange={e => setName(e.target.value)}/>
-            </div>
-            <div className="rw-flow-label">
-                <div className={`rw-flow-stars${rating > 0 ? ` stars-${rating}` : ''}`}>
-                    <div className="rw-flow-stars-item" onClick={() => setRating(1)}>
-                        <svg className={`rw-flow-stars-i${wantedRate ? ' wanted' : ''}`}
-                             xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
-                             onMouseEnter={() => setWantedRate(1)} onMouseLeave={() => setWantedRate(0)}>
-                            <use href='#rw-flow-star'/>
-                        </svg>
-                    </div>
-                    <div className="rw-flow-stars-item" onClick={() => setRating(2)}>
-                        <svg className={`rw-flow-stars-i${wantedRate > 1 ? ' wanted' : ''}`}
-                             xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
-                             onMouseEnter={() => setWantedRate(2)} onMouseLeave={() => setWantedRate(0)}>
-                            <use href='#rw-flow-star'/>
-                        </svg>
-                    </div>
-                    <div className="rw-flow-stars-item" onClick={() => setRating(3)}>
-                        <svg className={`rw-flow-stars-i${wantedRate > 2 ? ' wanted' : ''}`}
-                             xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
-                             onMouseEnter={() => setWantedRate(3)} onMouseLeave={() => setWantedRate(0)}>
-                            <use href='#rw-flow-star'/>
-                        </svg>
-                    </div>
-                    <div className="rw-flow-stars-item" onClick={() => setRating(4)}>
-                        <svg className={`rw-flow-stars-i${wantedRate > 3 ? ' wanted' : ''}`}
-                             xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
-                             onMouseEnter={() => setWantedRate(4)} onMouseLeave={() => setWantedRate(0)}>
-                            <use href='#rw-flow-star'/>
-                        </svg>
-                    </div>
-                    <div className="rw-flow-stars-item" onClick={() => setRating(5)}>
-                        <svg className={`rw-flow-stars-i${wantedRate > 4 ? ' wanted' : ''}`}
-                             xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
-                             onMouseEnter={() => setWantedRate(5)} onMouseLeave={() => setWantedRate(0)}>
-                            <use href='#rw-flow-star'/>
-                        </svg>
+    return !showSuccessMessage ?
+        <div className="rw-flow-feedback-cont">
+            <StepLayout logo={flowData?.utility?.thumbnail_url}>
+                <div className="rw-flow-desc">
+                    <p className="rw-flow-desc-in">{negativeReviewBoxText}</p>
+                </div>
+                <div className="rw-flow-label">
+                    <input type="text" placeholder={namePlaceholderText}
+                           className="rw-flow-input"
+                           onChange={e => setName(e.target.value)}/>
+                </div>
+                <div className="rw-flow-label">
+                    <div className={`rw-flow-stars${rating > 0 ? ` stars-${rating}` : ''}`}>
+                        <div className="rw-flow-stars-item" onClick={() => setRating(1)}>
+                            <svg className={`rw-flow-stars-i${wantedRate ? ' wanted' : ''}`}
+                                 xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
+                                 onMouseEnter={() => setWantedRate(1)} onMouseLeave={() => setWantedRate(0)}>
+                                <use href='#rw-flow-star'/>
+                            </svg>
+                        </div>
+                        <div className="rw-flow-stars-item" onClick={() => setRating(2)}>
+                            <svg className={`rw-flow-stars-i${wantedRate > 1 ? ' wanted' : ''}`}
+                                 xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
+                                 onMouseEnter={() => setWantedRate(2)} onMouseLeave={() => setWantedRate(0)}>
+                                <use href='#rw-flow-star'/>
+                            </svg>
+                        </div>
+                        <div className="rw-flow-stars-item" onClick={() => setRating(3)}>
+                            <svg className={`rw-flow-stars-i${wantedRate > 2 ? ' wanted' : ''}`}
+                                 xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
+                                 onMouseEnter={() => setWantedRate(3)} onMouseLeave={() => setWantedRate(0)}>
+                                <use href='#rw-flow-star'/>
+                            </svg>
+                        </div>
+                        <div className="rw-flow-stars-item" onClick={() => setRating(4)}>
+                            <svg className={`rw-flow-stars-i${wantedRate > 3 ? ' wanted' : ''}`}
+                                 xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
+                                 onMouseEnter={() => setWantedRate(4)} onMouseLeave={() => setWantedRate(0)}>
+                                <use href='#rw-flow-star'/>
+                            </svg>
+                        </div>
+                        <div className="rw-flow-stars-item" onClick={() => setRating(5)}>
+                            <svg className={`rw-flow-stars-i${wantedRate > 4 ? ' wanted' : ''}`}
+                                 xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
+                                 onMouseEnter={() => setWantedRate(5)} onMouseLeave={() => setWantedRate(0)}>
+                                <use href='#rw-flow-star'/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div className="rw-flow-label">
+                    <textarea placeholder={messagePlaceholderText}
+                              className="rw-flow-textarea"
+                              onChange={e => setMessage(e.target.value)}/>
+                </div>
+                <div className="rw-flow-feedback-actions">
+                    <div className="rw-flow-feedback-actions-in">
+                        <button
+                            className={`rw-flow-button rw-flow-button-minimal rw-flow-button-secondary${loading > 0 ? ' rw-button-disabled' : ''}`}
+                            onClick={() => setStep('vote')}>
+                            <span className='rw-flow-button-desc'>{__("Cancel", 'review-bird')}</span>
+                        </button>
+                        <button
+                            className={`rw-flow-button rw-flow-button-minimal rw-flow-button-primary${loading > 0 ? ' rw-button-disabled' : ''}`}
+                            onClick={submit}>
+                            <span className='rw-flow-button-desc'>{__("Submit", 'review-bird')}</span>
+                        </button>
+                    </div>
+                </div>
+            </StepLayout>
+            {!reviewGating &&
+                <div>
+                    <button className={`rw-flow-feedback-link${loading > 0 ? ' rw-button-disabled' : ''}`}
+                            onClick={() => setStep('public-review')}>
+                        <span>{__("Skip and post publicly", 'review-bird')}</span>
+                    </button>
+                </div>}
+        </div>
+        :
+        <StepLayout logo={flowData?.utility?.thumbnail_url}>
             <div className="rw-flow-label">
-                <textarea placeholder={messagePlaceholderText}
-                          className="rw-flow-textarea"
-                          onChange={e => setMessage(e.target.value)}/>
-            </div>
-            <div className="rw-flow-feedback-actions">
-                <div className="rw-flow-feedback-actions-in">
-                    <button
-                        className={`rw-flow-button rw-flow-button-minimal rw-flow-button-secondary${loading > 0 ? ' rw-button-disabled' : ''}`}
-                        onClick={() => setStep('vote')}>
-                        <span className='rw-flow-button-desc'>{__("Cancel", 'review-bird')}</span>
-                    </button>
-                    <button
-                        className={`rw-flow-button rw-flow-button-minimal rw-flow-button-primary${loading > 0 ? ' rw-button-disabled' : ''}`}
-                        onClick={submit}>
-                        <span className='rw-flow-button-desc'>{__("Submit", 'review-bird')}</span>
-                    </button>
+                <div className="rw-flow-public-review-desc">
+                    <p className="rw-flow-public-review-desc-in">{negativeReviewSuccessMessage}</p>
                 </div>
             </div>
         </StepLayout>
-        {!reviewGating &&
-            <div>
-                <button className={`rw-flow-feedback-link${loading > 0 ? ' rw-button-disabled' : ''}`}
-                        onClick={() => setStep('public-review')}>
-                    <span>{__("Skip and post publicly", 'review-bird')}</span>
-                </button>
-            </div>}
-    </div>
 }
