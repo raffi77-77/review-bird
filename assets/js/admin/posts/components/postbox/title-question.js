@@ -15,10 +15,10 @@ export default function TitleQuestion({flowData}) {
     const getData = async () => {
         setLoading(prev => prev + 1);
         try {
-            if (flowData?.metas?.length) {
-                for (const meta of flowData.metas) {
-                    if (meta.key in settings) {
-                        settings[meta.key][1](meta.value);
+            if (flowData?.utility) {
+                for (const key of Object.keys(settings)) {
+                    if (key in flowData.utility) {
+                        settings[key][1](flowData.utility[key]);
                     }
                 }
             }
@@ -51,10 +51,8 @@ export default function TitleQuestion({flowData}) {
             const form = e.target;
             // Add fields to form data
             for (const i in data) {
-                // Meta key
-                addDataToForm(form, `metas[${i}][meta_key]`, data[i].key);
-                // Meta value
-                addObjectDataToForm(form, `metas[${i}][meta_value]`, data[i].value);
+                // Meta
+                addObjectDataToForm(form, `metas[${data[i].key}]`, data[i].value);
             }
         }
     }

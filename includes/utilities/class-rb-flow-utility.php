@@ -42,7 +42,12 @@ class Flow_Utility implements JsonSerializable {
 	 */
 	public Flow $flow;
 	public string $question = 'Would you recommend {site-name} to others?';
-	public array $targets = [];
+	public array $targets = [
+		[
+			'url' => '',
+            'media_id' => null,
+		]
+	];
 	public ?int $target_distribution = null;
 	public bool $multiple_targets = false;
 	public string $review_box_text = 'Please leave your name and share your experience with us. Your feedback helps us improve and lets others know what to expect. We appreciate your time!';
