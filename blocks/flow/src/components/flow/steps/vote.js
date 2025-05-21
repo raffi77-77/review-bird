@@ -1,25 +1,18 @@
 import {useEffect, useState} from "@wordpress/element";
 import StepLayout from "./components/layout";
 import {CreateReview} from "../../../rest/rest";
+import {maybeJsonParse} from "../../../../../../assets/js/helpers/helper";
 
 export default function Vote({flowId, flowData, setStep}) {
     const [loading, setLoading] = useState(0);
     const [question, setQuestion] = useState('');
 
     useEffect(() => {
-        if (flowData?.metas?.length) {
-            for (const meta of flowData.metas) {
-                // Question
-                if (meta.key === 'question') {
-                    if (meta.value) {
-                        setQuestion(meta.value.replace('{site-name}', ReviewBird.site.name));
-                    } else {
-                        setQuestion('');
-                    }
-                }
-            }
+        if (flowData?.utility) {
+            // Question
+            setQuestion(flowData.utility.question?.replace('{site-name}', ReviewBird.site.name) || '');
         }
-    }, [flowData]);
+    }, [flowData?.utility]);
 
     const like = async () => {
         setLoading(prev => prev + 1);
@@ -28,7 +21,11 @@ export default function Vote({flowId, flowData, setStep}) {
                 flow_uuid: flowId,
                 like: 1
             });
-            // TODO - redirect
+            // Redirect
+            const target = maybeJsonParse(res.target);
+            if (target?.url) {
+                window.location.href = target.url;
+            }
         } catch (e) {
             console.log(e);
         }
@@ -39,14 +36,14 @@ export default function Vote({flowId, flowData, setStep}) {
         setStep('review');
     }
 
-    return <StepLayout>
+    return <StepLayout logo={flowData?.utility?.thumbnail_url}>
         <div className="rw-flow-title">
             <p className="rw-flow-title-in">{question}</p>
         </div>
         <div className="rw-flow-feedback-actions">
             <div className="rw-flow-feedback-actions-in">
                 <button className='rw-flow-button rw-flow-button-feedback rw-flow-button-feedback-good'
-                        onClick={like}>
+                        onClick={like} disabled={loading > 0}>
                     <div className='rw-flow-button-feedback-in'>
                         <svg className='rw-flow-button-feedback-i' xmlns='http://www.w3.org/2000/svg'
                              fill='none' viewBox='0 0 24 24'>
@@ -55,7 +52,7 @@ export default function Vote({flowId, flowData, setStep}) {
                     </div>
                 </button>
                 <button className='rw-flow-button rw-flow-button-feedback rw-flow-button-feedback-bad'
-                        onClick={dislike}>
+                        onClick={dislike} disabled={loading > 0}>
                     <div className='rw-flow-button-feedback-in'>
                         <svg className='rw-flow-button-feedback-i' xmlns='http://www.w3.org/2000/svg'
                              fill='none' viewBox='0 0 24 24'>

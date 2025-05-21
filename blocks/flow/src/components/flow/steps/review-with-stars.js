@@ -16,39 +16,19 @@ export default function ReviewWithStars({flowId, flowData, setStep}) {
     const [wantedRate, setWantedRate] = useState(0);
 
     useEffect(() => {
-        if (flowData?.metas?.length) {
-            for (const meta of flowData.metas) {
-                // Negative review box text
-                if (meta.key === 'negative_review_box_text') {
-                    if (meta.value) {
-                        setNegativeReviewBoxText(meta.value.replace('{site-name}', ReviewBird.site.name));
-                    }
-                }
-                // Negative review name placeholder text
-                if (meta.key === 'negative_review_name_placeholder_text') {
-                    if (meta.value) {
-                        setNamePlaceholderText(meta.value);
-                    }
-                }
-                // Negative review message placeholder text
-                if (meta.key === 'negative_review_message_placeholder_text') {
-                    if (meta.value) {
-                        setMessagePlaceholderText(meta.value);
-                    }
-                }
-                // Negative review success message
-                if (meta.key === 'negative_review_success_message') {
-                    if (meta.value) {
-                        setNegativeReviewSuccessMessage(meta.value);
-                    }
-                }
-                // Review gating
-                if (meta.key === 'review_gating_off') {
-                    setReviewGating(!meta.value);
-                }
-            }
+        if (flowData?.utility) {
+            // Negative review box text
+            setNegativeReviewBoxText(flowData.utility.review_box_text?.replace('{site-name}', ReviewBird.site.name) || '');
+            // Negative review name placeholder text
+            setNamePlaceholderText(flowData.utility.username_placeholder || '');
+            // Negative review message placeholder text
+            setMessagePlaceholderText(flowData.utility.review_placeholder || '');
+            // Negative review success message
+            setNegativeReviewSuccessMessage(flowData.utility.success_message || '');
+            // Review gating
+            setReviewGating(flowData.utility.gating || '');
         }
-    }, [flowData]);
+    }, [flowData?.utility]);
 
     const submit = async () => {
         setLoading(prev => prev + 1);
@@ -70,7 +50,7 @@ export default function ReviewWithStars({flowId, flowData, setStep}) {
     }
 
     return <div className="rw-flow-feedback-cont">
-        <StepLayout>
+        <StepLayout logo={flowData?.utility?.thumbnail_url}>
             <div className="rw-flow-desc">
                 <p className="rw-flow-desc-in">{negativeReviewBoxText}</p>
             </div>

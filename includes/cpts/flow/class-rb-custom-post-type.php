@@ -23,7 +23,7 @@ class Custom_Post_Type {
 		$this->meta_scheme = new Meta_Scheme();
 		add_filter( 'template_include', array( $this, 'rewrite_template' ) );
 		add_action( 'save_post_' . self::NAME, array( $this, 'save_post' ), 10, 3 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'register_settings_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 	public function save_post( $post_id, $post, $update ) {
@@ -141,7 +141,7 @@ class Custom_Post_Type {
 		}, self::NAME, 'normal', 'high' );
 	}
 
-	public function register_settings_styles() {
+	public function enqueue_scripts() {
 		// Get the current screen
 		$screen = get_current_screen();
 		if ( $screen->post_type === self::NAME ) {

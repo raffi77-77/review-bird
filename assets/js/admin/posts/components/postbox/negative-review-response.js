@@ -1,16 +1,16 @@
 import {useEffect, useState} from "@wordpress/element";
 import {__} from "@wordpress/i18n";
 import Tooltip from "../../../components/tooltip";
-import {addDataToForm, addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
+import {addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
 
 export default function NegativeReviewResponse({flowData}) {
     const [loading, setLoading] = useState(0);
     const settings = {
-        'negative_review_question': useState(''),
-        'field_name_placeholder': useState(''),
-        'field_review_placeholder': useState(''),
+        'review_box_text': useState(''),
+        'username_placeholder': useState(''),
+        'review_placeholder': useState(''),
         'success_message': useState(''),
-        'review_gating_off': useState(false),
+        'gating': useState(true),
     };
 
     useEffect(() => {
@@ -20,10 +20,10 @@ export default function NegativeReviewResponse({flowData}) {
     const getData = async () => {
         setLoading(prev => prev + 1);
         try {
-            if (flowData?.metas?.length) {
-                for (const meta of flowData.metas) {
-                    if (meta.key in settings) {
-                        settings[meta.key][1](meta.value);
+            if (flowData?.utility) {
+                for (const key of Object.keys(settings)) {
+                    if (key in flowData.utility) {
+                        settings[key][1](flowData.utility[key]);
                     }
                 }
             }
@@ -56,10 +56,8 @@ export default function NegativeReviewResponse({flowData}) {
             const form = e.target;
             // Add fields to form data
             for (const i in data) {
-                // Meta key
-                addDataToForm(form, `metas[${i}][meta_key]`, data[i].key);
-                // Meta value
-                addObjectDataToForm(form, `metas[${i}][meta_value]`, data[i].value);
+                // Meta
+                addObjectDataToForm(form, `metas[${data[i].key}]`, data[i].value);
             }
         }
     }
@@ -75,8 +73,8 @@ export default function NegativeReviewResponse({flowData}) {
                 <td className="rw-cont-table-item">
                     <div className="rw-admin-row">
                     <textarea id="rw-negative-review-question" className="rw-admin-textarea"
-                              value={settings['negative_review_question'][0]}
-                              onChange={e => settings['negative_review_question'][1](e.target.value)}
+                              value={settings['review_box_text'][0]}
+                              onChange={e => settings['review_box_text'][1](e.target.value)}
                               placeholder={__("Would you recommend {site-name} to others?", 'review-bird')}
                               rows="3"/>
                     </div>
@@ -90,14 +88,14 @@ export default function NegativeReviewResponse({flowData}) {
                 <td className="rw-cont-table-item">
                     <div className="rw-admin-row-nested">
                         <input type="text" className="rw-admin-input"
-                               value={settings['field_name_placeholder'][0]}
-                               onChange={e => settings['field_name_placeholder'][1](e.target.value)}
+                               value={settings['username_placeholder'][0]}
+                               onChange={e => settings['username_placeholder'][1](e.target.value)}
                                placeholder={__("Enter your name (Optional)", 'review-bird')}/>
                         <p className="rw-admin-desc">{__("This is the text for the name", 'review-bird')}</p>
                     </div>
                     <input type="text" className="rw-admin-input"
-                           value={settings['field_review_placeholder'][0]}
-                           onChange={e => settings['field_review_placeholder'][1](e.target.value)}
+                           value={settings['review_placeholder'][0]}
+                           onChange={e => settings['review_placeholder'][1](e.target.value)}
                            placeholder={__("Share your impressions and experiences (Optional)", 'review-bird')}/>
                     <p className="rw-admin-desc">{__("This is the text for the review field itself", 'review-bird')}</p>
                 </td>
@@ -143,8 +141,8 @@ export default function NegativeReviewResponse({flowData}) {
                         <div className="rw-admin-row-in">
                             <input type="checkbox"
                                    className='rw-admin-row-input'
-                                   checked={settings['review_gating_off'][0]}
-                                   onChange={e => settings['review_gating_off'][1](e.target.checked)}/>
+                                   checked={!settings['gating'][0]}
+                                   onChange={e => settings['gating'][1](!e.target.checked)}/>
                             <p className="rw-admin-desc">{__("Enable negative responses to be forwarded to the review destination.", 'review-bird')}</p>
                         </div>
                         <div className="rw-admin-row-in rw-admin-row-nested">

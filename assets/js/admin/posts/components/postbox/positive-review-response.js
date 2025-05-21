@@ -1,68 +1,59 @@
 import {useEffect, useState} from "@wordpress/element";
 import {__, sprintf} from "@wordpress/i18n";
 import Tooltip from "../../../components/tooltip";
-import {addDataToForm, addObjectDataToForm, getPartOfUrl, getSettingsDataToSave} from "../../../../helpers/helper";
+import {addObjectDataToForm, getPartOfUrl, getSettingsDataToSave} from "../../../../helpers/helper";
 import MediaUploaderButton from "../../../components/media-uploader-button";
 import {REVIEW_TARGET_LOGOS} from "../../../../../../blocks/flow/src/components/flow/steps/data/data";
 import Utilities from "../../../../../../blocks/flow/src/utilities";
 
 const REVIEW_TARGET_DISTRIBUTIONS = [
-    [
-        [50, 50],
-        [33, 33, 34],
-        [25, 25, 25, 25],
-    ],
-    [
-        [60, 40],
-        [50, 25, 25],
-        [40, 20, 20, 20],
-    ],
-    [
-        [70, 30],
-        [60, 25, 15],
-        [50, 20, 15, 15],
-    ],
-    [
-        [80, 20],
-        [70, 20, 10],
-        [60, 20, 10, 10],
-    ],
-    [
-        [90, 10],
-        [80, 15, 5],
-        [70, 15, 10, 5],
-    ],
+    {
+        1: [50, 50],
+        6: [33, 33, 34],
+        11: [25, 25, 25, 25],
+    },
+    {
+        2: [60, 40],
+        7: [50, 25, 25],
+        12: [40, 20, 20, 20],
+    },
+    {
+        3: [70, 30],
+        8: [60, 25, 15],
+        13: [50, 20, 15, 15],
+    },
+    {
+        4: [80, 20],
+        9: [70, 20, 10],
+        14: [60, 20, 10, 10],
+    },
+    {
+        5: [90, 10],
+        10: [80, 15, 5],
+        15: [70, 15, 10, 5],
+    },
 ];
 
 export default function PositiveReviewResponse({flowData}) {
     const [loading, setLoading] = useState(0);
     const settings = {
-        'review_targets': useState([
+        'targets': useState([
             {
                 url: '',
-                percent: 100,
-                media: null,
+                media_id: null,
             }
         ]),
+        'target_distribution': useState(null),
         'multiple_targets': useState(false),
     };
 
     useEffect(() => {
-        settings['review_targets'][1](prevState => {
-            const targetsCount = prevState.length;
-            if (targetsCount === 1) {
-                return prevState.map((reviewTarget, index) => ({
-                    ...reviewTarget,
-                    percent: 100
-                }))
-            } else {
-                return prevState.map((reviewTarget, index) => ({
-                    ...reviewTarget,
-                    percent: REVIEW_TARGET_DISTRIBUTIONS[0][targetsCount - 2][index]
-                }))
-            }
-        })
-    }, [settings['review_targets'][0].length]);
+        if (settings['targets'][0].length > 1) {
+            settings['target_distribution'][1]((settings['targets'][0].length - 1) * 5 - 4);
+        } else {
+            settings['target_distribution'][1](null);
+        }
+    }, [settings['targets'][0].length]);
 
     useEffect(() => {
         getData();
@@ -71,10 +62,10 @@ export default function PositiveReviewResponse({flowData}) {
     const getData = async () => {
         setLoading(prev => prev + 1);
         try {
-            if (flowData?.metas?.length) {
-                for (const meta of flowData.metas) {
-                    if (meta.key in settings) {
-                        settings[meta.key][1](meta.value);
+            if (flowData?.utility) {
+                for (const key of Object.keys(settings)) {
+                    if (key in flowData.utility) {
+                        settings[key][1](flowData.utility[key]);
                     }
                 }
             }
@@ -107,38 +98,18 @@ export default function PositiveReviewResponse({flowData}) {
             const form = e.target;
             // Add fields to form data
             for (const i in data) {
-                // Meta key
-                addDataToForm(form, `metas[${i}][meta_key]`, data[i].key);
-                // Meta value
-                if (data[i].key === 'review_targets') {
-                    addObjectDataToForm(
-                        form,
-                        `metas[${i}][meta_value]`,
-                        data[i].value.map((reviewTarget, index) => ({
-                            url: reviewTarget.url,
-                            percent: reviewTarget.percent,
-                            media_id: reviewTarget.media?.id || false,
-                        }))
-                    );
-                } else {
-                    addObjectDataToForm(form, `metas[${i}][meta_value]`, data[i].value);
+                let value = data[i].value;
+                // Prepare targets data
+                if (data[i].key === 'targets') {
+                    value = data[i].value.map((reviewTarget, index) => ({
+                        url: reviewTarget.url,
+                        media_id: reviewTarget.media_id ? reviewTarget.media_id : reviewTarget.media?.id || null,
+                    }));
                 }
+                // Meta
+                addObjectDataToForm(form, `metas[${data[i].key}]`, value);
             }
         }
-    }
-
-    /**
-     * Select distribution
-     *
-     * @param {number[]} distribution Distributions
-     */
-    const selectDistribution = (distribution) => {
-        settings['review_targets'][1](prevState =>
-            prevState.map((reviewTarget, index) => ({
-                ...reviewTarget,
-                percent: distribution[index]
-            }))
-        );
     }
 
     /**
@@ -198,11 +169,12 @@ export default function PositiveReviewResponse({flowData}) {
                         </svg>*/}
                     <MediaUploaderButton
                         className='rw-button-upload-media update'
-                        onSelect={media => settings['review_targets'][1](prevState =>
+                        onSelect={media => settings['targets'][1](prevState =>
                             prevState.map((reviewTarget, i) => {
                                 if (i === currentIndex) {
                                     return {
                                         ...reviewTarget,
+                                        media_id: media.id,
                                         media: media,
                                     }
                                 }
@@ -237,7 +209,7 @@ export default function PositiveReviewResponse({flowData}) {
                 <div className="rw-admin-row rw-admin-row-nested">
                     <input type="text" placeholder="https://" className="rw-admin-input"
                            value={currentReviewTarget.url}
-                           onChange={(e) => settings['review_targets'][1](prevState =>
+                           onChange={(e) => settings['targets'][1](prevState =>
                                prevState.map((reviewTarget, i) => {
                                    if (i === currentIndex) {
                                        return {
@@ -253,8 +225,21 @@ export default function PositiveReviewResponse({flowData}) {
         </tr>
     }
 
-    return <div className="rw-skin-content">
+    const renderReviewTargetDistributionRow = (distributionsRow, index) => {
+        return <tr key={index} className="rw-admin-table-body-in">
+            {Object.keys(distributionsRow).map((key, index) => {
+                const value = +key;
 
+                return <td key={key}
+                           className={`rw-admin-table-body-item clickable${settings['target_distribution'][0] === value ? ' selected' : ''}${distributionsRow[key].length !== settings['targets'][0].length ? ' disabled' : ''}`}
+                           onClick={() => settings['target_distribution'][1](value)}>
+                    <span className="rw-admin-table-desc">{distributionsRow[key].map(item => `${item}%`).join(' / ')}</span>
+                </td>
+            })}
+        </tr>
+    }
+
+    return <div className="rw-skin-content">
         <Utilities/>
         <table className="rw-cont-table">
             <tbody className="rw-cont-table-tbody">
@@ -267,8 +252,8 @@ export default function PositiveReviewResponse({flowData}) {
                     {/*TODO - icon is missing*/}
                     <input id="review-target-main" type="text" className="rw-admin-input"
                            placeholder="https://"
-                           value={settings['review_targets'][0][0]?.url || ''}
-                           onChange={(e) => settings['review_targets'][1](prevState =>
+                           value={settings['targets'][0][0]?.url || ''}
+                           onChange={(e) => settings['targets'][1](prevState =>
                                prevState.map((reviewTarget, index) => {
                                    if (index === 0) {
                                        return {
@@ -394,16 +379,15 @@ export default function PositiveReviewResponse({flowData}) {
                     </div>
                 </td>
             </tr>
-            {settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 && settings['review_targets'][0].slice(1).map(renderReviewTarget)}
-            {settings['multiple_targets'][0] && settings['review_targets'][0].length < 4 &&
+            {settings['multiple_targets'][0] && settings['targets'][0].length > 1 && settings['targets'][0].slice(1).map(renderReviewTarget)}
+            {settings['multiple_targets'][0] && settings['targets'][0].length < 4 &&
                 <tr className="rw-cont-table-in">
                     <th className="rw-cont-table-item-title">
                         <div className="rw-skin-content-title rw-admin-title">
                             <button type="button" className="rw-admin-add"
-                                    onClick={() => settings['review_targets'][1](prevState => [...prevState, {
+                                    onClick={() => settings['targets'][1](prevState => [...prevState, {
                                         url: '',
-                                        percent: 50,
-                                        media: null,
+                                        media_id: null,
                                     }])}>
                                 <svg className="rw-admin-i rw-admin-add-i" xmlns="http://www.w3.org/2000/svg"
                                      height="24px"
@@ -418,7 +402,7 @@ export default function PositiveReviewResponse({flowData}) {
                     </td>
                 </tr>}
 
-            {settings['multiple_targets'][0] && settings['review_targets'][0].length > 1 &&
+            {settings['multiple_targets'][0] && settings['targets'][0].length > 1 &&
                 <tr className="rw-cont-table-in">
                     <th className="rw-cont-table-item-title distribution">
                         <label
@@ -443,21 +427,7 @@ export default function PositiveReviewResponse({flowData}) {
                             </tr>
                             </thead>
                             <tbody className="rw-admin-table-body">
-                            {REVIEW_TARGET_DISTRIBUTIONS.map((distributionsRow, index) => {
-                                return <tr key={index} className="rw-admin-table-body-in">
-                                    {distributionsRow.map((distribution, index) => {
-                                        const value = distribution.join('-');
-                                        const selectedValue = settings['review_targets'][0].map(reviewTarget => reviewTarget.percent).join('-');
-
-                                        return <td key={value}
-                                                   className={`rw-admin-table-body-item clickable${selectedValue === value ? ' selected' : ''}${distribution.length !== settings['review_targets'][0].length ? ' disabled' : ''}`}
-                                                   onClick={() => selectDistribution(distribution)}>
-                                            <span
-                                                className="rw-admin-table-desc">{distribution.map(item => `${item}%`).join(' / ')}</span>
-                                        </td>
-                                    })}
-                                </tr>
-                            })}
+                            {REVIEW_TARGET_DISTRIBUTIONS.map(renderReviewTargetDistributionRow)}
                             </tbody>
                         </table>
                     </td>

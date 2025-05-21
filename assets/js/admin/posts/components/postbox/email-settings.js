@@ -1,14 +1,14 @@
 import {useEffect, useState} from "@wordpress/element";
 import {__} from "@wordpress/i18n";
-import {GetFlow} from "../../../../../../blocks/flow/src/rest/rest";
-import {addDataToForm, addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
+import {addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
 
 export default function EmailSettings({flowData}) {
     const [loading, setLoading] = useState(0);
     const settings = {
-        'negative_review_email_send': useState(false),
-        'negative_review_email': useState(''),
+        'email_notify_on_negative_review': useState(false),
+        'emails_on_negative_review': useState(['']),
     };
+    const [emails, setEmails] = useState('');
 
     useEffect(() => {
         getData();
@@ -17,10 +17,14 @@ export default function EmailSettings({flowData}) {
     const getData = async () => {
         setLoading(prev => prev + 1);
         try {
-            if (flowData?.metas?.length) {
-                for (const meta of flowData.metas) {
-                    if (meta.key in settings) {
-                        settings[meta.key][1](meta.value);
+            if (flowData?.utility) {
+                for (const key of Object.keys(settings)) {
+                    if (key in flowData.utility) {
+                        settings[key][1](flowData.utility[key]);
+                        // Emails
+                        if (key === 'emails_on_negative_review' && flowData.utility[key].length) {
+                            setEmails(flowData.utility[key].join(', '));
+                        }
                     }
                 }
             }
@@ -42,6 +46,10 @@ export default function EmailSettings({flowData}) {
         }
     }, [settings]);
 
+    useEffect(() => {
+        settings['emails_on_negative_review'][1](emails.split(',').map(email => email.trim()));
+    }, [emails]);
+
     /**
      * Handle post form submit
      *
@@ -53,10 +61,8 @@ export default function EmailSettings({flowData}) {
             const form = e.target;
             // Add fields to form data
             for (const i in data) {
-                // Meta key
-                addDataToForm(form, `metas[${i}][meta_key]`, data[i].key);
-                // Meta value
-                addObjectDataToForm(form, `metas[${i}][meta_value]`, data[i].value);
+                // Meta
+                addObjectDataToForm(form, `metas[${data[i].key}][meta_value]`, data[i].value);
             }
         }
     }
@@ -72,13 +78,15 @@ export default function EmailSettings({flowData}) {
                 <td className="rw-cont-table-item">
                     <div className="rw-admin-row">
                         <div className="rw-admin-row-in">
-                            <input type="checkbox" checked={settings['negative_review_email_send'][0]}
-                                   onChange={e => settings['negative_review_email_send'][1](e.target.checked)}/>
+                            <input type="checkbox" checked={settings['email_notify_on_negative_review'][0]}
+                                   onChange={e => settings['email_notify_on_negative_review'][1](e.target.checked)}/>
                             <p className="rw-admin-desc">{__("When a negative Review is received sent an email", 'review-bird')}</p>
                         </div>
                         <div className="rw-admin-row-in">
                             <input type="text" className="rw-admin-input rw-admin-input-minimal"
-                                   placeholder="Email"/>
+                                   placeholder={__("Emails", 'review-bird')}
+                                   value={emails}
+                                   onChange={e => setEmails(e.target.value)}/>
                             <p className="rw-admin-desc">{__("Emails will be sent to this email address", 'review-bird')}</p>
                         </div>
                     </div>

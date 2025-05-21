@@ -10,6 +10,13 @@ class Flow_Meta extends WP_Meta_Data_Object {
 		return parent::create( $data );
 	}
 
+	public static function update( $where, $data ) {
+		$where['post_id'] = $where['flow_id'] ?? $where['post_id'];
+		unset( $where['flow_id'] );
+
+		return parent::update( $where, $data );
+	}   
+
 	public static function where( $where, ...$args ) {
 		if ( isset( $where['flow_id'] ) ) {
 			$where['post_id'] = $where['flow_id'];

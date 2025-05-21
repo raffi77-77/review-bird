@@ -88,7 +88,7 @@ class Meta_Scheme implements Scheme_Interface {
 	}
 
 	public static function validate_target_distribution( $value ): bool {
-		return in_array( Flow_Utility::TARGET_DISTRIBUTIONS, $value, true );
+		return array_key_exists( $value, Flow_Utility::TARGET_DISTRIBUTIONS );
 	}
 
 	public static function validate_emails_on_negative_review( $value ): bool {

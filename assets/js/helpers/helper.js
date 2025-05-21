@@ -99,3 +99,28 @@ export const addObjectDataToForm = (form, keyPrefix, obj) => {
         addDataToForm(form, keyPrefix, getSettingFormatedValueForForm(obj));
     }
 }
+
+/**
+ * Maybe JSON parse
+ *
+ * @param {*} input Input
+ * @return {*|string}
+ */
+export const maybeJsonParse = (input) => {
+    if (typeof input === 'object') {
+        return input;
+    }
+
+    if (typeof input === 'string') {
+        try {
+            const parsed = JSON.parse(input);
+            if (typeof parsed === 'object' && parsed !== null) {
+                return parsed;
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    return input;
+}

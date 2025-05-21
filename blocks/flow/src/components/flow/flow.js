@@ -17,21 +17,15 @@ export default function Flow({id, attributes}) {
     }, [id]);
 
     useEffect(() => {
-        if (flowData?.metas?.length) {
-            for (const meta of flowData.metas) {
-                // Theme
-                if (meta.key === 'theme') {
-                    setTheme(meta.value || 'blue');
-                }
-            }
-        }
-    }, [flowData?.metas]);
+        // Theme
+        setTheme(flowData?.utility?.skin || 'blue');
+    }, [flowData?.utility]);
 
     const getData = async (flowId) => {
         setLoading(prev => prev + 1);
         try {
             const res = await GetFlow(ReviewBird.rest.url, ReviewBird.rest.nonce, flowId, {
-                include: ['metas']
+                include: ['utility']
             });
             setFlowData(res);
         } catch (e) {
