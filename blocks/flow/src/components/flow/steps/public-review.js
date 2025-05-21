@@ -8,16 +8,11 @@ export default function PublicReview({flowData}) {
     const [reviewTargets, setReviewTargets] = useState([]);
 
     useEffect(() => {
-        if (flowData?.metas?.length) {
-            for (const meta of flowData.metas) {
-                if (meta.key === 'review_targets') {
-                    if (meta.value?.length) {
-                        setReviewTargets(meta.value);
-                    }
-                }
-            }
+        if (flowData?.utility) {
+            // Targets
+            setReviewTargets(flowData.utility.targets || []);
         }
-    }, [flowData]);
+    }, [flowData?.utility]);
 
     const renderReviewTarget = (reviewTarget, index) => {
         let svgId = false;
@@ -40,28 +35,30 @@ export default function PublicReview({flowData}) {
         </button>
     }
 
-    return <StepLayout className={reviewTargets.length > 0 ? 'rw-flow-feedback-public-review-row' : ''}>
+    return <StepLayout className={reviewTargets.length > 1 ? 'rw-flow-feedback-public-review-row' : ''}
+                       logo={flowData?.utility?.thumbnail_url}>
         <div className="rw-flow-title">
             <p className="rw-flow-title-in">{__("Leave a public review", 'review-bird')}</p>
         </div>
         <div className="rw-flow-label">
             <div className="rw-flow-public-review-desc">
-                {reviewTargets.length > 0 &&
+                {reviewTargets.length > 1 &&
                     <p className="rw-flow-public-review-desc-in">{__("Click on the respective platform to leave a public review", 'review-bird')}:</p>}
-                {!reviewTargets.length &&
+                {reviewTargets.length === 1 &&
                     <p className="rw-flow-public-review-desc-in">{__("By clicking on the button below you can submit a public review", 'review-bird')}:</p>}
             </div>
         </div>
-        {reviewTargets.length > 0 &&
+        {reviewTargets.length > 1 &&
             <div className="rw-flow-feedback-actions rw-flow-platform-slide">
                 <div className="rw-flow-feedback-actions-in rw-flow-platform-slide-in">
                     {reviewTargets.map(renderReviewTarget)}
                 </div>
             </div>}
-        {!reviewTargets.length &&
+        {reviewTargets.length === 1 &&
             <div className="rw-flow-feedback-actions">
                 <div className="rw-flow-feedback-actions-in">
-                    <button className='rw-flow-button rw-flow-button-minimal rw-flow-button-primary'>
+                    <button className='rw-flow-button rw-flow-button-minimal rw-flow-button-primary'
+                            onClick={() => window.location.href = reviewTargets[0].url}>
                         <span className='rw-flow-button-desc'>{__("Yes, post publicly", 'review-bird')}</span>
                     </button>
                 </div>

@@ -63,7 +63,7 @@ class Flow_Utility implements JsonSerializable {
 	 */
 	public ?int $thumbnail_id = null;
 	public ?string $thumbnail_url = null;
-	public string $skin;
+	public string $skin = 'blue';
 
 	// public ?Collection $some_collection = null;
 	public function __construct( Flow $flow ) {
