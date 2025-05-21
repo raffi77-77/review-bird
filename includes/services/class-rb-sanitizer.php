@@ -15,16 +15,17 @@ class Sanitizer {
 	public function sanitize( array $data ): void {
 		$this->sanitized = [];
 		foreach ( $this->schema_class::rules() as $key => $rule ) {
-			if ( ! array_key_exists( $key, $data ) ) {
-				continue;
+			if ( array_key_exists( $key, $data ) ) {
+				$value = $data[ $key ];
+				if ( isset( $rule['sanitize_callback'] ) && is_callable( $rule['sanitize_callback'] ) ) {
+					$value = call_user_func( $rule['sanitize_callback'], $value );
+				} elseif ( isset( $rule['type'] ) ) {
+					$value = $this->sanitize_by_type( $value, $rule['type'] );
+				}
+				$this->sanitized[ $key ] = $value;
+			} elseif ( array_key_exists( 'default', $rule ) ) {
+				$this->sanitized[ $key ] = $rule['default'];
 			}
-			$value = $data[ $key ];
-			if ( isset( $rule['sanitize_callback'] ) && is_callable( $rule['sanitize_callback'] ) ) {
-				$value = call_user_func( $rule['sanitize_callback'], $value );
-			} elseif ( isset( $rule['type'] ) ) {
-				$value = $this->sanitize_by_type( $value, $rule['type'] );
-			}
-			$this->sanitized[ $key ] = $value;
 		}
 	}
 
