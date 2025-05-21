@@ -3,7 +3,7 @@
 namespace Review_Bird\Includes\Data_Objects;
 
 use Review_Bird\Includes\Database_Strategies\WP_Query;
-use Review_Bird\Includes\utilities\Flow_Utility;
+use Review_Bird\Includes\Utilities\Flow_Utility;
 
 class Flow extends WP_Post_Data_Object {
 	const POST_TYPE = 'review_bird_flow';

@@ -3,7 +3,7 @@
 namespace Review_Bird\Includes\Cpts\Flow;
 
 use Review_Bird\Includes\Scheme_Interface;
-use Review_Bird\Includes\utilities\Flow_Utility;
+use Review_Bird\Includes\Utilities\Flow_Utility;
 
 class Meta_Scheme implements Scheme_Interface {
 	public string $question = '';

@@ -1,6 +1,6 @@
 <?php
 
-namespace Review_Bird\Includes\utilities;
+namespace Review_Bird\Includes\Utilities;
 
 use JsonSerializable;
 use Review_Bird\Includes\Data_Objects\Flow;

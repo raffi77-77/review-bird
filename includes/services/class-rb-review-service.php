@@ -5,7 +5,7 @@ namespace Review_Bird\Includes\Services;
 use Review_Bird\Includes\Data_Objects\Flow;
 use Review_Bird\Includes\Data_Objects\Review;
 use Review_Bird\Includes\Repositories\Review_Repository;
-use Review_Bird\Includes\utilities\Flow_Utility;
+use Review_Bird\Includes\Utilities\Flow_Utility;
 
 class Review_Service {
 	protected Review_Repository $review_repository;
