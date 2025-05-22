@@ -42,7 +42,7 @@
 .rw-sms-feedback {
   &-container {
     max-width: 1150px;
-    padding-inline-end: 20px;
+    padding-inline: 20px;
   }
 
   &-row {
@@ -180,6 +180,16 @@
       &:not(:last-child) {
         padding-block-end: 20px;
       }
+
+      &-i {
+        width: 20px;
+        height: 20px;
+        display: block;
+      }
+    }
+
+    &-close {
+      cursor: pointer;
     }
   }
 

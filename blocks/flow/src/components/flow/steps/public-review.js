@@ -3,8 +3,11 @@ import {__} from "@wordpress/i18n";
 import StepLayout from "./components/layout";
 import {REVIEW_TARGET_LOGOS} from "./data/data";
 import {getPartOfUrl} from "../../../../../../assets/js/helpers/helper";
+import {CreateReview} from "../../../rest/rest";
 
-export default function PublicReview({flowData}) {
+export default function PublicReview({flowId, flowData}) {
+    const [loading, setLoading] = useState(0);
+    const [disliking, setDisliking] = useState(false);
     const [reviewTargets, setReviewTargets] = useState([]);
 
     useEffect(() => {
@@ -13,6 +16,24 @@ export default function PublicReview({flowData}) {
             setReviewTargets(flowData.utility.targets || []);
         }
     }, [flowData?.utility]);
+
+    const dislikePublicly = async (targetUrl) => {
+        setLoading(prev => prev + 1);
+        setDisliking(true);
+        try {
+            const res = await CreateReview(ReviewBird.rest.url, ReviewBird.rest.nonce, {
+                flow_uuid: flowId,
+                like: 0,
+                target: targetUrl,
+            });
+        } catch (e) {
+            console.log(e);
+        }
+        setDisliking(false);
+        setLoading(prev => prev - 1);
+        // Redirect
+        window.location.href = targetUrl;
+    }
 
     const renderReviewTarget = (reviewTarget, index) => {
         let svgId = false;
@@ -24,14 +45,16 @@ export default function PublicReview({flowData}) {
             }
         }
 
-        return <button key={index} className='rw-flow-button rw-flow-button-platform'>
-            {svgId &&
-                <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
-                     fill='none' viewBox='0 0 24 24'>
-                    <use href={`#rw-flow-${svgId}`}/>
-                </svg>}
-            {reviewTarget.logo_url &&
-                <img className='rw-flow-button-platform-pic' src={reviewTarget.logo_url} alt={reviewTarget.logo_name}/>}
+        return <button key={index} className='rw-flow-button rw-flow-button-platform'
+                       onClick={() => dislikePublicly(reviewTarget.url)} disabled={disliking}>
+            {reviewTarget.media_url ?
+                <img className='rw-flow-button-platform-pic' src={reviewTarget.media_url} alt='target-logo'/>
+                :
+                (svgId &&
+                    <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
+                         fill='none' viewBox='0 0 24 24'>
+                        <use href={`#rw-flow-${svgId}`}/>
+                    </svg>)}
         </button>
     }
 
@@ -46,6 +69,8 @@ export default function PublicReview({flowData}) {
                     <p className="rw-flow-public-review-desc-in">{__("Click on the respective platform to leave a public review", 'review-bird')}:</p>}
                 {reviewTargets.length === 1 &&
                     <p className="rw-flow-public-review-desc-in">{__("By clicking on the button below you can submit a public review", 'review-bird')}:</p>}
+                {!reviewTargets.length &&
+                    <p className="rw-flow-public-review-desc-in">{__("There is no target for this flow.", 'review-bird')}:</p>}
             </div>
         </div>
         {reviewTargets.length > 1 &&

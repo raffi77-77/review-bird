@@ -40,10 +40,15 @@ class Frontend {
 			'site' => array(
 				'name' => get_bloginfo( 'name' ),
 			),
+			'placeholder_logo_url' => $rb->get_plugin_dir_url() . 'resources/logo/50x50.svg',
 //			'debug' => true,
 		) );
 //		wp_enqueue_script( $rb->get_plugin_name() . '-something-to-change' );
 //		wp_register_style( $rb->get_plugin_name() . '-something-to-change', $rb->get_plugin_dir_url() . 'dist/css/something-to-change/main.css', array(), $rb->get_version() );
 //		wp_enqueue_style( $rb->get_plugin_name() . '-something-to-change' );
+	}
+
+	public function shortcode( $atts ) {
+		return do_blocks( '<!-- wp:review-bird/flow {"flow_id":"' . $atts['flow_id'] . '", "shortcode":true} /-->' );
 	}
 }

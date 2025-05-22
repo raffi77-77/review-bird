@@ -12,7 +12,7 @@ export default function ReviewWithStars({flowId, flowData, setStep}) {
     const [messagePlaceholderText, setMessagePlaceholderText] = useState('');
     const [reviewGating, setReviewGating] = useState(false);
     const [rating, setRating] = useState(0);
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [message, setMessage] = useState('');
     const [wantedRate, setWantedRate] = useState(0);
 
@@ -37,7 +37,7 @@ export default function ReviewWithStars({flowId, flowData, setStep}) {
             const res = await CreateReview(ReviewBird.rest.url, ReviewBird.rest.nonce, {
                 flow_uuid: flowId,
                 like: 0,
-                name,
+                username,
                 message,
                 rating
             });
@@ -59,7 +59,7 @@ export default function ReviewWithStars({flowId, flowData, setStep}) {
                 <div className="rw-flow-label">
                     <input type="text" placeholder={namePlaceholderText}
                            className="rw-flow-input"
-                           onChange={e => setName(e.target.value)}/>
+                           onChange={e => setUsername(e.target.value)}/>
                 </div>
                 <div className="rw-flow-label">
                     <div className={`rw-flow-stars${rating > 0 ? ` stars-${rating}` : ''}`}>

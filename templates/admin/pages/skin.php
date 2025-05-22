@@ -2,6 +2,7 @@
 
 use Review_Bird\Includes\Data_Objects\Setting;
 
+$plugin_url = $rb = Review_Bird()->get_plugin_dir_url();
 ?>
 <div class="rw-skin-container">
     <div class="rw-skin-content">
@@ -24,7 +25,10 @@ use Review_Bird\Includes\Data_Objects\Setting;
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="https://placehold.co/150x50?text=logo" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">
@@ -82,7 +86,10 @@ use Review_Bird\Includes\Data_Objects\Setting;
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="https://placehold.co/150x50?text=logo" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">
@@ -139,7 +146,10 @@ use Review_Bird\Includes\Data_Objects\Setting;
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="https://placehold.co/150x50?text=logo" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">
@@ -197,7 +207,10 @@ use Review_Bird\Includes\Data_Objects\Setting;
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="https://placehold.co/150x50?text=logo" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">
@@ -255,7 +268,10 @@ use Review_Bird\Includes\Data_Objects\Setting;
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="https://placehold.co/150x50?text=logo" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">
@@ -313,7 +329,10 @@ use Review_Bird\Includes\Data_Objects\Setting;
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="https://placehold.co/150x50?text=logo" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">

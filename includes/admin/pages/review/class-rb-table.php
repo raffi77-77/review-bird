@@ -112,5 +112,18 @@ class Table extends WP_List_Table {
         </div>
 		<?php
 	}
+
+	public function column_ID( $item ) {
+		$edit_link = add_query_arg(
+			[ 'id' => $item->id ],
+			menu_page_url( Page::$menu_slug, false )
+		);
+
+		return sprintf(
+			'<a href="%s">%d</a>',
+			esc_url( $edit_link ),
+			$item->id
+		);
+	}
 }
 
