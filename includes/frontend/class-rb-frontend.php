@@ -40,6 +40,7 @@ class Frontend {
 			'site' => array(
 				'name' => get_bloginfo( 'name' ),
 			),
+			'placeholder_logo_url' => $rb->get_plugin_dir_url() . 'resources/logo/50x50.svg',
 //			'debug' => true,
 		) );
 //		wp_enqueue_script( $rb->get_plugin_name() . '-something-to-change' );

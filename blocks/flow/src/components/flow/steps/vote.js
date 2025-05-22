@@ -1,10 +1,10 @@
 import {useEffect, useState} from "@wordpress/element";
 import StepLayout from "./components/layout";
 import {CreateReview} from "../../../rest/rest";
-import {maybeJsonParse} from "../../../../../../assets/js/helpers/helper";
 
 export default function Vote({flowId, flowData, setStep}) {
     const [loading, setLoading] = useState(0);
+    const [liking, setLiking] = useState(false);
     const [question, setQuestion] = useState('');
 
     useEffect(() => {
@@ -16,19 +16,20 @@ export default function Vote({flowId, flowData, setStep}) {
 
     const like = async () => {
         setLoading(prev => prev + 1);
+        setLiking(true);
         try {
             const res = await CreateReview(ReviewBird.rest.url, ReviewBird.rest.nonce, {
                 flow_uuid: flowId,
                 like: 1
             });
             // Redirect
-            const target = maybeJsonParse(res.target);
-            if (target?.url) {
-                window.location.href = target.url;
+            if (res.target) {
+                window.location.href = res.target;
             }
         } catch (e) {
             console.log(e);
         }
+        setLiking(false);
         setLoading(prev => prev - 1);
     }
 
@@ -42,7 +43,7 @@ export default function Vote({flowId, flowData, setStep}) {
         </div>
         <div className="rw-flow-feedback-actions">
             <div className="rw-flow-feedback-actions-in">
-                <button className='rw-flow-button rw-flow-button-feedback rw-flow-button-feedback-good'
+                <button className={`rw-flow-button rw-flow-button-feedback rw-flow-button-feedback-good${liking ? ' active' : ''}`}
                         onClick={like} disabled={loading > 0}>
                     <div className='rw-flow-button-feedback-in'>
                         <svg className='rw-flow-button-feedback-i' xmlns='http://www.w3.org/2000/svg'

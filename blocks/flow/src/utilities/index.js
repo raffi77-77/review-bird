@@ -84,7 +84,7 @@ function Utilities() {
                         </clipPath>
                     </defs>
                 </symbol>
-                <symbol viewBox='0 0 122 23' id='rw-flow-google-play'>
+                <symbol viewBox='0 0 122 23' id='rw-flow-play.google'>
                     <g clipPath="url(#clip0_34_1157)">
                         <path
                             fill="#5F6368"
