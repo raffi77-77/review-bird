@@ -91,8 +91,12 @@ class Single {
                                class="rw-admin-title-in"><?php _e( "Rating", 'review-bird' ); ?></label>
                     </th>
                     <td class="rw-cont-table-item">
-                        <p class="rw-admin-desc"><?php echo str_repeat( '⭐', (int) $this->review->rating ) ?>
-                            (<?php echo $this->review->rating; ?>)</p>
+                        <?php if ($this->review->rating): ?>
+                            <p class="rw-admin-desc"><?php echo str_repeat( '⭐', (int) $this->review->rating ) ?>
+                                (<?php echo $this->review->rating; ?>)</p>
+                        <?php else: ?>
+                            <p><?php _e( "N/A", 'review-bird' ); ?></p>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <tr class="rw-cont-table-in">
