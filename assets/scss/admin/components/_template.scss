@@ -10,7 +10,7 @@
     &-header {
       display: flex;
       align-items: center;
-      padding-block-end: 20px;
+      padding-block-end: 5px;
       cursor: pointer;
     }
 
@@ -25,6 +25,8 @@
     }
 
     &-desc {
+      height: 30px;
+      padding-block-start: 10px;
       font-size: var(--rw-admin-fs-12);
       font-weight: var(--rw-admin-fw-600);
       cursor: pointer;

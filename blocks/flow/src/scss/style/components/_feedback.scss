@@ -3,6 +3,7 @@
     &-row {
       width: 100%;
       max-width: 90%;
+      min-height: 500px;
       margin-inline: auto;
       background-color: var(--rw-flow-theme-local-box-bg);
       border: 1px solid var(--rw-flow-theme-local-box-border-bg);
@@ -30,6 +31,25 @@
       display: flex;
       padding-block: 8px 8px;
       border-bottom: 1px solid var(--rw-flow-theme-local-box-border-bg);
+
+      &-desc {
+        margin-inline:10px;
+        @include min-width($rw-flow-wp-lg-breakpoint) {
+          &:first-child:last-child {
+            margin: auto;
+          }
+          &:not(:first-child) {
+            margin-inline-end:auto;
+          }
+        }
+        &-in{
+          color: var(--rw-flow-theme-box-button-color);
+          font-size: var(--rw-flow-fs-20);
+          font-weight: var(--rw-flow-fw-500);
+          line-height: var(--rw-flow-lh-32);
+          text-align: center;
+        }
+      }
     }
 
     &-body {
