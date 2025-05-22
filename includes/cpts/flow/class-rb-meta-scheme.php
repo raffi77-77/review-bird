@@ -6,17 +6,6 @@ use Review_Bird\Includes\Scheme_Interface;
 use Review_Bird\Includes\Utilities\Flow_Utility;
 
 class Meta_Scheme implements Scheme_Interface {
-	public string $question = '';
-	public array $targets = [];
-	public ?int $target_distribution = null;
-	public bool $multiple_targets = false;
-	public string $review_box_text = '';
-	public string $username_placeholder = '';
-	public string $review_placeholder = '';
-	public string $success_message = '';
-	public bool $gating = false;
-	public bool $email_notify_on_negative_review = false;
-	public string $emails_on_negative_review = '';
 
 	public static function rules(): array {
 		return [
@@ -63,51 +52,59 @@ class Meta_Scheme implements Scheme_Interface {
 		];
 	}
 
-	public static function sanitize_targets( $value ): array {
+	public static function sanitize_targets( $value ) {
 		if ( is_array( $value ) ) {
 			foreach ( $value as &$item ) {
-				$item['url']      = sanitize_url( $item['url'] );
-				$item['media_id'] = (int) ( $item['media_id'] );
+				$item['url']      = is_string( $item['url'] ) ? sanitize_url( $item['url'] ) : null;
+				$item['media_id'] = is_numeric( $item['media_id'] ) ? (int) ( $item['media_id'] ) : null;
 			}
 		}
 
-		return $value;
+		return empty( $value ) ? [] : $value;
 	}
 
 	public static function validate_targets( $value ): bool {
+		$valid = true;
 		if ( is_array( $value ) ) {
 			foreach ( $value as $item ) {
-				if ( ! filter_var( $item['url'], FILTER_VALIDATE_URL ) || empty( wp_get_attachment_url( $item['media_id'] ) ) ) {
+				if ( ! filter_var( $item['url'], FILTER_VALIDATE_URL ) || ( ! empty( $item['media_id'] ) && empty( wp_get_attachment_url( $item['media_id'] ) ) ) ) {
 					$valid = false;
 					break;
 				}
 			}
+		} else {
+			return false;
 		}
 
-		return $valid ?? false;
+		return $valid;
 	}
 
 	public static function validate_target_distribution( $value ): bool {
-		return array_key_exists( $value, Flow_Utility::TARGET_DISTRIBUTIONS );
+		return $value === 0 || array_key_exists( $value, Flow_Utility::TARGET_DISTRIBUTIONS );
 	}
 
 	public static function validate_emails_on_negative_review( $value ): bool {
-		foreach ( $value as $item ) {
-			if ( ! filter_var( $item, FILTER_VALIDATE_EMAIL ) ) {
-				$valid = false;
+		$valid = true;
+		if ( is_array( $value ) ) {
+			foreach ( $value as $item ) {
+				if ( ! filter_var( $item, FILTER_VALIDATE_EMAIL ) ) {
+					$valid = false;
+				}
 			}
+		} else {
+			return false;
 		}
 
-		return $valid ?? false;
+		return $valid;
 	}
-	
-	public static function sanitize_emails_on_negative_review( $value ): array {
+
+	public static function sanitize_emails_on_negative_review( $value ) {
 		if ( is_array( $value ) ) {
 			foreach ( $value as &$item ) {
-				$item = sanitize_email( $item );
+				$item = is_string( $item ) ? sanitize_email( $item ) : null;
 			}
 		}
 
-		return $value;
+		return empty( $value ) ? [] : $value;
 	}
 }

@@ -75,10 +75,10 @@ class WP_Meta_Query extends Database_Strategy implements Database_Strategy_Inter
 	}
 
 	public function update( $where, $data ) {
-		$where['meta_key'] = str_starts_with( $where['meta_key'], '_' ) ? $where['meta_key'] : '_' . $where['meta_key'];
-		if ( ! empty($data['meta_value']) && (is_array($data['meta_value']) || is_object($data['meta_value']) || $data['meta_value'] instanceOf Collection )) {
-			$data['meta_value'] = json_encode($data['meta_value']);
+		if ( isset( $data['meta_value'] ) && ( is_array( $data['meta_value'] ) || is_object( $data['meta_value'] ) || $data['meta_value'] instanceof Collection ) ) {
+			$data['meta_value'] = json_encode( $data['meta_value'] );
 		}
+
 		return update_post_meta( $where['post_id'], $where['meta_key'], $data['meta_value'] );
 	}
 }

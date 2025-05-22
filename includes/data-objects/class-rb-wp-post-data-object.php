@@ -77,7 +77,6 @@ class WP_Post_Data_Object extends Data_Object {
 	}
 
 	public function get_meta( $meta_key, $object = false ) {
-		$meta_key = str_starts_with( $meta_key, '_' ) ? $meta_key : '_' . $meta_key;
 		$metas    = WP_Meta_Data_Object::where( [ 'post_id' => $this->get_id(), 'meta_key' => $meta_key ] );
 		if ( ! $metas->is_empty() ) {
 			return $object ? $metas->first() : $metas->first()->get_meta_value();

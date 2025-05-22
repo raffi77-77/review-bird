@@ -103,7 +103,7 @@ export default function PositiveReviewResponse({flowData}) {
                 if (data[i].key === 'targets') {
                     value = data[i].value.map((reviewTarget, index) => ({
                         url: reviewTarget.url,
-                        media_id: reviewTarget.media_id ? reviewTarget.media_id : reviewTarget.media?.id || null,
+                        media_id: reviewTarget.media_id || null,
                     }));
                 }
                 // Meta
@@ -175,18 +175,15 @@ export default function PositiveReviewResponse({flowData}) {
                                     return {
                                         ...reviewTarget,
                                         media_id: media.id,
-                                        media: media,
+                                        media_url: media.sizes?.thumbnail?.url,
                                     }
                                 }
                                 return reviewTarget;
                             })
                         )}>
-                        {currentReviewTarget.media?.sizes?.thumbnail ?
-                            <img className='rw-button-upload-media-pic'
-                                 width={currentReviewTarget.media.sizes.thumbnail.width}
-                                 height={currentReviewTarget.media.sizes.thumbnail.height}
-                                 src={currentReviewTarget.media.sizes.thumbnail.url}
-                                 alt={currentReviewTarget.media.alt}/>
+                        {currentReviewTarget.media_url ?
+                            <img className='rw-button-upload-media-pic' width='150' height='150'
+                                 src={currentReviewTarget.media_url} alt='media-pic'/>
                             :
                             (
                                 svgId ?
