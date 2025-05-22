@@ -22,9 +22,8 @@ export default function Vote({flowId, flowData, setStep}) {
                 like: 1
             });
             // Redirect
-            const target = maybeJsonParse(res.target);
-            if (target?.url) {
-                window.location.href = target.url;
+            if (res.target) {
+                window.location.href = res.target;
             }
         } catch (e) {
             console.log(e);
