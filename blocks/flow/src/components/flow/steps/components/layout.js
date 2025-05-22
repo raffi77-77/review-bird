@@ -2,7 +2,7 @@ export default function StepLayout({logo, className, children}) {
     return <div className={`rw-flow-feedback-row${className ? ' ' + className : ''}`}>
         <div className="rw-flow-feedback-header">
             <div className="rw-flow-logo">
-                <img src={logo} alt='logo'/>
+                <img src={logo ? logo : ReviewBird.placeholder_logo_url} alt='logo'/>
             </div>
             {/*<button className="rw-flow-button-close rw-flow-button-30">
                 <svg className='rw-flow-button-close-i' xmlns='http://www.w3.org/2000/svg'
