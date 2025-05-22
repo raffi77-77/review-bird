@@ -91,14 +91,16 @@ class Reviews_Controller extends Rest_Controller {
 					'description' => __( 'Review message', 'review-bird' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
-					'arg_options' => array(// 'sanitize_callback' => 'wp_filter_post_kses',
+					'arg_options' => array(
+						'sanitize_callback' => 'sanitize_text_field',
 					),
 				),
 				'username'  => array(
 					'description' => __( 'Review message', 'review-bird' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
-					'arg_options' => array(// 'sanitize_callback' => 'wp_filter_post_kses',
+					'arg_options' => array(
+						'sanitize_callback' => 'sanitize_text_field',
 					),
 				),
 				'uuid'      => array(

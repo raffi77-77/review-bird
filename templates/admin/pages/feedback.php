@@ -25,7 +25,7 @@
                    and
                    brings in new customers – all on autopilot.</p>
 
-               <a class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Get an Offer"></a>
+               <a href="#" class="button button-primary">Get an Offer</a>
            </div>
            <img class="rw-sms-feedback-image automatically"
                 src="<?php echo Review_Bird()->get_plugin_dir_url() . 'resources/admin/sms.svg' ?>">
@@ -95,9 +95,7 @@
                    reviews without
                    changing your existing workflow.
                </p>
-               <button class="rw-button-admin">
-                   <span>Get an Offer</span>
-               </button>
+               <a href="#" class="button button-primary">Get an Offer</a>
            </div>
            <img class="rw-sms-feedback-image"
                 src="<?php echo Review_Bird()->get_plugin_dir_url() . 'resources/admin/integration.png' ?>">
