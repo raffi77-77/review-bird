@@ -5,6 +5,7 @@ import Vote from "./steps/vote";
 import ReviewWithStars from "./steps/review-with-stars";
 import PublicReview from "./steps/public-review";
 import {GetFlow} from "../../rest/rest";
+import Container from "./steps/components/container";
 
 export default function Flow({id, attributes}) {
     const [loading, setLoading] = useState(0);
@@ -38,19 +39,21 @@ export default function Flow({id, attributes}) {
         setLoading(prev => prev - 1);
     }
 
-    return <div id="review-bird" className={`rw-flow-theme ${theme}`}>
+    return <div id="review-bird"
+                className={`rw-flow-theme${!attributes?.shortcode ? ' rw-flow-theme-bg' : ''} ${theme}`}>
         <Utilities/>
         {isDataFetched &&
-            <div className='rw-flow-container'>
+            <Container inside={!attributes?.shortcode}>
                 {step === 'vote' &&
                     <Vote flowId={id} flowData={flowData} setStep={setStep}/>}
                 {step === 'review' &&
                     <ReviewWithStars flowId={id} flowData={flowData} setStep={setStep}/>}
                 {step === 'public-review' &&
                     <PublicReview flowData={flowData}/>}
-                <div>
-                    <img src={generalLogo} alt="Logo"/>
-                </div>
-            </div>}
+                {!attributes?.shortcode &&
+                    <div>
+                        <img src={generalLogo} alt="Logo"/>
+                    </div>}
+            </Container>}
     </div>
 }

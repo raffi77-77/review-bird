@@ -10,5 +10,6 @@ export const REVIEW_TARGET_LOGOS = [
     'doctolib',
     'jameda',
     'yelp',
-    'etsy'
+    'etsy',
+    'amazon',
 ];

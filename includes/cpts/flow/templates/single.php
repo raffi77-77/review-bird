@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div id="review-box">
 	<?php
 	echo do_blocks('<!-- wp:review-bird/flow {"flow_id":"' . get_the_ID() . '"} /-->');
-	// TODO call do_blocks() or do_shortcode() by passing the_ID
+//	echo do_shortcode('[sr_rb_shortcode flow_id=' . get_the_ID() . ']');
 	?>
 </div>
 
