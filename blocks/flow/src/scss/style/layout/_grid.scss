@@ -33,11 +33,13 @@
 
   &-public-review {
     &-desc {
-      font-size: var(--rw-flow-fs-20);
-      font-weight: var(--rw-flow-fw-500);
-      line-height: var(--rw-flow-lh-28);
-      text-align: center;
-      color: var(--rw-flow-theme-local-box-button-bg);
+      &-in {
+        font-size: var(--rw-flow-fs-20);
+        font-weight: var(--rw-flow-fw-500);
+        line-height: var(--rw-flow-lh-28);
+        text-align: center;
+        color: var(--rw-flow-theme-local-box-button-bg);
+      }
     }
   }
 
@@ -80,9 +82,16 @@
   }
 
   &-logo {
-    margin-inline: 10px auto;
+    margin-block: auto;
+    margin-inline: 10px;
     @include min-width($rw-flow-wp-lg-breakpoint) {
-      margin: auto;
+      &:first-child:last-child {
+        margin: auto;
+      }
+      &:not(:last-child) {
+        margin: auto;
+        margin-inline-end: 10px;
+      }
     }
 
     @include max-width($rw-flow-wp-breakpoint) {

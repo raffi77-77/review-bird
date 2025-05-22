@@ -218,6 +218,23 @@ export default function PositiveReviewResponse({flowData}) {
                            )}/>
                 </div>
             </td>
+            <td className="rw-cont-table-item">
+                <button className="rw-admin-row rw-admin-row-nested rw-admin-row-close">
+                    <svg
+                        className='rw-admin-row rw-admin-row-nested-i'
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 668 668"
+                    >
+                        <path
+                            fill="#d63638"
+                            fillRule="evenodd"
+                            d="M667.333 334c0 184.094-149.24 333.334-333.333 333.334C149.905 667.334.667 518.094.667 334 .667 149.905 149.905.667 334 .667 518.093.667 667.333 149.905 667.333 334M232.988 232.989c9.763-9.763 25.592-9.763 35.355 0L334 298.644l65.653-65.655c9.764-9.763 25.594-9.763 35.357 0s9.763 25.593 0 35.355L369.353 334l65.657 65.654c9.763 9.763 9.763 25.593 0 35.356s-25.593 9.764-35.357 0L334 369.357l-65.657 65.653c-9.762 9.764-25.592 9.764-35.355 0s-9.763-25.593 0-35.353L298.643 334l-65.655-65.656c-9.764-9.763-9.764-25.592 0-35.355"
+                            clipRule="evenodd"
+                        ></path>
+                    </svg>
+                </button>
+            </td>
         </tr>
     }
 
