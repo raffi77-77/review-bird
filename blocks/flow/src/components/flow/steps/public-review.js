@@ -25,13 +25,14 @@ export default function PublicReview({flowData}) {
         }
 
         return <button key={index} className='rw-flow-button rw-flow-button-platform'>
-            {svgId &&
-                <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
-                     fill='none' viewBox='0 0 24 24'>
-                    <use href={`#rw-flow-${svgId}`}/>
-                </svg>}
-            {reviewTarget.logo_url &&
-                <img className='rw-flow-button-platform-pic' src={reviewTarget.logo_url} alt={reviewTarget.logo_name}/>}
+            {reviewTarget.media_url ?
+                <img className='rw-flow-button-platform-pic' src={reviewTarget.media_url} alt='target-logo'/>
+                :
+                (svgId &&
+                    <svg className='rw-flow-button-platform-i' xmlns='http://www.w3.org/2000/svg'
+                         fill='none' viewBox='0 0 24 24'>
+                        <use href={`#rw-flow-${svgId}`}/>
+                    </svg>)}
         </button>
     }
 
