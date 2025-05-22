@@ -3,14 +3,15 @@
     width: 35em;
     background: transparent !important;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 13px;
   }
 
   &-textarea {
     width: 45em;
+    min-height: 60px;
     background: transparent;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 
@@ -28,10 +29,6 @@ h2 {
 
 .wp-core-ui .button-primary {
   font-size: 12px;
-}
-
-.wrap h1 {
-  font-size: 16px;
 }
 
 .fs-notice-body, .fs-close {

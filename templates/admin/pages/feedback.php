@@ -25,12 +25,10 @@
                    and
                    brings in new customers – all on autopilot.</p>
 
-               <button class="rw-button-admin">
-                   <span>Get an Offer</span>
-               </button>
+               <a class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Get an Offer"></a>
            </div>
            <img class="rw-sms-feedback-image automatically"
-                src="<?php echo Review_Bird()->get_plugin_dir_url() . 'resources/admin/sms-feedback.svg' ?>">
+                src="<?php echo Review_Bird()->get_plugin_dir_url() . 'resources/admin/sms.svg' ?>">
        </div>
        <p class="rw-sms-feedback-desc rw-sms-feedback-nested-desc">Did you know that 98% of SMS get read within 5 Minutes
            of receiving</p>
@@ -71,7 +69,7 @@
                    grow their reputation. You can be next.</p>
            </div>
        </div>
-       <p class="rw-sms-feedback-desc rw-sms-feedback-nested-desc">fancy divider</p>
+       <div class="rw-flow-divider"></div>
        <div class="rw-sms-feedback-row">
            <div class="rw-sms-feedback-row-in">
                <h2 class="rw-sms-feedback-title rw-sms-feedback-title-nested">What do you need to get started?</h2>
