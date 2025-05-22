@@ -218,23 +218,21 @@ export default function PositiveReviewResponse({flowData}) {
                            )}/>
                 </div>
             </td>
-            <td className="rw-cont-table-item">
-                <button className="rw-admin-row rw-admin-row-nested rw-admin-row-close">
-                    <svg
-                        className='rw-admin-row rw-admin-row-nested-i'
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 668 668"
-                    >
-                        <path
-                            fill="#d63638"
-                            fillRule="evenodd"
-                            d="M667.333 334c0 184.094-149.24 333.334-333.333 333.334C149.905 667.334.667 518.094.667 334 .667 149.905 149.905.667 334 .667 518.093.667 667.333 149.905 667.333 334M232.988 232.989c9.763-9.763 25.592-9.763 35.355 0L334 298.644l65.653-65.655c9.764-9.763 25.594-9.763 35.357 0s9.763 25.593 0 35.355L369.353 334l65.657 65.654c9.763 9.763 9.763 25.593 0 35.356s-25.593 9.764-35.357 0L334 369.357l-65.657 65.653c-9.762 9.764-25.592 9.764-35.355 0s-9.763-25.593 0-35.353L298.643 334l-65.655-65.656c-9.764-9.763-9.764-25.592 0-35.355"
-                            clipRule="evenodd"
-                        ></path>
+            {index > 0 && <td className="rw-cont-table-item">
+                <button type='button' className="rw-admin-row rw-admin-row-nested rw-admin-row-close"
+                        onClick={() => confirm(__("Are you sure you want to delete the target?", 'review-bird')) && settings['targets'][1](prevState => prevState.filter((item, i) => i !== index))}>
+                    <svg className='rw-admin-row rw-admin-row-nested-i' xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 1200 1200">
+                        <path fill="#d63638" fillRule="evenodd"
+                              d="M600,0C268.63,0,0,268.63,0,600c0,331.369,268.63,600,600,600
+	c331.369,0,600-268.63,600-600S931.369,0,600,0z M600,130.371c259.369,0,469.556,210.325,469.556,469.629
+	c0,259.305-210.187,469.556-469.556,469.556c-259.37,0-469.556-210.251-469.556-469.556C130.445,340.696,340.63,130.371,600,130.371
+	L600,130.371z M435.425,305.347L305.347,435.425L469.922,600L305.347,764.575l130.078,130.078L600,730.078l164.575,164.575
+	l130.078-130.078L730.078,600l164.575-164.575L764.575,305.347L600,469.922L435.425,305.347z"
+                              clipRule="evenodd"></path>
                     </svg>
                 </button>
-            </td>
+            </td>}
         </tr>
     }
 
@@ -246,7 +244,8 @@ export default function PositiveReviewResponse({flowData}) {
                 return <td key={key}
                            className={`rw-admin-table-body-item clickable${settings['target_distribution'][0] === value ? ' selected' : ''}${distributionsRow[key].length !== settings['targets'][0].length ? ' disabled' : ''}`}
                            onClick={() => settings['target_distribution'][1](value)}>
-                    <span className="rw-admin-table-desc">{distributionsRow[key].map(item => `${item}%`).join(' / ')}</span>
+                    <span
+                        className="rw-admin-table-desc">{distributionsRow[key].map(item => `${item}%`).join(' / ')}</span>
                 </td>
             })}
         </tr>

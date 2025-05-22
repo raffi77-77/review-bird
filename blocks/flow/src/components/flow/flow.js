@@ -49,7 +49,7 @@ export default function Flow({id, attributes}) {
                 {step === 'review' &&
                     <ReviewWithStars flowId={id} flowData={flowData} setStep={setStep}/>}
                 {step === 'public-review' &&
-                    <PublicReview flowData={flowData}/>}
+                    <PublicReview flowId={id} flowData={flowData}/>}
                 {!attributes?.shortcode &&
                     <div>
                         <img src={generalLogo} alt="Logo"/>

@@ -17,20 +17,25 @@ export default function Vote({flowId, flowData, setStep}) {
     const like = async () => {
         setLoading(prev => prev + 1);
         setLiking(true);
+        let res;
         try {
-            const res = await CreateReview(ReviewBird.rest.url, ReviewBird.rest.nonce, {
+            res = await CreateReview(ReviewBird.rest.url, ReviewBird.rest.nonce, {
                 flow_uuid: flowId,
                 like: 1
             });
-            // Redirect
-            if (res.target) {
-                window.location.href = res.target;
-            }
         } catch (e) {
             console.log(e);
         }
         setLiking(false);
         setLoading(prev => prev - 1);
+        // Redirect
+        if (res?.target) {
+            window.location.href = res.target;
+        } else if (flowData.utility.targets?.length) {
+            window.location.href = flowData.utility.targets[0].url;
+        } else {
+            alert(__("There is no target for this flow.", 'review-bird'));
+        }
     }
 
     const dislike = () => {
