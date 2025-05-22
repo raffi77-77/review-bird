@@ -128,7 +128,7 @@ class Flow_Utility implements JsonSerializable {
 	}
 
 	protected function define_thumbnail_url() {
-		$thumbnail_id = $this->thumbnail_id ?? $this->flow->get_meta( 'thumbnail_id' ) ?? Setting::find( self::SETTING_PREFIX . 'thumbnail_id' )->get_value();
+		$thumbnail_id = $this->thumbnail_id ?? $this->flow->get_meta( '_thumbnail_id' ) ?? Setting::find( self::SETTING_PREFIX . 'thumbnail_id' )->get_value();
 		if ( $thumbnail_id ) {
 			return wp_get_attachment_url( $thumbnail_id );
 		}
