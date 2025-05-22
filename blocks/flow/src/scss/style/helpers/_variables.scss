@@ -1,6 +1,4 @@
 & {
-  background-color: var(--rw-flow-theme-local-bg);
-
   --rw-flow-black: #000;
   --rw-flow-rgb-black: 0, 0, 0;
   --rw-flow-white: #fff;
@@ -32,6 +30,10 @@
 
   //blue theme
   &.rw-flow-theme {
+
+    &-bg{
+      background-color: var(--rw-flow-theme-local-bg);
+    }
 
     --rw-flow-theme-local-bg: var(--rw-flow-theme-bg);
     --rw-flow-theme-local-box-bg: var(--rw-flow-theme-box-bg);

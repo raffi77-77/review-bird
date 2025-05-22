@@ -23,5 +23,9 @@
         padding-block-start: 58px;
       }
     }
+
+    &:last-child {
+      padding-inline-start: 0;
+    }
   }
 }
