@@ -42,12 +42,13 @@ class Flow_Utility implements JsonSerializable {
 	 */
 	public Flow $flow;
 	public string $question = 'Would you recommend {site-name} to others?';
-	public array $targets = [
-		[
-			'url' => '',
-            'media_id' => null,
-		]
-	];
+	public array $targets
+		= [
+			[
+				'url'      => '',
+				'media_id' => null,
+			]
+		];
 	public ?int $target_distribution = null;
 	public bool $multiple_targets = false;
 	public string $review_box_text = 'Please leave your name and share your experience with us. Your feedback helps us improve and lets others know what to expect. We appreciate your time!';
@@ -56,7 +57,7 @@ class Flow_Utility implements JsonSerializable {
 	public string $success_message = 'Your review was submitted successfully!';
 	public bool $gating = true;
 	public bool $email_notify_on_negative_review = false;
-	public string $emails_on_negative_review = '';
+	public ?array $emails_on_negative_review = null;
 	/**
 	 * @var int|null
 	 * @json_excluded
@@ -92,6 +93,16 @@ class Flow_Utility implements JsonSerializable {
 			$value = $value ?? $this->flow->get_meta( $property_name ) ?? Setting::find( self::SETTING_PREFIX . $property_name )->get_value();
 			if ( $property_name === 'thumbnail_url' ) {
 				$value = $this->define_thumbnail_url();
+			} elseif ( $property_name === 'targets' ) {
+				if ( isset( $value ) ) {
+					$value = array_map( function ( $target ) {
+						if ( ! empty( $target['media_id'] ) ) {
+							$target['media_url'] = wp_get_attachment_thumb_url( $target['media_id'] );
+						}
+
+						return $target;
+					}, $value );
+				}
 			}
 			if ( isset( $value ) ) {
 				$this->{$property_name} = Helper::cast_value( $property->getType()->getName(), $value );

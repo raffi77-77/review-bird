@@ -6,7 +6,7 @@ export default function EmailSettings({flowData}) {
     const [loading, setLoading] = useState(0);
     const settings = {
         'email_notify_on_negative_review': useState(false),
-        'emails_on_negative_review': useState(['']),
+        'emails_on_negative_review': useState(null),
     };
     const [emails, setEmails] = useState('');
 
@@ -47,7 +47,8 @@ export default function EmailSettings({flowData}) {
     }, [settings]);
 
     useEffect(() => {
-        settings['emails_on_negative_review'][1](emails.split(',').map(email => email.trim()));
+        const typedEmails = emails.split(',').map(email => email.trim()).filter(email => email);
+        settings['emails_on_negative_review'][1](typedEmails?.length ? typedEmails : null);
     }, [emails]);
 
     /**
@@ -62,7 +63,7 @@ export default function EmailSettings({flowData}) {
             // Add fields to form data
             for (const i in data) {
                 // Meta
-                addObjectDataToForm(form, `metas[${data[i].key}][meta_value]`, data[i].value);
+                addObjectDataToForm(form, `metas[${data[i].key}]`, data[i].value);
             }
         }
     }

@@ -40,7 +40,7 @@ class Flow_Repository {
 		return $flow;
 	}
 
-	public function save_on_hook( int $id, WP_Post $post, array $data ) {
+	public function save_post( int $id, WP_Post $post, array $data ) {
 		if ( $post->post_status === 'publish' ) {
 			if ( empty( Flow_Meta::where( [ 'flow_id' => $id, 'meta_key' => '_uuid' ] )->first() ) ) {
 				return $this->create( $id, $data );

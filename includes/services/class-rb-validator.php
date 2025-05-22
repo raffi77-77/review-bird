@@ -13,12 +13,12 @@ class Validator {
 		$this->schema_class = $schema_class;
 	}
 
-	public function validate( array $data ): bool {
+	public function validate( array $data, string $context = 'create' ): bool {
 		$this->errors    = [];
 		$this->validated = [];
 		foreach ( $this->schema_class->rules() as $key => $rule ) {
 			$value = $data[ $key ] ?? null;
-			if ( ! empty( $rule['required'] ) && ( $value === null || $value === '' ) ) {
+			if ( $context === 'create' && ! empty( $rule['required'] ) && ( $value === null || $value === '' ) ) {
 				$this->errors[ $key ][] = __( 'Field is required.', 'review-bird' );
 				continue;
 			}
@@ -46,7 +46,7 @@ class Validator {
 			}
 		}
 
-		return ! empty( $this->errors );
+		return empty( $this->errors );
 	}
 
 	private function validate_type( $value, string $type, array $rule ): bool {
@@ -54,10 +54,12 @@ class Validator {
 			case 'string':
 				return is_string( $value );
 			case 'int':
+			case 'integer':
 				return is_int( $value );
 			case 'float':
 				return is_float( $value );
 			case 'bool':
+			case 'boolean':
 				return is_bool( $value );
 			case 'array':
 				if ( ! is_array( $value ) ) {
