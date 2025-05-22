@@ -25,7 +25,10 @@ $plugin_url = $rb = Review_Bird()->get_plugin_dir_url();
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">
@@ -83,7 +86,10 @@ $plugin_url = $rb = Review_Bird()->get_plugin_dir_url();
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">
@@ -140,7 +146,10 @@ $plugin_url = $rb = Review_Bird()->get_plugin_dir_url();
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">
@@ -198,7 +207,10 @@ $plugin_url = $rb = Review_Bird()->get_plugin_dir_url();
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">
@@ -256,7 +268,10 @@ $plugin_url = $rb = Review_Bird()->get_plugin_dir_url();
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">
@@ -314,7 +329,10 @@ $plugin_url = $rb = Review_Bird()->get_plugin_dir_url();
                         <div class="rw-flow-row rw-flow-feedback-row">
                             <div class="rw-flow-feedback-header">
                                 <div class="rw-flow-logo">
-                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-150x80">
+                                    <img src="<?php echo $plugin_url . 'resources/logo/50x50.svg' ?>" alt="placeholder-50x50">
+                                </div>
+                                <div class="rw-flow-feedback-header-desc">
+                                    <span class='rw-flow-feedback-header-desc-in'><?php echo get_bloginfo( 'name' ); ?></span>
                                 </div>
                             </div>
                             <div class="rw-flow-feedback-body">

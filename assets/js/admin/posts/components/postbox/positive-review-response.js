@@ -218,21 +218,23 @@ export default function PositiveReviewResponse({flowData}) {
                            )}/>
                 </div>
             </td>
-            {index > 0 && <td className="rw-cont-table-item">
-                <button type='button' className="rw-admin-row rw-admin-row-nested rw-admin-row-close"
-                        onClick={() => confirm(__("Are you sure you want to delete the target?", 'review-bird')) && settings['targets'][1](prevState => prevState.filter((item, i) => i !== index))}>
-                    <svg className='rw-admin-row rw-admin-row-nested-i' xmlns="http://www.w3.org/2000/svg" fill="none"
-                         viewBox="0 0 1200 1200">
-                        <path fill="#d63638" fillRule="evenodd"
-                              d="M600,0C268.63,0,0,268.63,0,600c0,331.369,268.63,600,600,600
+            <td className="rw-cont-table-item">
+                {index > 0 &&
+                    <button type='button' className="rw-admin-row rw-admin-row-nested rw-admin-row-close"
+                            onClick={() => confirm(__("Are you sure you want to delete the target?", 'review-bird')) && settings['targets'][1](prevState => prevState.filter((item, i) => i !== index))}>
+                        <svg className='rw-admin-row rw-admin-row-nested-i' xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 1200 1200">
+                            <path fill="#d63638" fillRule="evenodd"
+                                  d="M600,0C268.63,0,0,268.63,0,600c0,331.369,268.63,600,600,600
 	c331.369,0,600-268.63,600-600S931.369,0,600,0z M600,130.371c259.369,0,469.556,210.325,469.556,469.629
 	c0,259.305-210.187,469.556-469.556,469.556c-259.37,0-469.556-210.251-469.556-469.556C130.445,340.696,340.63,130.371,600,130.371
 	L600,130.371z M435.425,305.347L305.347,435.425L469.922,600L305.347,764.575l130.078,130.078L600,730.078l164.575,164.575
 	l130.078-130.078L730.078,600l164.575-164.575L764.575,305.347L600,469.922L435.425,305.347z"
-                              clipRule="evenodd"></path>
-                    </svg>
-                </button>
-            </td>}
+                                  clipRule="evenodd"></path>
+                        </svg>
+                    </button>}
+            </td>
         </tr>
     }
 
