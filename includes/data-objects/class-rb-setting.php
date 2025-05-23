@@ -52,4 +52,8 @@ class Setting extends Data_Object {
 
 		return parent::find( $id );
 	}
+
+	public static function exists($id){
+		return self::get_db_strategy()->exists($id);
+	}
 }

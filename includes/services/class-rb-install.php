@@ -2,6 +2,9 @@
 
 namespace Review_Bird\Includes\Services;
 
+use Review_Bird\Includes\Admin\Pages\Setting\Page;
+use Review_Bird\Includes\Cpts\Flow\Meta_Scheme;
+use Review_Bird\Includes\Data_Objects\Setting;
 use Review_Bird\Includes\Traits\SingletonTrait;
 
 class Install {
@@ -22,15 +25,29 @@ class Install {
 	}
 
 	public static function deactivate() {
-		 // self::instance()->drop_tables();
+		// self::instance()->drop_tables();
 	}
 
 	public function seed() {
+		try {
+			$this->create_default_settings();
+		} catch ( \Exception $e ) {
+			Helper::log( [], $e->getMessage() );
+		}
 	}
-	
+
 	public function create_default_settings() {
+		$meta_scheme_rules = Meta_Scheme::rules();
+		$flow_prefix       = Review_Bird()->get_plugin_prefix() . Page::$prefix;
+		$this->maybe_add_setting( "{$flow_prefix}question", $meta_scheme_rules['question']['default'] ?? '' );
+		$this->maybe_add_setting( "{$flow_prefix}review_box_text", $meta_scheme_rules['review_box_text']['default'] ?? '' );
+		$this->maybe_add_setting( "{$flow_prefix}username_placeholder", $meta_scheme_rules['username_placeholder']['default'] ?? '' );
+		$this->maybe_add_setting( "{$flow_prefix}review_placeholder", $meta_scheme_rules['review_placeholder']['default'] ?? '' );
+		$this->maybe_add_setting( "{$flow_prefix}success_message", $meta_scheme_rules['success_message']['default'] ?? '' );
+		$this->maybe_add_setting( "{$flow_prefix}emails_on_negative_review", $meta_scheme_rules['emails_on_negative_review']['default'] ?? '' );
+		$this->maybe_add_setting( "{$flow_prefix}skin", $meta_scheme_rules['skin']['default'] ?? '' );
 	}
-	
+
 	public function create_tables() {
 		$wpdb = $this->wpdb;
 		// Include necessary WordPress upgrade functions and execute the query.
@@ -39,7 +56,7 @@ class Install {
 	}
 
 	protected static function get_schemas( $wpdb ) {
-		$prefix = Review_Bird()->get_plugin_prefix();
+		$prefix  = Review_Bird()->get_plugin_prefix();
 		$collate = '';
 		$tables  = "
 CREATE TABLE {$wpdb->prefix}{$prefix}_reviews (
@@ -63,6 +80,7 @@ CREATE TABLE {$wpdb->prefix}{$prefix}_reviews (
   KEY `rating` (`rating`),
   KEY `created_at` (`created_at`)
 ) $collate;";
+
 		return $tables;
 	}
 
@@ -83,6 +101,12 @@ CREATE TABLE {$wpdb->prefix}{$prefix}_reviews (
 			// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$wpdb->query( "DROP TABLE IF EXISTS {$table}" );
 			// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		}
+	}
+
+	private function maybe_add_setting( $key, $value ) {
+		if ( ! Setting::exists( $key ) ) {
+			Setting::create( [ 'key' => $key, 'value' => $value ] );
 		}
 	}
 

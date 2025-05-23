@@ -188,12 +188,13 @@ class Custom_Post_Type {
 			}
 			wp_enqueue_style( $rb->get_plugin_name() . '-single-' . self::NAME . '-style' );
 			wp_enqueue_media();
-            ?>
+		} elseif ($screen->post_type === self::NAME) {
+			?>
             <style>
                 .column-thumbnail { width: 60px; }
             </style>
-            <?php
-		}
+			<?php
+        }
 	}
 
 

@@ -41,7 +41,7 @@ class Flow_Utility implements JsonSerializable {
 	 * @json_excluded
 	 */
 	public Flow $flow;
-	public string $question = 'Would you recommend {site-name} to others?';
+	public string $question = '';
 	public array $targets
 		= [
 			[
@@ -51,10 +51,10 @@ class Flow_Utility implements JsonSerializable {
 		];
 	public ?int $target_distribution = null;
 	public bool $multiple_targets = false;
-	public string $review_box_text = 'Please leave your name and share your experience with us. Your feedback helps us improve and lets others know what to expect. We appreciate your time!';
-	public string $username_placeholder = 'Enter your name (Optional)';
-	public string $review_placeholder = 'Tell us about your impressions and experiences';
-	public string $success_message = 'Your review was submitted successfully!';
+	public string $review_box_text = '';
+	public string $username_placeholder = '';
+	public string $review_placeholder = '';
+	public string $success_message = '';
 	public bool $gating = true;
 	public bool $email_notify_on_negative_review = false;
 	public ?array $emails_on_negative_review = null;
@@ -90,7 +90,7 @@ class Flow_Utility implements JsonSerializable {
 				$value = $this->flow->{$property_name};
 			}
 			// Or meta property or setting value
-			$value = $value ?? $this->flow->get_meta( $property_name ) ?? Setting::find( self::SETTING_PREFIX . $property_name )->get_value();
+			$value = $value ?? $this->flow->get_meta( $property_name );
 			if ( $property_name === 'thumbnail_url' ) {
 				$value = $this->define_thumbnail_url();
 			} elseif ( $property_name === 'targets' ) {
