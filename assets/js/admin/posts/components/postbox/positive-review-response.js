@@ -6,6 +6,7 @@ import MediaUploaderButton from "../../../components/media-uploader-button";
 import {REVIEW_TARGET_LOGOS} from "../../../../../../blocks/flow/src/components/flow/steps/data/data";
 import Utilities from "../../../../../../blocks/flow/src/utilities";
 import {SETTINGS_KEYS_PREFIX} from "../../data";
+import {GetMedia} from "../../../../../../blocks/flow/src/rest/rest";
 
 const REVIEW_TARGET_DISTRIBUTIONS = [
     {
@@ -59,7 +60,24 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
             if (flowData?.metas?.length) {
                 for (const meta of flowData.metas) {
                     if (meta.meta_key in settings) {
-                        settings[meta.meta_key][1](meta.meta_value);
+                        if (meta.meta_key === 'targets') {
+                            // Targets with media_urls
+                            const targets = [];
+                            for (const target of meta.meta_value) {
+                                if (target.media_id) {
+                                    const media = await GetMedia(ReviewBird.rest.nonce, target.media_id);
+                                    targets.push({
+                                        ...target,
+                                        media_url: media?.guid?.rendered,
+                                    });
+                                } else {
+                                    targets.push(target);
+                                }
+                            }
+                            settings[meta.meta_key][1](targets);
+                        } else {
+                            settings[meta.meta_key][1](meta.meta_value);
+                        }
                         checkedKeys.push(meta.meta_key);
                     }
                 }
