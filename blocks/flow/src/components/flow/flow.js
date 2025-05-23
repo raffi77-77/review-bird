@@ -66,8 +66,8 @@ export default function Flow({id, attributes}) {
                 {step === 'public-review' &&
                     <PublicReview flowId={id} flowData={flowData}/>}
                 {!attributes?.shortcode &&
-                    <div>
-                        <img src={generalLogo} alt="Logo"/>
+                    <div className='rw-flow-footer'>
+                        <img className='rw-flow-footer-in' src={generalLogo} alt="Logo"/>
                     </div>}
             </Container>}
     </div>

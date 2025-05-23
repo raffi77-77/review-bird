@@ -108,4 +108,14 @@
       }
     }
   }
+
+  &-footer{
+    padding-block-end: 30px;
+    @include max-width($rw-flow-wp-breakpoint) {
+      &-in{
+        width: 184px;
+        height: 32px;
+      }
+    }
+  }
 }

@@ -5,6 +5,7 @@
     padding-inline: 10px;
     border-radius: 3px;
     font-size: var(--rw-admin-fs-13);
+    word-break: break-word;
 
     &:not(:last-child) {
       margin-block-end: 2px;

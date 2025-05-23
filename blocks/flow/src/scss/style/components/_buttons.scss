@@ -41,6 +41,11 @@
           }
         }
 
+        @include max-width($rw-flow-wp-sm-breakpoint) {
+          --rw-flow-button-width: 70px;
+          --rw-flow-button-height: 70px;
+        }
+
         &-in {
           width: 100%;
           height: 100%;

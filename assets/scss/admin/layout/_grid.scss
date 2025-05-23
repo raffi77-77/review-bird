@@ -244,9 +244,10 @@
     font-size: var(--rw-admin-fs-12);
     line-height: var(--rw-admin-lh-18);
     text-align: left;
+    word-break: break-word;
 
     &:not(:last-child) {
-      padding-block-end: 10px;
+      padding-block-end: 2px;
     }
 
     &:first-child:last-child {
@@ -257,6 +258,7 @@
       font-size: var(--rw-admin-fs-12);
       font-weight: var(--rw-admin-fw-700);
       line-height: var(--rw-admin-lh-20);
+      word-break: break-word;
       cursor: pointer;
     }
   }
