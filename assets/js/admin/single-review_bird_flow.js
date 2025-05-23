@@ -24,9 +24,11 @@ domReady(async () => {
         'emails_on_negative_review',
     ];
     try {
-        flowData = await GetFlow(ReviewBird.rest.url, ReviewBird.rest.nonce, ReviewBird.flow_uuid, {
-            include: ['metas']
-        });
+        if (ReviewBird.flow_uuid) {
+            flowData = await GetFlow(ReviewBird.rest.url, ReviewBird.rest.nonce, ReviewBird.flow_uuid, {
+                include: ['metas']
+            });
+        }
         settings = await GetSettings(ReviewBird.rest.url, ReviewBird.rest.nonce, {
             key: settingsKeys.map(key => `${SETTINGS_KEYS_PREFIX}${key}`)
         });
