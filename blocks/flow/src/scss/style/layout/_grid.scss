@@ -28,6 +28,10 @@
       font-weight: var(--rw-flow-fw-600);
       line-height: var(--rw-flow-lh-32);
       text-align: center;
+
+      @include max-width($rw-flow-wp-breakpoint) {
+        font-size: var(--rw-flow-fs-20);
+      }
     }
   }
 
@@ -82,9 +86,10 @@
   }
 
   &-logo {
+    height: 100%;
     margin-block: auto;
     margin-inline: 10px;
-    @include min-width($rw-flow-wp-lg-breakpoint) {
+    @include min-width($rw-flow-wp-breakpoint) {
       &:first-child:last-child {
         margin: auto;
       }
@@ -95,7 +100,12 @@
     }
 
     @include max-width($rw-flow-wp-breakpoint) {
-      width: 200px;
+      max-width: 200px;
+    }
+
+    &-in{
+      width: 100%;
+      height: 100%;
     }
 
   }

@@ -15,8 +15,8 @@
       }
 
       &-feedback {
-        --rw-flow-button-width: 70px;
-        --rw-flow-button-height: 70px;
+        --rw-flow-button-width: 132px;
+        --rw-flow-button-height: 132px;
         --rw-flow-button-pb: 10px;
         --rw-flow-button-pi: 10px;
         --rw-flow-button-nested-p: 10px;
@@ -30,12 +30,21 @@
           --rw-flow-button-pb: 16px;
           --rw-flow-button-pi: 16px;
           --rw-flow-button-nested-p: 30px;
+
+          &-in {
+            width: 100px;
+            height: 100px;
+          }
+
+          &-i {
+            width: 100%;
+          }
         }
 
         &-in {
           width: 100%;
           height: 100%;
-          display: block;
+          display: flex;
           margin: auto;
           padding: var(--rw-flow-button-nested-p);
           background-color: var(--rw-flow-button-in-local-bg);
@@ -44,7 +53,8 @@
         }
 
         &-i {
-          width: 100%;
+          width: 50px;
+          margin: auto;
           fill: var(--rw-flow-white);
         }
 
@@ -161,6 +171,8 @@
       }
 
       &-primary {
+        --rw-flow-button-pb: 11px;
+        --rw-flow-button-pi: 33px;
         --rw-flow-button-local-bg: var(--rw-flow-theme-local-box-button-bg);
         --rw-flow-button-local-color: var(--rw-flow-secondary-color);
         --rw-flow-button-color: var(--rw-flow-secondary-color);
@@ -177,6 +189,8 @@
       }
 
       &-secondary {
+        --rw-flow-button-pb: 11px;
+        --rw-flow-button-pi: 33px;
         --rw-flow-button-local-bg: var(--rw-flow-secondary-button-bg);
         --rw-flow-button-local-color: var(--rw-flow-theme-local-box-color);
         --rw-flow-button-border: var(--rw-flow-theme-local-box-border-bg);

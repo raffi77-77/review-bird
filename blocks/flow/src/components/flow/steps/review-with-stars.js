@@ -124,7 +124,7 @@ export default function ReviewWithStars({flowId, flowData, setStep}) {
                 <div>
                     <button className={`rw-flow-feedback-link${loading > 0 ? ' rw-button-disabled' : ''}`}
                             onClick={() => setStep('public-review')}>
-                        <span>{__("Skip and post publicly", 'review-bird')}</span>
+                        <span className='rw-flow-feedback-link-in'>{__("Skip and post publicly", 'review-bird')}</span>
                     </button>
                 </div>}
         </div>
