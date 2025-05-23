@@ -1,17 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
-//@font-face {
-//  font-family: 'Raleway';
-//  src: url('../..fonts/Raleway-VariableFont_wght.d8040b0c.ttf') format('truetype');
-//  font-weight: 100 900;
-//  font-style: normal;
-//  font-display: swap;
-//}
+@font-face {
+  font-family: 'Raleway';
+  src: url('./assets/fonts/Raleway-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
-//@font-face {
-//  font-family: 'Raleway-italic';
-//  src: url('../../../fonts/Raleway-Italic-VariableFont_wght.ttf') format('truetype');
-//  font-weight: 100 900;
-//  font-style: italic;
-//  font-display: swap;
-//}
+@font-face {
+  font-family: 'Raleway-italic';
+  src: url('./assets/fonts/Raleway-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
