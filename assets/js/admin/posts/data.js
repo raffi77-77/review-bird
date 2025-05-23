@@ -12,4 +12,5 @@ export const SETTINGS_KEYS = [
     // 'gating',
     // 'email_notify_on_negative_review',
     'emails_on_negative_review',
+    'skin'
 ];
