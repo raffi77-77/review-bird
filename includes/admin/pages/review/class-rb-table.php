@@ -131,16 +131,13 @@ class Table extends WP_List_Table {
 			$thumbnail = $this->printed_flows[ $item->flow_id ]['thumbnail'] ?? null;
 		} else {
 			$flow         = $this->printed_flows[ $item->flow_id ]['flow'] = Flow::find( $item->flow_id );
-			$thumbnail_id = $flow ? $flow->get_meta( '_thumbnail_id' ) : null;
-			$thumbnail    = $this->printed_flows[ $item->flow_id ]['thumbnail'] = $thumbnail_id ? wp_get_attachment_thumb_url( $thumbnail_id ) : null;
+			$thumbnail    = $this->printed_flows[ $item->flow_id ]['thumbnail'] = $flow ? get_the_post_thumbnail($flow->id, [40, 40]) : '';
 		}
 		if ( $flow ) {
 			?>
             <a style="display: flex; align-items: center;" href="<?= esc_url( get_edit_post_link( $flow->get_id() ) ) ?>">
-				<?= esc_html( $flow->get_title() ) ?>
-				<?php if ( $thumbnail ): ?>
-                    <img style="width: 50px; height: auto; margin-left: 5px" src="<?= esc_url( $thumbnail ) ?>">
-				<?php endif; ?>
+				<strong style="margin-right: 5px"><?= esc_html( $flow->get_title() ) ?></strong>
+				<?= wp_kses_post($thumbnail) ?>
             </a>
 			<?php
 		}
@@ -148,7 +145,7 @@ class Table extends WP_List_Table {
 
 	public function column_like( Review $item ): void {
 		?>
-        <img src="<?= esc_url( $item->like ? Review_Bird()->get_plugin_dir_url() . '/resources/admin/like.svg' : Review_Bird()->get_plugin_dir_url() . '/resources/admin/dislike.svg' ) ?>">
+        <img src="<?= esc_url( $item->like ? Review_Bird()->get_plugin_dir_url() . 'resources/admin/like.svg' : Review_Bird()->get_plugin_dir_url() . 'resources/admin/dislike.svg' ) ?>">
 		<?php
 	}
 }
