@@ -137,29 +137,6 @@ class Page {
 	}
 
 	public function register_settings_scripts(): void {
-		$rb = Review_Bird();
-		if ( ! wp_script_is( $rb->get_plugin_name() . '-page-settings-script', 'registered' ) ) {
-			$settings_script_asset = include( $rb->get_plugin_dir_path() . 'dist/js/admin/something-to-change-page-settings.asset.php' );
-			wp_register_script( $rb->get_plugin_name() . '-page-settings-script', $rb->get_plugin_dir_url() . 'dist/js/admin/something-to-change-page-settings.js', $settings_script_asset['dependencies'],
-				$settings_script_asset['version'] );
-		}
-		if ( ! wp_script_is( $rb->get_plugin_name() . '-page-settings-script', 'enqueued' ) ) {
-			wp_enqueue_script( $rb->get_plugin_name() . '-page-settings-script' );
-			wp_localize_script( $rb->get_plugin_name() . '-page-settings-script', 'Review_Bird', [
-				'rest'   => [
-					'url'    => get_rest_url( null, 'sr-rb/ai/v1/' ),
-					'wp_url' => get_rest_url( null, 'wp/v2/' ),
-					'nonce'  => wp_create_nonce( 'wp_rest' )
-				],
-				'config' => [
-					'debug' => true,
-				],
-			] );
-		}
-		$chatbot_settings_script_asset = include( $rb->get_plugin_dir_path() . 'dist/js/admin/something-to-change-page-settings-chatbot.asset.php' );
-		wp_register_script( $rb->get_plugin_name() . '-page-settings-chatbot-script', $rb->get_plugin_dir_url() . 'dist/js/admin/something-to-change-page-settings-chatbot.js',
-			array_merge( $chatbot_settings_script_asset['dependencies'] ?: [], [ $rb->get_plugin_name() . '-page-settings-script' ] ), $chatbot_settings_script_asset['version'] );
-		wp_enqueue_script( $rb->get_plugin_name() . '-page-settings-chatbot-script' );
 	}
 
 	public function register_settings_styles(): void {
@@ -168,12 +145,6 @@ class Page {
 			wp_register_style( $rb->get_plugin_name() . '-page-settings-style', $rb->get_plugin_dir_url() . 'dist/css/admin/pages/settings.css', array(), $rb->get_version() );
 		}
 		wp_enqueue_style( $rb->get_plugin_name() . '-page-settings-style' );
-		if ( file_exists( $rb->get_plugin_dir_path() . 'dist/js/admin/something-to-change-page-settings.css' ) ) {
-			if ( ! wp_style_is( $rb->get_plugin_name() . '-page-settings-js-style', 'registered' ) ) {
-				wp_register_style( $rb->get_plugin_name() . '-page-settings-js-style', $rb->get_plugin_dir_url() . 'dist/js/admin/something-to-change-page-settings.css', array(), $rb->get_version() );
-			}
-			wp_enqueue_style( $rb->get_plugin_name() . '-page-settings-js-style' );
-		}
 	}
 
 }

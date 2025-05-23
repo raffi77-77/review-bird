@@ -76,6 +76,7 @@ class Meta_Scheme implements Scheme_Interface {
 			foreach ( $value as &$item ) {
 				$item['url']      = is_string( $item['url'] ) ? sanitize_url( $item['url'] ) : null;
 				$item['media_id'] = is_numeric( $item['media_id'] ) ? (int) ( $item['media_id'] ) : null;
+				// $item['media_url'] = $item['media_id'] ? wp_get_attachment_url( $item['media_id'] ) : null;
 			}
 		}
 

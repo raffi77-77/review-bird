@@ -20,8 +20,10 @@ class Review_Service {
 		$flow_utility    = new FLow_Utility( $flow );
 		$data['flow_id'] = $flow->id;
 		if ( $data['like'] ) {
-			$target_index   = count( $flow_utility->targets ) > 1 ? $flow_utility->calc_target_index( $flow_utility->target_distribution ) : 0;
-			$data['target'] = $flow_utility->targets[ $target_index ] ?? null;
+			$target_index = count( $flow_utility->targets ) > 1 ? $flow_utility->calc_target_index( $flow_utility->target_distribution ) : 0;
+			if ( ! empty( $flow_utility->targets[ $target_index ]['url'] ) ) {
+				$data['target'] = $flow_utility->targets[ $target_index ]['url'];
+			}
 		}
 		$review = $this->review_repository->create( $data );
 		if ( $review && ! $review->like && $flow_utility->email_notify_on_negative_review && ! empty( $flow_utility->emails_on_negative_review ) ) {

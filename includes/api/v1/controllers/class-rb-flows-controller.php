@@ -26,7 +26,7 @@ class Flows_Controller extends Rest_Controller {
 						}
 					),
 					'include' => array(
-						'description' => __( 'Include extra data with chatbot.', 'review-bird' ),
+						'description' => __( 'Include extra data with flow.', 'review-bird' ),
 						'type'        => 'array'
 					)
 				)
