@@ -49,14 +49,6 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
     };
 
     useEffect(() => {
-        if (settings['targets'][0].length > 1) {
-            settings['target_distribution'][1]((settings['targets'][0].length - 1) * 5 - 4);
-        } else {
-            settings['target_distribution'][1](null);
-        }
-    }, [settings['targets'][0].length]);
-
-    useEffect(() => {
         getData();
     }, [flowData, defaultSettings]);
 
@@ -121,6 +113,13 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
                 // Meta
                 addObjectDataToForm(form, `metas[${data[i].key}]`, value);
             }
+        }
+    }
+
+    const deleteTarget = (index) => {
+        if (confirm(__("Are you sure you want to delete the target?", 'review-bird'))) {
+            settings['targets'][1](prevState => prevState.filter((item, i) => i !== index))
+            checkTargetDistribution(settings['targets'][0].length - 1);
         }
     }
 
@@ -231,7 +230,7 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
                                )}/>
                         {index > 0 &&
                             <button type='button' className="rw-admin-row rw-admin-row-nested rw-admin-row-close"
-                                    onClick={() => confirm(__("Are you sure you want to delete the target?", 'review-bird')) && settings['targets'][1](prevState => prevState.filter((item, i) => i !== index))}>
+                                    onClick={() => deleteTarget(index)}>
                                 <svg className='rw-admin-row rw-admin-row-nested-i' xmlns="http://www.w3.org/2000/svg"
                                      fill="none"
                                      viewBox="0 0 1200 1200">
@@ -347,6 +346,22 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
         </tr>
     }
 
+    const checkTargetDistribution = (targetsCount) => {
+        if (targetsCount > 1) {
+            settings['target_distribution'][1]((targetsCount - 1) * 5 - 4);
+        } else {
+            settings['target_distribution'][1](null);
+        }
+    }
+
+    const addNewTarget = () => {
+        settings['targets'][1](prevState => [...prevState, {
+            url: '',
+            media_id: null,
+        }]);
+        checkTargetDistribution(settings['targets'][0].length + 1);
+    }
+
     return <div className="rw-skin-content">
         <Utilities/>
         <table className="rw-cont-table">
@@ -392,10 +407,7 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
                     <th className="rw-cont-table-item-title">
                         <div className="rw-skin-content-title rw-admin-title">
                             <button type="button" className="rw-admin-add"
-                                    onClick={() => settings['targets'][1](prevState => [...prevState, {
-                                        url: '',
-                                        media_id: null,
-                                    }])}>
+                                    onClick={addNewTarget}>
                                 <svg className="rw-admin-i rw-admin-add-i" xmlns="http://www.w3.org/2000/svg"
                                      height="24px"
                                      viewBox="0 -960 960 960">
