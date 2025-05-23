@@ -10,41 +10,60 @@ class Meta_Scheme implements Scheme_Interface {
 	public static function rules(): array {
 		return [
 			'question'                        => [
+				'name'     => __( 'Question', 'review-bird' ),
 				'type'     => 'string',
 				'required' => true,
+				'default'  => __( 'Would you recommend {site-name} to others?', 'review-bird' ),
 			],
 			'targets'                         => [
+				'name'              => __( 'Targets', 'review-bird' ),
 				'type'              => 'array',
 				'required'          => true,
 				'sanitize_callback' => [ self::class, 'sanitize_targets' ],
 				'validate_callback' => [ self::class, 'validate_targets' ],
 			],
 			'target_distribution'             => [
+				'name'              => __( 'Target Distribution', 'review-bird' ),
 				'type'              => 'integer',
 				'validate_callback' => [ self::class, 'validate_target_distribution' ],
 			],
 			'multiple_targets'                => [
-				'type' => 'boolean',
+				'name'    => __( 'Multiple Targets', 'review-bird' ),
+				'type'    => 'boolean',
+				'default' => false,
 			],
 			'review_box_text'                 => [
-				'type' => 'string',
+				'name'    => __( 'Review Box Text', 'review-bird' ),
+				'type'    => 'string',
+				'default' => __( 'Please leave your name and share your experience with us. Your feedback helps us improve and lets others know what to expect. We appreciate your time!', 'review-bird' ),
 			],
 			'username_placeholder'            => [
-				'type' => 'string',
+				'name'    => __( 'Username placeholder', 'review-bird' ),
+				'type'    => 'string',
+				'default' => __( 'Enter your name (Optional)', 'review-bird' ),
 			],
 			'review_placeholder'              => [
-				'type' => 'string',
+				'name'    => __( 'Review placeholder', 'review-bird' ),
+				'type'    => 'string',
+				'default' => __( 'Tell us about your impressions and experiences', 'review-bird' ),
 			],
 			'success_message'                 => [
-				'type' => 'string',
+				'name'    => __( 'Success Message', 'review-bird' ),
+				'type'    => 'string',
+				'default' => __( 'Your review was submitted successfully!', 'review-bird' ),
 			],
 			'gating'                          => [
-				'type' => 'boolean',
+				'name'    => __( 'Gating', 'review-bird' ),
+				'type'    => 'boolean',
+				'default' => true,
 			],
 			'email_notify_on_negative_review' => [
-				'type' => 'boolean',
+				'name'    => __( 'Email Notify On Negative Review', 'review-bird' ),
+				'type'    => 'boolean',
+				'default' => false,
 			],
 			'emails_on_negative_review'       => [
+				'name'              => __( 'Emails On Negative Review', 'review-bird' ),
 				'type'              => 'array',
 				'sanitize_callback' => [ self::class, 'sanitize_emails_on_negative_review' ],
 				'validate_callback' => [ self::class, 'validate_emails_on_negative_review' ],

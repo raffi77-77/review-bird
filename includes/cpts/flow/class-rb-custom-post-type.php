@@ -3,6 +3,8 @@
 namespace Review_Bird\Includes\Cpts\Flow;
 
 use Exception;
+use Review_Bird\Includes\Data_Objects\Flow;
+use Review_Bird\Includes\Data_Objects\Flow_Meta;
 use Review_Bird\Includes\Data_Objects\Setting;
 use Review_Bird\Includes\Repositories\Flow_Repository;
 use Review_Bird\Includes\Review_Bird;
@@ -24,6 +26,7 @@ class Custom_Post_Type {
 		add_filter( 'template_include', array( $this, 'rewrite_template' ) );
 		add_action( 'save_post_' . self::NAME, array( $this, 'save_post' ), 10, 3 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'admin_notices', array( $this, 'output_errors' ) );
 	}
 
 	public function save_post( $post_id, $post, $update ) {
@@ -33,10 +36,10 @@ class Custom_Post_Type {
 				$validator = new Validator( $this->meta_scheme );
 				$sanitizer->sanitize( $metas );
 				if ( ! $validator->validate( $sanitizer->get_sanitized() ) ) {
-					Helper::log($validator->get_errors(), 'cpt save error');
-					return;
+					$error_meta[ Flow_Meta::KEY_ERROR_ON_SAVE ] = json_encode( $validator->get_errors() );
+					Helper::log( $validator->get_errors(), 'cpt save error' );
 				}
-				$this->repository->save_post($post_id, $post, [ 'metas' => $validator->get_validated() ]);
+				$this->repository->save_post( $post_id, $post, [ 'metas' => array_merge( $validator->get_validated(), $error_meta ?? [] ) ] );
 			}
 		} catch ( Exception $exception ) {
 			Helper::log( $exception, __( 'Failed to save chatbot.', 'review-bird' ) );
@@ -65,7 +68,7 @@ class Custom_Post_Type {
 			'show_in_menu'        => 'review-bird',
 			'hierarchical'        => false,
 			'show_in_nav_menus'   => false,
-			'rewrite'             => [ 'slug' => Setting::find(Review_Bird::get_instance()->get_plugin_prefix() . '_utilities_flow_flow_slug')->get_value() ?? 'review' ],
+			'rewrite'             => [ 'slug' => Setting::find( Review_Bird::get_instance()->get_plugin_prefix() . '_utilities_flow_flow_slug' )->get_value() ?? 'review' ],
 			'query_var'           => true,
 			'has_archive'         => true,
 			'show_in_rest'        => false,
@@ -167,6 +170,30 @@ class Custom_Post_Type {
 			wp_enqueue_style( $rb->get_plugin_name() . '-single-' . self::NAME . '-style' );
 			// Media uploader
 			wp_enqueue_media();
+		}
+	}
+
+
+	public function output_errors() {
+		$current_screen = get_current_screen();
+		if ( $current_screen->id !== self::NAME ) {
+			return;
+		}
+		if ( ! empty( get_the_ID() ) && $flow = Flow::find( get_the_ID() ) ) {
+			if ( $errors = $flow->get_meta( Flow_Meta::KEY_ERROR_ON_SAVE ) ) {
+				if ( is_array( $errors ) ) {
+					$elements = $this->meta_scheme::rules();
+					echo '<div class="error notice is-dismissible">';
+					foreach ( $errors as $key => $error ) {
+						$error = is_array( $error ) ? implode( ',', $error ) : $error;
+						?>
+                        <p><strong><?= esc_html( $elements[ $key ]['name'] ?? $key ?? '' ) ?></strong> - <?= esc_html( $error ) ?></p>
+						<?php
+					}
+					echo '</div>';
+				}
+				Flow_Meta::delete( [ 'post_id' => $flow->get_id(), 'meta_key' => Flow_Meta::KEY_ERROR_ON_SAVE ] );
+			}
 		}
 	}
 }

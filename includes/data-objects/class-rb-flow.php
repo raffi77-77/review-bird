@@ -48,7 +48,7 @@ class Flow extends WP_Post_Data_Object {
 	}
 
 	public function metas() {
-		return Flow_Meta::where( [ 'post_id' => $this->id, 'meta_key' => [ '_uuid' ] ] )->get();
+		return Flow_Meta::where( [ 'post_id' => $this->id ] )->get();
 	}
 
 	public function utility() {

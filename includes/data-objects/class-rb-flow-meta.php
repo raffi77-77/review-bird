@@ -3,6 +3,7 @@
 namespace Review_Bird\Includes\Data_Objects;
 
 class Flow_Meta extends WP_Meta_Data_Object {
+	const KEY_ERROR_ON_SAVE = '_error_on_save';
 	public static function create( $data ) {
 		$data['post_id'] = $data['flow_id'] ?? $data['post_id'];
 		unset( $data['flow_id'] );

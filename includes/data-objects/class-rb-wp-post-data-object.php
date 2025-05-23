@@ -8,10 +8,10 @@ class WP_Post_Data_Object extends Data_Object {
 	const STATUS_PUBLISHED = 1;
 	const STATUS_DRAFT = 3;
 	public $id;
-	public $title;
+	public ?string $title = null;
 	public ?int $status = null;
-	public $created_at;
-	public $updated_at;
+	public ?string $created_at = null;
+	public ?string $updated_at = null;
 
 	public static function get_our_status_equivalent( $status ) {
 		return array_flip( self::wp_statuses_equivalents() )[ $status ];
@@ -88,5 +88,8 @@ class WP_Post_Data_Object extends Data_Object {
 	public static function where( $where, ...$args ) {
 		return parent::where( self::map_where( $where ), static::POST_TYPE );
 	}
-
+	
+	public function get_title() {
+		return $this->title;
+	}
 }

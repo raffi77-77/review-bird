@@ -55,6 +55,9 @@ class Flows_Controller extends Rest_Controller {
 		if ( ! empty( $include ) && is_array( $include ) ) {
 			foreach ( $include as $relation ) {
 				if ( method_exists( $item, $relation ) ) {
+					if( $relation === 'metas' && !current_user_can( 'manage_options' ) ) {
+						continue;
+					}
 					$item->included[ $relation ] = $item->{$relation}();
 				}
 			}
