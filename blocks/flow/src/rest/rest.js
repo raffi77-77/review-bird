@@ -97,3 +97,21 @@ export const CreateReview = (restUrl, restNonce, requestData) => {
         body: JSON.stringify(requestData)
     }).then(handleResponse);
 }
+
+/**
+ * Get settings
+ *
+ * @param {string} restUrl Rest url
+ * @param {string} restNonce Rest nonce
+ * @param {object} params Query params
+ * @return {Promise<any>}
+ */
+export const GetSettings = (restUrl, restNonce, params = {}) => {
+    const query = urlSearchParams(params);
+
+    return fetch(`${restUrl}settings${query}`, {
+        headers: {
+            'X-WP-Nonce': restNonce
+        }
+    }).then(handleResponse);
+}

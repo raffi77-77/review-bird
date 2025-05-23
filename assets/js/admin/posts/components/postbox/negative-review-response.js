@@ -2,8 +2,9 @@ import {useEffect, useState} from "@wordpress/element";
 import {__} from "@wordpress/i18n";
 import Tooltip from "../../../components/tooltip";
 import {addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
+import {SETTINGS_KEYS_PREFIX} from "../../data";
 
-export default function NegativeReviewResponse({flowData}) {
+export default function NegativeReviewResponse({flowData, defaultSettings}) {
     const [loading, setLoading] = useState(0);
     const settings = {
         'review_box_text': useState(''),
@@ -15,15 +16,26 @@ export default function NegativeReviewResponse({flowData}) {
 
     useEffect(() => {
         getData();
-    }, [flowData]);
+    }, [flowData, defaultSettings]);
 
     const getData = async () => {
         setLoading(prev => prev + 1);
         try {
+            const checkedKeys = [];
             if (flowData?.metas?.length) {
                 for (const meta of flowData.metas) {
                     if (meta.meta_key in settings) {
                         settings[meta.meta_key][1](meta.meta_value);
+                        checkedKeys.push(meta.meta_key);
+                    }
+                }
+            }
+            const missedKeys = Object.keys(settings).filter(item => !checkedKeys.includes(item));
+            if (missedKeys.length && defaultSettings?.length) {
+                for (const setting of defaultSettings) {
+                    const key = setting.key.replace(SETTINGS_KEYS_PREFIX, '');
+                    if (missedKeys.includes(key)) {
+                        settings[key][1](setting.value);
                     }
                 }
             }

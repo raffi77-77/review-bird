@@ -1,0 +1,1 @@
+export const SETTINGS_KEYS_PREFIX = 'review_bird_utility_flow_';

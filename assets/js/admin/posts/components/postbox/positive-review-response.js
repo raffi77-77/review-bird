@@ -5,6 +5,7 @@ import {addObjectDataToForm, getPartOfUrl, getSettingsDataToSave} from "../../..
 import MediaUploaderButton from "../../../components/media-uploader-button";
 import {REVIEW_TARGET_LOGOS} from "../../../../../../blocks/flow/src/components/flow/steps/data/data";
 import Utilities from "../../../../../../blocks/flow/src/utilities";
+import {SETTINGS_KEYS_PREFIX} from "../../data";
 
 const REVIEW_TARGET_DISTRIBUTIONS = [
     {
@@ -34,7 +35,7 @@ const REVIEW_TARGET_DISTRIBUTIONS = [
     },
 ];
 
-export default function PositiveReviewResponse({flowData}) {
+export default function PositiveReviewResponse({flowData, defaultSettings}) {
     const [loading, setLoading] = useState(0);
     const settings = {
         'targets': useState([
@@ -57,15 +58,26 @@ export default function PositiveReviewResponse({flowData}) {
 
     useEffect(() => {
         getData();
-    }, [flowData]);
+    }, [flowData, defaultSettings]);
 
     const getData = async () => {
         setLoading(prev => prev + 1);
         try {
+            const checkedKeys = [];
             if (flowData?.metas?.length) {
                 for (const meta of flowData.metas) {
                     if (meta.meta_key in settings) {
                         settings[meta.meta_key][1](meta.meta_value);
+                        checkedKeys.push(meta.meta_key);
+                    }
+                }
+            }
+            const missedKeys = Object.keys(settings).filter(item => !checkedKeys.includes(item));
+            if (missedKeys.length && defaultSettings?.length) {
+                for (const setting of defaultSettings) {
+                    const key = setting.key.replace(SETTINGS_KEYS_PREFIX, '');
+                    if (missedKeys.includes(key)) {
+                        settings[key][1](setting.value);
                     }
                 }
             }

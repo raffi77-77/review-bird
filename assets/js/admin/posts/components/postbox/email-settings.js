@@ -1,8 +1,9 @@
 import {useEffect, useState} from "@wordpress/element";
 import {__} from "@wordpress/i18n";
 import {addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
+import {SETTINGS_KEYS_PREFIX} from "../../data";
 
-export default function EmailSettings({flowData}) {
+export default function EmailSettings({flowData, defaultSettings}) {
     const [loading, setLoading] = useState(0);
     const settings = {
         'email_notify_on_negative_review': useState(false),
@@ -12,18 +13,33 @@ export default function EmailSettings({flowData}) {
 
     useEffect(() => {
         getData();
-    }, [flowData]);
+    }, [flowData, defaultSettings]);
 
     const getData = async () => {
         setLoading(prev => prev + 1);
         try {
+            const checkedKeys = [];
             if (flowData?.metas?.length) {
                 for (const meta of flowData.metas) {
                     if (meta.meta_key in settings) {
                         settings[meta.meta_key][1](meta.meta_value);
+                        checkedKeys.push(meta.meta_key);
                         // Emails
                         if (meta.meta_key === 'emails_on_negative_review' && meta.meta_value.length) {
                             setEmails(meta.meta_value.join(', '));
+                        }
+                    }
+                }
+            }
+            const missedKeys = Object.keys(settings).filter(item => !checkedKeys.includes(item));
+            if (missedKeys.length && defaultSettings?.length) {
+                for (const setting of defaultSettings) {
+                    const key = setting.key.replace(SETTINGS_KEYS_PREFIX, '');
+                    if (missedKeys.includes(key)) {
+                        settings[key][1](setting.value);
+                        // Emails
+                        if (key === 'emails_on_negative_review' && setting.value.length) {
+                            setEmails(setting.value.join(', '));
                         }
                     }
                 }
