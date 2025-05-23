@@ -9,7 +9,7 @@ trait SingletonTrait {
 
 	private function __construct() {}
 
-	final public static function instance() {
+	final public static function instance(): self {
 		if ( null === static::$instance ) {
 			static::$instance = new static();
 		}

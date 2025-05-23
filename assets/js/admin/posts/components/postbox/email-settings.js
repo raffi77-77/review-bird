@@ -100,7 +100,7 @@ export default function EmailSettings({flowData, defaultSettings}) {
                             <p className="rw-admin-desc">{__("When a negative Review is received sent an email", 'review-bird')}</p>
                         </div>
                         <div className="rw-admin-row-in">
-                            <input type="text" className="rw-admin-input rw-admin-input-minimal"
+                            <input type="text" className="rw-admin-input"
                                    placeholder={__("Emails", 'review-bird')}
                                    value={emails}
                                    onChange={e => setEmails(e.target.value)}/>

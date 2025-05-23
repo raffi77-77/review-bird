@@ -3,6 +3,7 @@
 namespace Review_Bird\Includes\Services;
 
 use Review_Bird\Includes\Admin\Pages\Setting\Page;
+use Review_Bird\Includes\Cpts\Flow\Custom_Post_Type;
 use Review_Bird\Includes\Cpts\Flow\Meta_Scheme;
 use Review_Bird\Includes\Data_Objects\Setting;
 use Review_Bird\Includes\Traits\SingletonTrait;
@@ -49,6 +50,7 @@ class Install {
 	}
 	
 	public function flush_rewrite_rules() {
+		Custom_Post_Type::instance()->register();
 		flush_rewrite_rules();
 	}
 
