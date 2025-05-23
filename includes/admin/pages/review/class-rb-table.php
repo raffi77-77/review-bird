@@ -23,11 +23,11 @@ class Table extends WP_List_Table {
 		return [
 			'cb'         => '<input type="checkbox" />',
 			'id'         => __( 'ID', 'review-bird' ),
-			'username'   => __( 'Username', 'review-bird' ),
-			'message'    => __( 'Message', 'review-bird' ),
-			'flow'       => __( 'Flow', 'review-bird' ),
 			'like'       => __( 'Answer', 'review-bird' ),
 			'rating'     => __( 'Rating', 'review-bird' ),
+			'flow'       => __( 'Flow', 'review-bird' ),
+			'username'   => __( 'Username', 'review-bird' ),
+			'message'    => __( 'Message', 'review-bird' ),
 			'created_at' => __( 'Submission Date', 'review-bird' ),
 		];
 	}
@@ -53,7 +53,7 @@ class Table extends WP_List_Table {
 	protected function column_rating( Review $item ): string {
 		$stars = str_repeat( '⭐', (int) $item->rating );
 
-		return $item->rating ? $stars : __('N/A', 'review-bird');
+		return $item->rating ? $stars : __( 'N/A', 'review-bird' );
 	}
 
 	public function prepare_items() {
@@ -122,7 +122,7 @@ class Table extends WP_List_Table {
 	public function column_ID( Review $item ): string {
 		$edit_link = add_query_arg( [ 'id' => $item->id ], menu_page_url( Page::$menu_slug, false ) );
 
-		return sprintf( '<a href="%s"><strong>%d</strong></a>', esc_url( $edit_link ), $item->id );
+		return sprintf( '<a href="%s">#%d</a>', esc_url( $edit_link ), $item->id );
 	}
 
 	public function column_flow( Review $item ): void {
@@ -136,24 +136,20 @@ class Table extends WP_List_Table {
 		}
 		if ( $flow ) {
 			?>
-            <a style="display: flex; align-items: center;" href="<?= esc_attr( get_edit_post_link( $flow->get_id() ) ) ?>">
+            <a style="display: flex; align-items: center;" href="<?= esc_url( get_edit_post_link( $flow->get_id() ) ) ?>">
 				<?= esc_html( $flow->get_title() ) ?>
 				<?php if ( $thumbnail ): ?>
-                    <img style="width: 50px; height: auto; margin-left: 5px" src="<?= esc_attr( $thumbnail ) ?>">
+                    <img style="width: 50px; height: auto; margin-left: 5px" src="<?= esc_url( $thumbnail ) ?>">
 				<?php endif; ?>
             </a>
 			<?php
 		}
 	}
-    
-    public function column_like( Review $item ): void {
-        if($item->like) {
-            ?>
-            <?php
-        } else {
-            ?>
-            <?php
-        }
-    }
+
+	public function column_like( Review $item ): void {
+		?>
+        <img src="<?= esc_url( $item->like ? Review_Bird()->get_plugin_dir_url() . '/resources/admin/like.svg' : Review_Bird()->get_plugin_dir_url() . '/resources/admin/dislike.svg' ) ?>">
+		<?php
+	}
 }
 
