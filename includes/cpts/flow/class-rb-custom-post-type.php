@@ -27,6 +27,27 @@ class Custom_Post_Type {
 		add_action( 'save_post_' . self::NAME, array( $this, 'save_post' ), 10, 3 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_notices', array( $this, 'output_errors' ) );
+		add_filter('manage_'.self::NAME.'_posts_columns', array($this, 'add_thumbnail_column'), 10, 3);
+		add_action('manage_'.self::NAME.'_posts_custom_column', array($this, 'show_thumbnail'), 10, 2);
+		
+	}
+	function show_thumbnail($column, $post_id) {
+		if ($column === 'thumbnail') {
+			$thumb = get_the_post_thumbnail($post_id, [40, 40]);
+			echo $thumb ?? '';
+		}
+	}
+	public function add_thumbnail_column($columns) {
+		$new = [];
+		foreach ($columns as $key => $value) {
+			if ($key === 'cb') {
+				$new[$key] = $value;
+				$new['thumbnail'] = '<img src="'.Review_Bird()->get_plugin_dir_url() . 'resources/admin/img-placeholder.svg">';
+			} else {
+				$new[$key] = $value;
+			}
+		}
+		return $new;
 	}
 
 	public function save_post( $post_id, $post, $update ) {
@@ -113,7 +134,7 @@ class Custom_Post_Type {
 	}
 
 	public function title_question_meta_box() {
-		add_meta_box( 'title-question', __( 'Title Question', 'review-bird' ), function () {
+		add_meta_box( 'title-question', __( 'General', 'review-bird' ), function () {
 			ob_start();
 			include Review_Bird()->get_plugin_dir_path() . 'templates/admin/posts/meta-boxes/title-questions.php';
 			echo ob_get_clean();
@@ -149,7 +170,6 @@ class Custom_Post_Type {
 		$screen = get_current_screen();
 		if ( $screen->post_type === self::NAME ) {
 			$rb = Review_Bird();
-			// Scripts
 			if ( ! wp_style_is( $rb->get_plugin_name() . '-single-' . self::NAME . '-js', 'registered' ) ) {
 				$flow_script_asset = include( $rb->get_plugin_dir_path() . 'dist/js/admin/single-' . self::NAME . '.asset.php' );
 				wp_register_script( $rb->get_plugin_name() . '-single-' . self::NAME . '-js', $rb->get_plugin_dir_url() . 'dist/js/admin/single-' . self::NAME . '.js', $flow_script_asset['dependencies'],
@@ -163,13 +183,16 @@ class Custom_Post_Type {
 				),
 				'flow_uuid' => get_post_meta( get_the_ID(), '_uuid', true ),
 			) );
-			// Styles
 			if ( ! wp_style_is( $rb->get_plugin_name() . '-single-' . self::NAME . '-style', 'registered' ) ) {
 				wp_register_style( $rb->get_plugin_name() . '-single-' . self::NAME . '-style', $rb->get_plugin_dir_url() . 'dist/css/admin/posts/flow.css', array(), $rb->get_version() );
 			}
 			wp_enqueue_style( $rb->get_plugin_name() . '-single-' . self::NAME . '-style' );
-			// Media uploader
 			wp_enqueue_media();
+            ?>
+            <style>
+                .column-thumbnail { width: 60px; }
+            </style>
+            <?php
 		}
 	}
 

@@ -7,10 +7,10 @@ use Review_Bird\Includes\Review_Bird;
 class Page {
 
 	static $menu_slug = 'review-bird-reviews';
-	public bool $is_single;
+	public int $is_single;
 
 	public function __construct() {
-		$this->is_single = isset( $_GET['id'] ) ? (int) sanitize_text_field( $_GET['id'] ) : false;
+		$this->is_single = isset( $_GET['id'] ) ? (int) sanitize_text_field( $_GET['id'] ) : 0;
 	}
 
 	public function add_submenu_page() {
