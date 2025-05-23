@@ -6,6 +6,7 @@ import NegativeReviewResponse from "./posts/components/postbox/negative-review-r
 import EmailSettings from "./posts/components/postbox/email-settings";
 import {GetFlow, GetSettings} from "../../../blocks/flow/src/rest/rest";
 import {SETTINGS_KEYS_PREFIX} from "./posts/data";
+import SkinSettings from "./posts/components/postbox/skin-settings";
 
 domReady(async () => {
     let flowData = null;
@@ -49,5 +50,12 @@ domReady(async () => {
         const root = createRoot(emailSettings);
 
         root.render(<EmailSettings flowData={flowData} defaultSettings={settings}/>);
+    }
+
+    const skinSettings = document.querySelector('#skin-settings .inside');
+    if (skinSettings) {
+        const root = createRoot(skinSettings);
+
+        root.render(<SkinSettings flowData={flowData} defaultSettings={settings}/>);
     }
 });

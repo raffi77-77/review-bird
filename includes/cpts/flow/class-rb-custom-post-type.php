@@ -131,6 +131,7 @@ class Custom_Post_Type {
 		add_action( 'add_meta_boxes', array( $this, 'positive_review_response_meta_box' ) );
 		add_action( 'add_meta_boxes', array( $this, 'negative_review_response_meta_box' ) );
 		add_action( 'add_meta_boxes', array( $this, 'email_settings_meta_box' ) );
+		add_action( 'add_meta_boxes', array( $this, 'skin_meta_box' ) );
 	}
 
 	public function title_question_meta_box() {
@@ -161,6 +162,14 @@ class Custom_Post_Type {
 		add_meta_box( 'email-settings', __( 'E-Mail sent on negative response', 'review-bird' ), function () {
 			ob_start();
 			include Review_Bird()->get_plugin_dir_path() . 'templates/admin/posts/meta-boxes/admin-email.php';
+			echo ob_get_clean();
+		}, self::NAME, 'normal', 'high' );
+	}
+
+	public function skin_meta_box() {
+		add_meta_box( 'skin-settings', __( 'Skin', 'review-bird' ), function () {
+			ob_start();
+			include Review_Bird()->get_plugin_dir_path() . 'templates/admin/posts/meta-boxes/skin.php';
 			echo ob_get_clean();
 		}, self::NAME, 'normal', 'high' );
 	}
