@@ -25,15 +25,15 @@ class Freemius {
 	private function fs_init(): ?\Freemius {
 		try {
 			return fs_dynamic_init( array(
-				'id'                  => '18636',
+				'id'                  => '19172',
 				'slug'                => 'review-bird',
 				'premium_slug'        => 'review-bird-pro',
 				'type'                => 'plugin',
-				'public_key'          => 'pk_447a04094d7ba96f7470d4f9a7329',
+				'public_key'          => 'pk_7c426b1d7d57bb7e3852aa1d431eb',
 				'is_premium'          => true,
 				'premium_suffix'      => '(PRO)',
 				'has_addons'          => false,
-				'has_paid_plans'      => false,
+				'has_paid_plans'      => true,
 				'menu'                => array(
 					'slug'           => 'review-bird',
 				),
