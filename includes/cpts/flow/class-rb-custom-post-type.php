@@ -113,7 +113,7 @@ class Custom_Post_Type {
 	}
 
 	public function title_question_meta_box() {
-		add_meta_box( 'title-question', __( 'Title Question', 'review-bird' ), function () {
+		add_meta_box( 'title-question', __( 'General', 'review-bird' ), function () {
 			ob_start();
 			include Review_Bird()->get_plugin_dir_path() . 'templates/admin/posts/meta-boxes/title-questions.php';
 			echo ob_get_clean();
