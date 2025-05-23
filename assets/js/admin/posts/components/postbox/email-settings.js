@@ -17,13 +17,13 @@ export default function EmailSettings({flowData}) {
     const getData = async () => {
         setLoading(prev => prev + 1);
         try {
-            if (flowData?.utility) {
-                for (const key of Object.keys(settings)) {
-                    if (key in flowData.utility) {
-                        settings[key][1](flowData.utility[key]);
+            if (flowData?.metas?.length) {
+                for (const meta of flowData.metas) {
+                    if (meta.meta_key in settings) {
+                        settings[meta.meta_key][1](meta.meta_value);
                         // Emails
-                        if (key === 'emails_on_negative_review' && flowData.utility[key].length) {
-                            setEmails(flowData.utility[key].join(', '));
+                        if (meta.meta_key === 'emails_on_negative_review' && meta.meta_value.length) {
+                            setEmails(meta.meta_value.join(', '));
                         }
                     }
                 }

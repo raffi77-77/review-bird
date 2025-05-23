@@ -72,6 +72,7 @@ class WP_Meta_Query extends Database_Strategy implements Database_Strategy_Inter
 	}
 
 	public function delete( $where ) {
+		return delete_post_meta( $where['post_id'] ?? null, $where['meta_key'] ?? null );
 	}
 
 	public function update( $where, $data ) {
