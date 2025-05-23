@@ -1,4 +1,5 @@
 import {useEffect, useState} from "@wordpress/element";
+import {__} from "@wordpress/i18n";
 import Utilities from "../../utilities/index"
 import generalLogo from "../../../../../resources/logo/general-logo.svg"
 import Vote from "./steps/vote";
@@ -15,7 +16,9 @@ export default function Flow({id, attributes}) {
     const [theme, setTheme] = useState(false);
 
     useEffect(() => {
-        getData(id);
+        if (id) {
+            getData(id);
+        }
     }, [id]);
 
     useEffect(() => {
@@ -42,6 +45,18 @@ export default function Flow({id, attributes}) {
     return <div id="review-bird"
                 className={`rw-flow-theme${!attributes?.shortcode ? ' rw-flow-theme-bg' : ''} ${theme}`}>
         <Utilities/>
+        {!id &&
+            <Container>
+                <div className="rw-flow-feedback-row">
+                    <div className="rw-flow-feedback-body">
+                        <div className="rw-flow-label">
+                            <div className="rw-flow-public-review-desc">
+                                <p className="rw-flow-public-review-desc-in">{__("There is no flow setup!", 'review-bird')}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Container>}
         {isDataFetched &&
             <Container inside={!attributes?.shortcode}>
                 {step === 'vote' &&
@@ -51,8 +66,8 @@ export default function Flow({id, attributes}) {
                 {step === 'public-review' &&
                     <PublicReview flowId={id} flowData={flowData}/>}
                 {!attributes?.shortcode &&
-                    <div>
-                        <img src={generalLogo} alt="Logo"/>
+                    <div className='rw-flow-footer'>
+                        <img className='rw-flow-footer-in' src={generalLogo} alt="Logo"/>
                     </div>}
             </Container>}
     </div>

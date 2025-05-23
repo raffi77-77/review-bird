@@ -6,6 +6,7 @@ import MediaUploaderButton from "../../../components/media-uploader-button";
 import {REVIEW_TARGET_LOGOS} from "../../../../../../blocks/flow/src/components/flow/steps/data/data";
 import Utilities from "../../../../../../blocks/flow/src/utilities";
 import {SETTINGS_KEYS_PREFIX} from "../../data";
+import {GetMedia} from "../../../../../../blocks/flow/src/rest/rest";
 
 const REVIEW_TARGET_DISTRIBUTIONS = [
     {
@@ -49,14 +50,6 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
     };
 
     useEffect(() => {
-        if (settings['targets'][0].length > 1) {
-            settings['target_distribution'][1]((settings['targets'][0].length - 1) * 5 - 4);
-        } else {
-            settings['target_distribution'][1](null);
-        }
-    }, [settings['targets'][0].length]);
-
-    useEffect(() => {
         getData();
     }, [flowData, defaultSettings]);
 
@@ -67,7 +60,24 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
             if (flowData?.metas?.length) {
                 for (const meta of flowData.metas) {
                     if (meta.meta_key in settings) {
-                        settings[meta.meta_key][1](meta.meta_value);
+                        if (meta.meta_key === 'targets') {
+                            // Targets with media_urls
+                            const targets = [];
+                            for (const target of meta.meta_value) {
+                                if (target.media_id) {
+                                    const media = await GetMedia(ReviewBird.rest.nonce, target.media_id);
+                                    targets.push({
+                                        ...target,
+                                        media_url: media?.guid?.rendered,
+                                    });
+                                } else {
+                                    targets.push(target);
+                                }
+                            }
+                            settings[meta.meta_key][1](targets);
+                        } else {
+                            settings[meta.meta_key][1](meta.meta_value);
+                        }
                         checkedKeys.push(meta.meta_key);
                     }
                 }
@@ -121,6 +131,13 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
                 // Meta
                 addObjectDataToForm(form, `metas[${data[i].key}]`, value);
             }
+        }
+    }
+
+    const deleteTarget = (index) => {
+        if (confirm(__("Are you sure you want to delete the target?", 'review-bird'))) {
+            settings['targets'][1](prevState => prevState.filter((item, i) => i !== index))
+            checkTargetDistribution(settings['targets'][0].length - 1);
         }
     }
 
@@ -216,22 +233,22 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
             <td className="rw-cont-table-item">
                 <div className="rw-admin-row-nested">
                     <div className="rw-admin-row-nested-in">
-                            <input type="text" placeholder="https://" className="rw-admin-input"
-                                   value={currentReviewTarget.url}
-                                   onChange={(e) => settings['targets'][1](prevState =>
-                                       prevState.map((reviewTarget, i) => {
-                                           if (i === index) {
-                                               return {
-                                                   ...reviewTarget,
-                                                   url: e.target.value
-                                               }
+                        <input type="text" placeholder="https://" className="rw-admin-input"
+                               value={currentReviewTarget.url}
+                               onChange={(e) => settings['targets'][1](prevState =>
+                                   prevState.map((reviewTarget, i) => {
+                                       if (i === index) {
+                                           return {
+                                               ...reviewTarget,
+                                               url: e.target.value
                                            }
-                                           return reviewTarget;
-                                       })
-                                   )}/>
-                            {index > 0 &&
+                                       }
+                                       return reviewTarget;
+                                   })
+                               )}/>
+                        {index > 0 &&
                             <button type='button' className="rw-admin-row rw-admin-row-nested rw-admin-row-close"
-                                    onClick={() => confirm(__("Are you sure you want to delete the target?", 'review-bird')) && settings['targets'][1](prevState => prevState.filter((item, i) => i !== index))}>
+                                    onClick={() => deleteTarget(index)}>
                                 <svg className='rw-admin-row rw-admin-row-nested-i' xmlns="http://www.w3.org/2000/svg"
                                      fill="none"
                                      viewBox="0 0 1200 1200">
@@ -244,9 +261,90 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
                                           clipRule="evenodd"></path>
                                 </svg>
                             </button>}
-
                     </div>
-                </div>
+                    {!index &&
+                        <>
+                            <p className="rw-admin-desc">{__("This field is required.", 'review-bird')}</p>
+                            <div className="rw-admin-label">
+                                <Tooltip title="⭐ Quick Review Link Guide by Platform" subTitle="Is there a quick review link?">
+                                    <p className="rw-admin-desc">
+                                        1. Google
+                                        ✅ Yes – Use the Google Place ID to generate a direct link:
+                                        https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID
+                                        Find your Place ID here:
+                                        <a href="#">👉
+                                            https://developers.google.com/maps/documentation/places/web-service/place-id</a>
+                                    </p>
+                                    <p className="rw-admin-desc">
+                                        2. Facebook
+                                        ✅ Yes, but a bit more complex.
+                                        Direct link to review tab (if enabled on page):
+                                        <a href="#">https://www.facebook.com/YOUR_PAGE_USERNAME/reviews/</a>
+                                        ⚠️ Note: The review feature must be turned on for the Facebook page.
+                                    </p>
+                                    <p className="rw-admin-desc">
+                                        3. Yelp
+                                        🔶 Partially – No official direct link to the review form.
+                                        Best option:
+                                        Link to business page, review section will show if user is logged in:
+                                        <a href="#">https://www.yelp.com/biz/YOUR-BUSINESS-NAME</a>
+                                    </p>
+                                    <p className="rw-admin-desc">
+                                        4. Amazon
+                                        ❌ No – There is no direct "quick review" link.
+                                        Users must go to their orders → select product → leave a review.
+                                    </p>
+                                    <p className="rw-admin-desc">
+                                        5. Audible
+                                        🔶 Indirect – Reviews are done via Amazon.
+                                        No separate direct link for Audible-specific content.
+                                    </p>
+                                    <p className="rw-admin-desc">
+                                        6. iTunes / Apple Music
+                                        ❌ No direct review link for apps, music, or podcasts.
+                                        Users must open iTunes/Apple Podcasts and leave a review within the app.
+                                    </p>
+                                    <p className="rw-admin-desc">
+                                        7. Apple App Store
+                                        🔶 No direct link to review form, but you can link to the app's page:
+                                        <a href="#">https://apps.apple.com/app/idYOUR_APP_ID</a>
+                                        Users can scroll to "Ratings & Reviews" and click "Write a Review."
+                                    </p>
+                                    <p className="rw-admin-desc">
+                                        8. Google Play
+                                        ✅ Yes – Direct link to your app's page:
+                                        <a href="#">https://play.google.com/store/apps/details?id=YOUR_APP_PACKAGE_NAME</a>
+                                        Users can click "Rate this app" directly from there.
+                                    </p>
+                                    <p className="rw-admin-desc">
+                                        9. Foursquare
+                                        ❌ No quick review link – Users must search for the venue manually in the app or
+                                        site.
+                                    </p>
+                                    <p className="rw-admin-desc">
+                                        10. WordPress
+                                        🔶 Depends – If you're asking for plugin or theme reviews on WordPress.org:
+                                        Direct link:
+                                        <a href="#">https://wordpress.org/support/plugin/PLUGIN-SLUG/reviews/#new-post
+                                        </a>
+                                        Replace PLUGIN-SLUG with your plugin's slug.
+                                    </p>
+                                    <p className="rw-admin-desc">
+                                        11. Etsy
+                                        ❌ No direct review link – Reviews are only allowed for verified purchases, and
+                                        must
+                                        be left through the buyer’s account.
+                                    </p>
+                                    <p className="rw-admin-desc">
+                                        12. YouTube
+                                        ✅ Yes – To make a subscribe link for your YouTube channel, just add
+                                        ? sub_confirmation=1 to the end of your YouTube channel's URL
+                                    </p>
+                                </Tooltip>
+                                <p className="rw-admin-desc">{__("How to find the right URL", 'review-bird')}</p>
+                            </div>
+                        </>}
+                    </div>
             </td>
         </tr>
     }
@@ -264,6 +362,22 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
                 </td>
             })}
         </tr>
+    }
+
+    const checkTargetDistribution = (targetsCount) => {
+        if (targetsCount > 1) {
+            settings['target_distribution'][1]((targetsCount - 1) * 5 - 4);
+        } else {
+            settings['target_distribution'][1](null);
+        }
+    }
+
+    const addNewTarget = () => {
+        settings['targets'][1](prevState => [...prevState, {
+            url: '',
+            media_id: null,
+        }]);
+        checkTargetDistribution(settings['targets'][0].length + 1);
     }
 
     return <div className="rw-skin-content">
@@ -311,10 +425,7 @@ export default function PositiveReviewResponse({flowData, defaultSettings}) {
                     <th className="rw-cont-table-item-title">
                         <div className="rw-skin-content-title rw-admin-title">
                             <button type="button" className="rw-admin-add"
-                                    onClick={() => settings['targets'][1](prevState => [...prevState, {
-                                        url: '',
-                                        media_id: null,
-                                    }])}>
+                                    onClick={addNewTarget}>
                                 <svg className="rw-admin-i rw-admin-add-i" xmlns="http://www.w3.org/2000/svg"
                                      height="24px"
                                      viewBox="0 -960 960 960">

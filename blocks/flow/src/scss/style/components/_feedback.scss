@@ -15,7 +15,6 @@
       @include min-width($rw-flow-wp-breakpoint) {
         max-width: 600px;
         min-width: 400px;
-        min-height: 500px;
       }
     }
 
@@ -105,6 +104,16 @@
         &-in {
           font-size: var(--rw-flow-fs-16);
         }
+      }
+    }
+  }
+
+  &-footer{
+    padding-block-end: 30px;
+    @include max-width($rw-flow-wp-breakpoint) {
+      &-in{
+        width: 184px;
+        height: 32px;
       }
     }
   }

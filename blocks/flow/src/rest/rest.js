@@ -115,3 +115,26 @@ export const GetSettings = (restUrl, restNonce, params = {}) => {
         }
     }).then(handleResponse);
 }
+
+/**
+ * Get media
+ *
+ * @param {string} restNonce Rest nonce
+ * @param {string} mediaId Media ID
+ * @return {Promise<string|boolean>}
+ */
+export const GetMedia = async (restNonce, mediaId) => {
+    try {
+        const response = await fetch(`${window.location.origin}/wp-json/wp/v2/media/${mediaId}`, {
+            method: 'GET',
+            headers: {
+                'X-WP-Nonce': restNonce
+            },
+            credentials: 'include',
+        });
+        return await response.json();
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+};

@@ -74,8 +74,8 @@ export default function PublicReview({flowId, flowData}) {
             </div>
         </div>
         {reviewTargets.length > 1 &&
-            <div className="rw-flow-feedback-actions rw-flow-platform-slide">
-                <div className="rw-flow-feedback-actions-in rw-flow-platform-slide-in">
+            <div className="rw-flow-feedback-actions">
+                <div className="rw-flow-feedback-actions-in rw-flow-platform">
                     {reviewTargets.map(renderReviewTarget)}
                 </div>
             </div>}
