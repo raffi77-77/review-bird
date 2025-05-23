@@ -63,7 +63,7 @@ class Custom_Post_Type {
 				$this->repository->save_post( $post_id, $post, [ 'metas' => array_merge( $validator->get_validated(), $error_meta ?? [] ) ] );
 			}
 		} catch ( Exception $exception ) {
-			Helper::log( $exception, __( 'Failed to save chatbot.', 'review-bird' ) );
+			Helper::log( $exception, __( 'Failed to save flow.', 'review-bird' ) );
 		}
 	}
 
