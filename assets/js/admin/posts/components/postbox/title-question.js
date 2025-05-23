@@ -1,6 +1,6 @@
 import {useEffect, useState} from "@wordpress/element";
 import {__} from "@wordpress/i18n";
-import {addDataToForm, addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
+import {addObjectDataToForm, getSettingsDataToSave} from "../../../../helpers/helper";
 
 export default function TitleQuestion({flowData}) {
     const [loading, setLoading] = useState(0);
@@ -15,10 +15,10 @@ export default function TitleQuestion({flowData}) {
     const getData = async () => {
         setLoading(prev => prev + 1);
         try {
-            if (flowData?.utility) {
-                for (const key of Object.keys(settings)) {
-                    if (key in flowData.utility) {
-                        settings[key][1](flowData.utility[key]);
+            if (flowData?.metas?.length) {
+                for (const meta of flowData.metas) {
+                    if (meta.meta_key in settings) {
+                        settings[meta.meta_key][1](meta.meta_value);
                     }
                 }
             }

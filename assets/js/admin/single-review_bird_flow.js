@@ -10,7 +10,7 @@ domReady(async () => {
     let flowData = null;
     try {
         flowData = await GetFlow(ReviewBird.rest.url, ReviewBird.rest.nonce, ReviewBird.flow_uuid, {
-            include: ['utility']
+            include: ['metas']
         });
     } catch (e) {
         console.error(e);
