@@ -10,19 +10,6 @@ import {SETTINGS_KEYS_PREFIX} from "./posts/data";
 domReady(async () => {
     let flowData = null;
     let settings = [];
-    const settingsKeys = [
-        'question',
-        'targets',
-        'target_distribution',
-        'multiple_targets',
-        'review_box_text',
-        'username_placeholder',
-        'review_placeholder',
-        'success_message',
-        'gating',
-        'email_notify_on_negative_review',
-        'emails_on_negative_review',
-    ];
     try {
         if (ReviewBird.flow_uuid) {
             flowData = await GetFlow(ReviewBird.rest.url, ReviewBird.rest.nonce, ReviewBird.flow_uuid, {
@@ -30,7 +17,7 @@ domReady(async () => {
             });
         }
         settings = await GetSettings(ReviewBird.rest.url, ReviewBird.rest.nonce, {
-            key: settingsKeys.map(key => `${SETTINGS_KEYS_PREFIX}${key}`)
+            group: SETTINGS_KEYS_PREFIX.slice(0, -1)
         });
     } catch (e) {
         console.error(e);
