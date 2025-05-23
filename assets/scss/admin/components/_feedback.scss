@@ -20,10 +20,33 @@
     }
 
     &-header {
+      min-height: 69px;
       position: relative;
       display: flex;
       padding-block: 8px 8px;
       border-bottom: 1px solid var(--rw-feedback-local-border-color);
+
+      &-desc{
+        margin-block: auto;
+        margin-inline:10px;
+        @include min-width($rw-admin-wp-breakpoint) {
+          &:first-child:last-child {
+            margin: auto;
+          }
+          &:not(:first-child) {
+            margin-inline-end:auto;
+          }
+        }
+
+
+        &-in{
+          color: var(--rw-flow-theme-box-button-color);
+          font-size: var(--rw-flow-fs-20);
+          font-weight: var(--rw-flow-fw-500);
+          line-height: var(--rw-flow-lh-32);
+          text-align: center;
+        }
+      }
     }
 
     &-body {
@@ -56,10 +79,21 @@
   }
 
   &-logo {
-    margin-inline: 10px auto;
-    @include min-width($rw-admin-wp-lg-breakpoint) {
+    max-height: 50px;
+    margin-block: auto;
+    margin-inline: 10px;
+    @include min-width($rw-admin-wp-breakpoint) {
+      &:first-child:last-child {
+        margin: auto;
+      }
+      &:not(:last-child) {
+        margin: auto;
+        margin-inline-end: 10px;
+      }
+    }
 
-      margin: auto;
+    @include max-width($rw-admin-wp-breakpoint) {
+      max-width: 200px;
     }
   }
 
@@ -75,6 +109,10 @@
       font-weight: var(--rw-admin-fw-600);
       line-height: var(--rw-admin-lh-18);
       text-align: center;
+
+      @include max-width($rw-admin-wp-breakpoint) {
+        font-size: var(--rw-flow-fs-20);
+      }
     }
   }
 

@@ -71,33 +71,40 @@ export default function NegativeReviewResponse({flowData}) {
                            className="rw-admin-title-in">{__("Review-Box Text", 'review-bird')}</label>
                 </th>
                 <td className="rw-cont-table-item">
-                    <div className="rw-admin-row">
-                    <textarea id="rw-negative-review-question" className="rw-admin-textarea"
-                              value={settings['review_box_text'][0]}
-                              onChange={e => settings['review_box_text'][1](e.target.value)}
-                              placeholder={__("Would you recommend {site-name} to others?", 'review-bird')}
-                              rows="3"/>
+                    <div className="rw-admin-row-nested">
+                        <div className="rw-admin-row-nested-in">
+                            <textarea id="rw-negative-review-question" className="rw-admin-textarea"
+                                      value={settings['review_box_text'][0]}
+                                      onChange={e => settings['review_box_text'][1](e.target.value)}
+                                      placeholder={__("Would you recommend {site-name} to others?", 'review-bird')}
+                                      rows="3"/>
+                        </div>
                     </div>
                 </td>
             </tr>
             <tr className="rw-cont-table-in">
                 <th className="rw-cont-table-item-title">
                     <label className="rw-admin-title-in">{__("Placeholder Text Form Fields", 'review-bird')}</label>
-
                 </th>
                 <td className="rw-cont-table-item">
                     <div className="rw-admin-row-nested">
-                        <input type="text" className="rw-admin-input"
-                               value={settings['username_placeholder'][0]}
-                               onChange={e => settings['username_placeholder'][1](e.target.value)}
-                               placeholder={__("Enter your name (Optional)", 'review-bird')}/>
+                        <div className="rw-admin-row-nested-in">
+                            <input type="text" className="rw-admin-input"
+                                   value={settings['username_placeholder'][0]}
+                                   onChange={e => settings['username_placeholder'][1](e.target.value)}
+                                   placeholder={__("Enter your name (Optional)", 'review-bird')}/>
+                        </div>
                         <p className="rw-admin-desc">{__("This is the text for the name", 'review-bird')}</p>
                     </div>
-                    <input type="text" className="rw-admin-input"
-                           value={settings['review_placeholder'][0]}
-                           onChange={e => settings['review_placeholder'][1](e.target.value)}
-                           placeholder={__("Share your impressions and experiences (Optional)", 'review-bird')}/>
-                    <p className="rw-admin-desc">{__("This is the text for the review field itself", 'review-bird')}</p>
+                    <div className="rw-admin-row-nested">
+                        <div className="rw-admin-row-nested-in">
+                            <input type="text" className="rw-admin-input"
+                                   value={settings['review_placeholder'][0]}
+                                   onChange={e => settings['review_placeholder'][1](e.target.value)}
+                                   placeholder={__("Share your impressions and experiences (Optional)", 'review-bird')}/>
+                        </div>
+                        <p className="rw-admin-desc">{__("This is the text for the review field itself", 'review-bird')}</p>
+                    </div>
                 </td>
             </tr>
             <tr className="rw-cont-table-in">
@@ -107,10 +114,12 @@ export default function NegativeReviewResponse({flowData}) {
                 </th>
                 <td className="rw-cont-table-item">
                     <div className="rw-admin-row-nested">
-                        <input id="rw-negative-success-message" type="text" className="rw-admin-input"
-                               value={settings['success_message'][0]}
-                               onChange={e => settings['success_message'][1](e.target.value)}
-                               placeholder={__("Your review was submitted successfully", 'review-bird')}/>
+                        <div className="rw-admin-row-nested-in">
+                            <input id="rw-negative-success-message" type="text" className="rw-admin-input"
+                                   value={settings['success_message'][0]}
+                                   onChange={e => settings['success_message'][1](e.target.value)}
+                                   placeholder={__("Your review was submitted successfully", 'review-bird')}/>
+                        </div>
                     </div>
                 </td>
             </tr>

@@ -66,12 +66,14 @@ export default function TitleQuestion({flowData}) {
                            className="rw-admin-title-in">{__("Define Question", 'review-bird')}</label>
                 </th>
                 <td className="rw-cont-table-item">
-                    <div className="rw-admin-row">
-                    <textarea id="rw-question" className="rw-admin-textarea"
-                              value={settings['question'][0]}
-                              onChange={e => settings['question'][1](e.target.value)}
-                              placeholder={__("Would you recommend {site-name} to others?", 'review-bird')}
-                              rows="3"/>
+                    <div className="rw-admin-row-nested">
+                        <div className="rw-admin-row-nested-in">
+                              <textarea id="rw-question" className="rw-admin-textarea"
+                                        value={settings['question'][0]}
+                                        onChange={e => settings['question'][1](e.target.value)}
+                                        placeholder={__("Would you recommend {site-name} to others?", 'review-bird')}
+                                        rows="3"/>
+                        </div>
                         <p className="rw-admin-desc">{"The shortcode {site-name} displays the site name as defined in WordPress under Settings → General."}</p>
                     </div>
                 </td>
