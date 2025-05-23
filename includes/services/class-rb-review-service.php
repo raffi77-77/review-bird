@@ -2,6 +2,7 @@
 
 namespace Review_Bird\Includes\Services;
 
+use Exception;
 use Review_Bird\Includes\Data_Objects\Flow;
 use Review_Bird\Includes\Data_Objects\Review;
 use Review_Bird\Includes\Repositories\Review_Repository;
@@ -26,7 +27,11 @@ class Review_Service {
 		if ( $review && ! $review->like && $flow_utility->email_notify_on_negative_review && ! empty( $flow_utility->emails_on_negative_review ) ) {
 			foreach ( $flow_utility->emails_on_negative_review as $email ) {
 				if ( ! empty( $email ) ) {
-					$this->email_notify( $email, $review, $flow );
+					try {
+						$this->email_notify( $email, $review, $flow );
+					} catch ( Exception $e ) {
+						Helper::log( [], 'Error on email sending: ' . $e->getMessage() );
+					}
 				}
 			}
 		}
@@ -38,21 +43,27 @@ class Review_Service {
 		return $this->review_repository->update( $where, $data );
 	}
 
-	public function email_notify( string $user_email, Review $review, Flow $flow ) {
-		$site_name = get_bloginfo( 'name' );
-		$subject    = sprintf( __( 'New Review Notification in - %s', 'review-bird' ), $site_name );
-		$stars_html = $review->rating ? str_repeat( '⭐', $review->rating ) : __( 'N/A', 'review-bird' );
-		$like_svg   = $review->like ? '👍' : '👎';
-		$username   = $review->username ?? __( 'N/A', 'review-bird' );
-		$review_text   = $review->message ?? __( 'N/A', 'review-bird' );
+	public function email_notify( string $to, Review $review, Flow $flow ) {
+		$site_name   = get_bloginfo( 'name' );
+		$subject     = sprintf( __( 'New Review Notification in - %s', 'review-bird' ), $site_name );
+		$stars_html  = $review->rating ? str_repeat( '⭐', $review->rating ) : __( 'N/A', 'review-bird' );
+		$like_svg    = $review->like ? '👍' : '👎';
+		$username    = $review->username ?? __( 'N/A', 'review-bird' );
+		$review_text = $review->message ?? __( 'N/A', 'review-bird' );
 		ob_start();
 		include Review_Bird()->get_plugin_dir_path() . 'templates/email-notification.php';
-		$message = ob_get_clean();
-		$headers    = [
-			"Content-Type: text/html; charset=UTF-8",
-			"From: {$site_name} <info@limb.dev>",
-		];
-		$sent       = wp_mail( $user_email, $subject, $message, $headers );
-		Helper::log( [], '#' . $review->id . ' - Email notification is' . ( $sent ? ' sent' : ' not sent' ) );
+		$message    = ob_get_clean();
+		$from_name  = apply_filters( 'review_bird_review_email_notification_from_name', $site_name );
+		$from_email = apply_filters( 'review_bird_review_email_notification_from_address', 'noreply@' . parse_url( home_url(), PHP_URL_HOST ) );
+		$headers    = array(
+			'Content-Type: text/html; charset=UTF-8',
+			'From: ' . $from_name . ' <' . $from_email . '>',
+		);
+		$to         = apply_filters( 'review_bird_review_email_notification_to', $to );
+		$subject    = apply_filters( 'review_bird_review_email_notification_subject', $subject );
+		$message    = apply_filters( 'review_bird_review_email_notification_message', $message );
+		$headers    = apply_filters( 'review_bird_review_email_notification_headers', $headers );
+		$sent       = wp_mail( $to, $subject, $message, $headers );
+		Helper::log( [ 'to' => $to, 'headers' => $headers ], '#' . $review->id . ' - Email notification is' . ( $sent ? ' sent' : ' not sent' ) );
 	}
 }

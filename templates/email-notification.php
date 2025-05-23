@@ -20,7 +20,7 @@
             <table width="100%" cellpadding="10" cellspacing="0" style="border-collapse: collapse;">
                 <tr style="border-bottom: 1px solid #e5e7eb;">
                     <td style="font-weight: bold; color: #374151;"><?= __( 'Flow:', 'review-bird' ) ?></td>
-                    <td style="color: #111827;"><a href="<?= ! empty( $flow ) ? esc_url( get_edit_post_link( $flow->get_id() ) ) : '#' ?>"><?= esc_html( $flow->title ?? '' ) ?>🔗</a></td>
+                    <td style="color: #111827;"><a href="<?= ! empty( $flow ) ? esc_url( get_edit_post_link( $flow->get_id() ) ) : '#' ?>"><?= esc_html( $flow->title ?? '' ) ?> 🔗</a></td>
                 </tr>
                 <tr style="border-bottom: 1px solid #e5e7eb;">
                     <td style="font-weight: bold; color: #374151;"><?= __( 'Username:', 'review-bird' ) ?></td>
