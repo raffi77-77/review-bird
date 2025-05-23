@@ -168,7 +168,7 @@ class Custom_Post_Type {
 	public function enqueue_scripts() {
 		// Get the current screen
 		$screen = get_current_screen();
-		if ( $screen->post_type === self::NAME ) {
+		if ( $screen->post_type === self::NAME && $screen->base === 'post' ) {
 			$rb = Review_Bird();
 			if ( ! wp_style_is( $rb->get_plugin_name() . '-single-' . self::NAME . '-js', 'registered' ) ) {
 				$flow_script_asset = include( $rb->get_plugin_dir_path() . 'dist/js/admin/single-' . self::NAME . '.asset.php' );
