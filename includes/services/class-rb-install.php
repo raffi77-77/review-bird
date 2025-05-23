@@ -45,6 +45,7 @@ class Install {
 		$this->maybe_add_setting( "{$flow_prefix}review_placeholder", $meta_scheme_rules['review_placeholder']['default'] ?? '' );
 		$this->maybe_add_setting( "{$flow_prefix}success_message", $meta_scheme_rules['success_message']['default'] ?? '' );
 		$this->maybe_add_setting( "{$flow_prefix}emails_on_negative_review", $meta_scheme_rules['emails_on_negative_review']['default'] ?? '' );
+		$this->maybe_add_setting( "{$flow_prefix}skin", $meta_scheme_rules['skin']['default'] ?? '' );
 	}
 
 	public function create_tables() {

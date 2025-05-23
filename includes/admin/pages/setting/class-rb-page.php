@@ -45,8 +45,12 @@ class Page {
 		add_settings_field( $option_prefix . 'username_placeholder', __( 'Username field:', 'review-bird' ), [ $this, 'render_review_username_placeholder' ], self::$menu_slug, 'new_flow' );
 		register_setting( self::$option_group, $option_prefix . 'review_placeholder', [ 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', ] );
 		add_settings_field( $option_prefix . 'review_placeholder', __( 'Review field:', 'review-bird' ), [ $this, 'render_review_text_placeholder' ], self::$menu_slug, 'new_flow' );
-		register_setting( self::$option_group, $option_prefix . 'emails_on_negative_review', [ 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', ] );
+		register_setting( self::$option_group, $option_prefix . 'emails_on_negative_review', [ 'type' => 'string', 'sanitize_callback' => [ $this, 'sanitize_notify_to_emails' ], ] );
 		add_settings_field( $option_prefix . 'emails_on_negative_review', __( 'Notify To E-Mails', 'review-bird' ), [ $this, 'render_notify_to_emails' ], self::$menu_slug, 'new_flow' );
+	}
+
+	public function sanitize_notify_to_emails( $value ) {
+		return is_string( $value ) ? explode( ',', $value ) : [];
 	}
 
 	public function render() {
@@ -68,7 +72,7 @@ class Page {
 		?>
         <input type="text" placeholder="Review" name="<?= $this->option_prefix ?>flow_slug" value="<?php echo esc_attr( Setting::find( self::$prefix . 'flow_slug' )->get_value() ?? 'review' ); ?>" class="regular-text 
         rw-settings-input">
-        <p><?= sprintf(__( 'After updating the slug, always update the permalinks %s here %s', 'review-bird' ), '<a href="options-permalink.php">', '</a>') ?></p>
+        <p><?= sprintf( __( 'After updating the slug, always update the permalinks %s here %s', 'review-bird' ), '<a href="options-permalink.php">', '</a>' ) ?></p>
 		<?php
 	}
 
@@ -114,8 +118,12 @@ class Page {
 	}
 
 	public function render_notify_to_emails() {
+		$emails = Setting::find( self::$prefix . 'emails_on_negative_review' )->get_value() ?? [];
+		if ( is_array( $emails ) ) {
+			$emails = implode( ',', $emails );
+		}
 		?>
-        <input type="text" name="<?= $this->option_prefix ?>emails_on_negative_review" value="<?php echo esc_attr( Setting::find( self::$prefix . 'emails_on_negative_review' )->get_value() ?? '' ); ?>"
+        <input type="text" name="<?= $this->option_prefix ?>emails_on_negative_review" value="<?php echo esc_attr( $emails ); ?>"
                class="regular-text rw-settings-input">
         <p><?= __( 'Email address(es) to receive negative feedback. You can enter multiple addresses, separated by commas.', 'review-bird' ) ?></p>
 		<?php

@@ -67,7 +67,13 @@ class Meta_Scheme implements Scheme_Interface {
 				'type'              => 'array',
 				'sanitize_callback' => [ self::class, 'sanitize_emails_on_negative_review' ],
 				'validate_callback' => [ self::class, 'validate_emails_on_negative_review' ],
-			]
+			],
+			'skin'                            => [
+				'name'    => __( 'Skin', 'review-bird' ),
+				'type'    => 'string',
+				'enum'    => [ 'blue', 'green', 'braun', 'orange', 'lilia', 'rot' ],
+				'default' => 'blue',
+			],
 		];
 	}
 
