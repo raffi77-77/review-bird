@@ -77,4 +77,10 @@ class WP_Options extends Database_Strategy implements Database_Strategy_Interfac
 	public function delete( $where ) {
 		return delete_option( $where['key'] );
 	}
+
+	public function exists( $id ) {
+		$setting = get_option( $id, '__not_set__' );
+
+		return $setting !== '__not_set__';
+	}
 }
