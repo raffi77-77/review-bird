@@ -79,7 +79,7 @@ class Custom_Post_Type {
 				'edit_item'     => __( 'Edit flow', 'review-bird' ),
 				'new_item'      => __( 'New flow', 'review-bird' ),
 			],
-			'supports'            => array( 'title', 'editor', 'thumbnail'/*, 'custom-fields'*/ ),
+			'supports'            => array( 'title', 'thumbnail' ),
 			'description'         => __( '', 'review-bird' ),
 			'public'              => true,
 			'show_ui'             => true,

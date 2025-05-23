@@ -52,12 +52,16 @@ CREATE TABLE {$wpdb->prefix}{$prefix}_reviews (
   username varchar(64) NULL, 
   rating smallint NULL,
   `like` tinyint(1) NULL,
-  target varchar(512) NULL,
+  target varchar(1024) NULL,
   created_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   updated_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   PRIMARY KEY  (id),
   UNIQUE KEY uuid (uuid),
-  KEY flow_id (flow_id)
+  KEY flow_id (flow_id),
+  KEY `user_id` (`user_id`),
+  KEY `like` (`like`),
+  KEY `rating` (`rating`),
+  KEY `created_at` (`created_at`)
 ) $collate;";
 		return $tables;
 	}
